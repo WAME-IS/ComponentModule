@@ -1,0 +1,16 @@
+services:
+	PermissionObject:
+		setup:
+			- addResource('component')
+			- addResourceAction('component', 'view')
+			- allow('admin', 'component', 'view')
+			- addResourceAction('component', 'add')
+			- allow('admin', 'component', 'add')
+			- addResourceAction('component', 'edit')
+			- allow('admin', 'component', 'edit')
+			- addResourceAction('component', 'delete')
+			- allow('admin', 'component', 'delete')
+
+
+	ComponentManager:
+		class: Wame\ComponentModule\Models\ComponentManager

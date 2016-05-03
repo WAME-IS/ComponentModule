@@ -1,0 +1,2 @@
+services:
+	- Wame\ComponentModule\Vendor\Wame\AdminModule\Components\IAddComponentControlFactory
