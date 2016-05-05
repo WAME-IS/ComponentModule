@@ -4,13 +4,37 @@ services:
 			- addResource('component')
 			- addResourceAction('component', 'view')
 			- allow('admin', 'component', 'view')
-			- addResourceAction('component', 'add')
-			- allow('admin', 'component', 'add')
-			- addResourceAction('component', 'edit')
-			- allow('admin', 'component', 'edit')
+			- addResourceAction('component', 'create')
+			- allow('admin', 'component', 'create')
+			- addResourceAction('component', 'update')
+			- allow('admin', 'component', 'update')
 			- addResourceAction('component', 'delete')
 			- allow('admin', 'component', 'delete')
+
+	- Wame\ComponentModule\Vendor\Wame\MenuModule\Components\ComponentMenu\ItemTemplate
+
+	# Entities
+	- Wame\ComponentModule\Entities\ComponentEntity
+	- Wame\ComponentModule\Entities\ComponentLangEntity
+	- Wame\ComponentModule\Entities\ComponentInPositionEntity
+
+
+	# Repositories
+	- Wame\ComponentModule\Repositories\ComponentRepository
+	- Wame\ComponentModule\Repositories\ComponentInPositionRepository
 
 
 	ComponentManager:
 		class: Wame\ComponentModule\Models\ComponentManager
+
+
+	ComponentForm:
+		class: Wame\ComponentModule\Forms\ComponentForm
+		setup:
+			- addFormContainer(Wame\ComponentModule\Forms\BasicFormContainer(), 'BasicFormContainer', 50)
+			- addFormContainer(Wame\ComponentModule\Forms\AdvancedFormContainer(), 'AdvancedFormContainer', 100)
+
+
+doctrine:
+	metadata:
+		Wame\ComponentModule\Entities: %appDir%/../vendor/wame/ComponentModule/entities

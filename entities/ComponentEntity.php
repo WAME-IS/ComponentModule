@@ -13,21 +13,32 @@ class ComponentEntity extends \Wame\Core\Entities\BaseEntity
 {
 	use Columns\Identifier;
 	use Columns\CreateDate;
+	use Columns\Settings;
 	use Columns\Status;
 
 	/**
-     * @ORM\OneToMany(targetEntity="ArticleLangEntity", mappedBy="article")
+     * @ORM\OneToMany(targetEntity="ComponentLangEntity", mappedBy="component")
      */
     protected $langs;
 	
 	/**
-	 * @ORM\Column(name="publish_start_date", type="datetime", nullable=true)
+	 * @ORM\Column(name="name", type="string", nullable=true)
 	 */
-	protected $publishStartDate;
+	protected $name;
+	
+	/**
+	 * @ORM\Column(name="type", type="string", nullable=true)
+	 */
+	protected $type;
+	
+	/**
+	 * @ORM\Column(name="cache", type="string", nullable=true)
+	 */
+	protected $cache;
 
 	/**
-	 * @ORM\Column(name="publish_end_date", type="datetime", nullable=true)
+	 * @ORM\Column(name="template", type="string", nullable=true)
 	 */
-	protected $publishEndDate;
-
+	protected $template;
+	
 }
