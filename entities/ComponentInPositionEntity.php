@@ -12,7 +12,7 @@ use Wame\Core\Entities\Columns;
 class ComponentInPositionEntity extends \Wame\Core\Entities\BaseEntity 
 {
 	use Columns\Identifier;
-	use Columns\Settings;
+	use Columns\Parameters;
 	
 
 	/**

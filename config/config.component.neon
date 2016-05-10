@@ -31,8 +31,8 @@ services:
 	ComponentForm:
 		class: Wame\ComponentModule\Forms\ComponentForm
 		setup:
-			- addFormContainer(Wame\ComponentModule\Forms\BasicFormContainer(), 'BasicFormContainer', 50)
-			- addFormContainer(Wame\ComponentModule\Forms\AdvancedFormContainer(), 'AdvancedFormContainer', 100)
+			- addFormContainer(Wame\ComponentModule\Forms\BasicFormContainer(), 'BasicFormContainer', 100)
+			- addFormContainer(Wame\ComponentModule\Forms\AdvancedFormContainer(), 'AdvancedFormContainer', 50)
 
 
 doctrine:

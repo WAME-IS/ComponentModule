@@ -18,8 +18,14 @@ class ComponentForm extends FormFactory
 	/** @var EntityManager */
 	private $entityManager;
 
+	/** @var User */
+	private $user;
+
 	/** @var UserEntity */
 	private $userEntity;
+
+	/** @var UserRepository */
+	private $userRepository;
 	
 	/** @var ComponentRepository */
 	private $componentRepository;
@@ -39,10 +45,11 @@ class ComponentForm extends FormFactory
 	) {
 		parent::__construct();
 
+		$this->user = $user;
 		$this->entityManager = $entityManager;
 		$this->componentRepository = $componentRepository;
+		$this->userRepository = $userRepository;
 		
-		$this->userEntity = $userRepository->get(['id' => $user->id]);
 		$this->lang = $componentRepository->lang;
 	}
 
@@ -65,6 +72,8 @@ class ComponentForm extends FormFactory
 	public function formSucceeded(Form $form, $values)
 	{
 		$presenter = $form->getPresenter();
+
+		$this->userEntity = $this->userRepository->get(['id' => $this->user->id]);
 
 		try {
 			if ($this->id) {
@@ -153,7 +162,7 @@ class ComponentForm extends FormFactory
 		if ($this->type) {
 			return $this->type;
 		} else {
-			throw new \Exception(_('Type is not defined. You must use the settType() method to create a form.'));
+			throw new \Exception(_('Type is not defined. You must use the setType() method to create a form.'));
 		}
 	}
 

@@ -7,7 +7,10 @@ use Wame\MenuModule\Models\ItemSorter;
 class ComponentManager
 {	
 	/** @var array */
-	private $components = [];
+	public $components = [];
+	
+	/** @var array */
+	private $removeComponent = [];
 	
 	/** @var ItemSorter */
 	private $itemSorter;
@@ -34,6 +37,35 @@ class ComponentManager
 		return $this;
 	}
 	
+	/**
+	 * Add component to remove list
+	 * 
+	 * @param object $component
+	 * @return \Wame\ComponentModule\Models\ComponentManager
+	 */
+	public function removeComponent($component)
+	{
+		$name = $this->getClassName($component);
+		
+		$this->removeComponent[$name] = $name;
+		
+		return $this;
+	}
+	
+	
+	private function removeComponents()
+	{
+		$components = $this->components;
+		
+		foreach ($this->removeComponent as $component) {
+			if (array_key_exists($component, $components)) {
+				unset($components[$component]);
+			}
+		}
+		
+		return $components;
+	}
+	
 
     /**
      * Get items from services
@@ -42,7 +74,9 @@ class ComponentManager
      */
     public function getItems()
     {
-        return $this->itemSorter->sort($this->components);
+		$components = $this->removeComponents();
+				
+        return $this->itemSorter->sort($components);
     }
 	
 	

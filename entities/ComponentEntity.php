@@ -13,7 +13,7 @@ class ComponentEntity extends \Wame\Core\Entities\BaseEntity
 {
 	use Columns\Identifier;
 	use Columns\CreateDate;
-	use Columns\Settings;
+	use Columns\Parameters;
 	use Columns\Status;
 
 	/**

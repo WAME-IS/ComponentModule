@@ -75,6 +75,7 @@ class ComponentPresenter extends \App\AdminModule\Presenters\BasePresenter
 	{
 		$this->template->siteTitle = _('Components');
 		$this->template->components = $this->components;
+		$this->template->componentManager = $this->componentManager->components;
 	}
 	
 	
