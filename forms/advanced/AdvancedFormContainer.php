@@ -28,6 +28,8 @@ class AdvancedFormContainer extends BaseFormContainer
 		
         $form->addText('name', _('Component name'));
 
+        $form->addText('class', _('CSS class'));		
+
 		$form->addText('template', _('Template'))
 				->setAttribute('placeholder', 'default.latte');
 		

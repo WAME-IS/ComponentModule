@@ -32,14 +32,27 @@ class ComponentInPositionEntity extends \Wame\Core\Entities\BaseEntity
 	 */
 	protected $sort;
 	
-	/**
-	 * @ORM\Column(name="cache", type="string", nullable=true)
-	 */
-	protected $cache;
+	
+	/** get ************************************************************/
 
-	/**
-	 * @ORM\Column(name="template", type="string", nullable=true)
-	 */
-	protected $template;
+	public function getComponentInPositionName()
+	{
+		return $this->position->name . '_' . $this->component->type . '_' . $this->component->name . '_' . $this->component->id;
+	}
+	
+	public function getSort()
+	{
+		return $this->sort;
+	}
+	
+	
+	/** set ************************************************************/
+
+	public function setSort($sort)
+	{
+		$this->sort = $sort;
+		
+		return $this;
+	}
 	
 }

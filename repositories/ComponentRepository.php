@@ -47,21 +47,21 @@ class ComponentRepository extends \Wame\Core\Repositories\BaseRepository
 	/**
 	 * Create component
 	 * 
-	 * @param ComponentLangEntity $componentLangEntity
+	 * @param ComponentEntity $componentEntity
 	 * @return ComponentEntity
 	 * @throws \Wame\Core\Exception\RepositoryException
 	 */
-	public function create($componentLangEntity)
+	public function create($componentEntity)
 	{
-		$create = $this->entityManager->persist($componentLangEntity->component);
+		$create = $this->entityManager->persist($componentEntity);
 		
-		$this->entityManager->persist($componentLangEntity);
+		$this->entityManager->persist($componentEntity->langs);
 		
 		if (!$create) {
 			throw new \Wame\Core\Exception\RepositoryException(_('Component could not be created.'));
 		}
 		
-		return $componentLangEntity->component;
+		return $componentEntity;
 	}
 	
 	

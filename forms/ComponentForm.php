@@ -4,7 +4,7 @@ namespace Wame\ComponentModule\Forms;
 
 use Nette\Application\UI\Form;
 use Nette\Security\User;
-use Nette\Utils\Strings;
+use Wame\Utils\Strings;
 use Kdyby\Doctrine\EntityManager;
 use Wame\Core\Forms\FormFactory;
 use Wame\ComponentModule\Entities\ComponentEntity;
@@ -111,23 +111,24 @@ class ComponentForm extends FormFactory
 	private function create($values)
 	{
 		$componentEntity = new ComponentEntity();
-		$componentEntity->type = $this->getType();
-		$componentEntity->name = $this->getComponentName($values);
-		$componentEntity->cache = $values['cache'];
-		$componentEntity->template = $values['template'];
-		$componentEntity->createDate = $this->formatDate('now');
-		$componentEntity->createUser = $this->userEntity;
-		$componentEntity->status = ComponentRepository::STATUS_ENABLED;
+		$componentEntity->setType($this->getType());
+		$componentEntity->setName($this->getComponentName($values));
+		$componentEntity->setParameters($this->getParams($values));
+		$componentEntity->setCreateDate($this->formatDate('now'));
+		$componentEntity->setCreateUser($this->userEntity);
+		$componentEntity->setStatus(ComponentRepository::STATUS_ENABLED);
 		
 		$componentLangEntity = new ComponentLangEntity();
 		$componentLangEntity->component = $componentEntity;
-		$componentLangEntity->lang = $this->lang;
-		$componentLangEntity->title = $values['title'];
-		$componentLangEntity->description = $values['description'];
-		$componentLangEntity->editDate = $this->formatDate('now');
-		$componentLangEntity->editUser = $this->userEntity;
+		$componentLangEntity->setLang($this->lang);
+		$componentLangEntity->setTitle($values['title']);
+		$componentLangEntity->setDescription($values['description']);
+		$componentLangEntity->setEditDate($this->formatDate('now'));
+		$componentLangEntity->setEditUser($this->userEntity);
 		
-		return $this->componentRepository->create($componentLangEntity);
+		$componentEntity->addLang($this->lang, $componentLangEntity);
+		
+		return $this->componentRepository->create($componentEntity);
 	}
 	
 	
@@ -181,7 +182,26 @@ class ComponentForm extends FormFactory
 			$name = $values['title'];
 		}
 		
-		return Strings::webalize($name);
+		return $name;
 	} 
+	
+	
+	/**
+	 * Get parameters
+	 * 
+	 * @param array $values
+	 * @param array $parameters
+	 * @return array
+	 */
+	private function getParams($values, $parameters = [])
+	{
+		$array = [
+			'cache' => $values['cache'],
+			'class' => $values['class'],
+			'template' => $values['template']
+		];
+		
+		return array_replace($parameters, $array);
+	}
 
 }

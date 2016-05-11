@@ -4,6 +4,7 @@ namespace Wame\ComponentModule\Entities;
 
 use Doctrine\ORM\Mapping as ORM;
 use Wame\Core\Entities\Columns;
+use Wame\Utils\Strings;
 
 /**
  * @ORM\Table(name="wame_component")
@@ -15,6 +16,7 @@ class ComponentEntity extends \Wame\Core\Entities\BaseEntity
 	use Columns\CreateDate;
 	use Columns\Parameters;
 	use Columns\Status;
+	
 
 	/**
      * @ORM\OneToMany(targetEntity="ComponentLangEntity", mappedBy="component")
@@ -31,14 +33,34 @@ class ComponentEntity extends \Wame\Core\Entities\BaseEntity
 	 */
 	protected $type;
 	
-	/**
-	 * @ORM\Column(name="cache", type="string", nullable=true)
-	 */
-	protected $cache;
-
-	/**
-	 * @ORM\Column(name="template", type="string", nullable=true)
-	 */
-	protected $template;
 	
+	/** get ************************************************************/
+	
+	public function getName()
+	{
+		return $this->name;
+	}
+	
+	public function getType()
+	{
+		return $this->type;
+	}
+	
+
+	/** set ************************************************************/
+	
+	public function setName($name)
+	{
+		$this->name = Strings::dashesToCamelCase($name);
+		
+		return $this;
+	}
+	
+	public function setType($type)
+	{
+		$this->type = $type;
+		
+		return $this;
+	}
+
 }
