@@ -38,18 +38,25 @@ class AdvancedFormContainer extends BaseFormContainer
     }
 	
 	
-//	public function setDefaultValues($object)
-//	{
-//		$form = $this->getForm();
-//		
-//		$address = $this->addressRepository->get(['user' => $object->id]);
-//
-//		if ($address) {
-//			$form['street']->setDefaultValue($address->street);
-//			$form['houseNumber']->setDefaultValue($address->houseNumber);
-//			$form['zipCode']->setDefaultValue($address->zipCode);
-//			$form['city']->setDefaultValue($address->city);
-//		}
-//	}
+	public function setDefaultValues($object)
+	{
+		$form = $this->getForm();
+		
+		$componentEntity = $object->componentEntity;
+
+		$form['name']->setDefaultValue($componentEntity->name);
+		
+		if ($componentEntity->getParameter('class')) {
+			$form['class']->setDefaultValue($componentEntity->getParameter('class'));
+		}
+		
+		if ($componentEntity->getParameter('template')) {
+			$form['template']->setDefaultValue($componentEntity->getParameter('template'));
+		}
+		
+		if ($componentEntity->getParameter('cache')) {
+			$form['cache']->setDefaultValue($componentEntity->getParameter('cache'));
+		}
+	}
 	
 }

@@ -4,8 +4,8 @@ namespace Wame\ComponentModule\Forms;
 
 use Nette\Application\UI\Form;
 use Nette\Security\User;
-use Wame\Utils\Strings;
 use Kdyby\Doctrine\EntityManager;
+use Wame\Utils\CacheManager;
 use Wame\Core\Forms\FormFactory;
 use Wame\ComponentModule\Entities\ComponentEntity;
 use Wame\ComponentModule\Entities\ComponentLangEntity;
@@ -18,6 +18,9 @@ class ComponentForm extends FormFactory
 	/** @var EntityManager */
 	private $entityManager;
 
+	/** @var CacheManager */
+	private $cacheManager;
+
 	/** @var User */
 	private $user;
 
@@ -27,11 +30,14 @@ class ComponentForm extends FormFactory
 	/** @var UserRepository */
 	private $userRepository;
 	
+	/** @var ComponentEntity */
+	public $componentEntity;
+	
 	/** @var ComponentRepository */
 	private $componentRepository;
 	
 	/** @var string */
-	private $lang;
+	public $lang;
 	
 	/** @var string */
 	private $type;
@@ -40,6 +46,7 @@ class ComponentForm extends FormFactory
 	public function __construct(
 		User $user,
 		EntityManager $entityManager, 
+		CacheManager $cacheManager,
 		ComponentRepository $componentRepository,
 		UserRepository $userRepository
 	) {
@@ -47,6 +54,7 @@ class ComponentForm extends FormFactory
 
 		$this->user = $user;
 		$this->entityManager = $entityManager;
+		$this->cacheManager = $cacheManager;
 		$this->componentRepository = $componentRepository;
 		$this->userRepository = $userRepository;
 		
@@ -62,6 +70,11 @@ class ComponentForm extends FormFactory
 			$form->addSubmit('submit', _('Update'));
 		} else {
 			$form->addSubmit('submit', _('Create'));
+		}
+		
+		if ($this->id) {
+			$this->componentEntity = $this->componentRepository->get(['id' => $this->id]);
+			$this->setDefaultValues();
 		}
 		
 		$form->onSuccess[] = [$this, 'formSucceeded'];
@@ -80,6 +93,8 @@ class ComponentForm extends FormFactory
 				$componentEntity = $this->update($values);
 				
 				$this->componentRepository->onUpdate($form, $values, $componentEntity);
+
+				$this->cleanCache($componentEntity->cacheTag);
 
 				$presenter->flashMessage(_('The component has been successfully updated.'), 'success');
 			} else {
@@ -132,9 +147,24 @@ class ComponentForm extends FormFactory
 	}
 	
 	
+	/**
+	 * Update component
+	 * 
+	 * @param array $values
+	 * @return ComponentEntity
+	 */
 	private function update($values)
 	{
+		$componentEntity = $this->componentRepository->get(['id' => $this->id]);
+		$componentEntity->setParameters($this->getParams($values));
 		
+		$componentLangEntity = $componentEntity->langs[$this->lang];
+		$componentLangEntity->setTitle($values['title']);
+		$componentLangEntity->setDescription($values['description']);
+		$componentLangEntity->setEditDate($this->formatDate('now'));
+		$componentLangEntity->setEditUser($this->userEntity);
+		
+		return $this->componentRepository->update($componentEntity);
 	}
 	
 	
@@ -202,6 +232,19 @@ class ComponentForm extends FormFactory
 		];
 		
 		return array_replace($parameters, $array);
+	}
+	
+	
+	/**
+	 * Clean cache by tag
+	 * 
+	 * @param string $tag
+	 */
+	private function cleanCache($tag)
+	{
+		$cache = $this->cacheManager;
+		$cache->setTag($tag);
+		$cache->cleanByTag();
 	}
 
 }

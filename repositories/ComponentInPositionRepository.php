@@ -2,6 +2,7 @@
 
 namespace Wame\ComponentModule\Repositories;
 
+use Wame\ComponentModule\Entities\ComponentEntity;
 use Wame\ComponentModule\Entities\ComponentInPositionEntity;
 
 class ComponentInPositionRepository extends \Wame\Core\Repositories\BaseRepository
@@ -42,6 +43,26 @@ class ComponentInPositionRepository extends \Wame\Core\Repositories\BaseReposito
 		$componentInPositionEntity = $this->find($criteria);
 		
 		$this->remove($componentInPositionEntity);
+	}
+	
+	
+	/**
+	 * Get component positions 
+	 * 
+	 * @param ComponentEntity $component
+	 * @return array
+	 */
+	public function getPositions($component)
+	{
+		$return = [];
+		
+		$positions = $this->find(['component' => $component]);
+		
+		foreach ($positions as $position) {
+			$return[$position->position->id] = $position->position;
+		}
+		
+		return $return;
 	}
 	
 }

@@ -3,7 +3,6 @@
 namespace Wame\ComponentModule\Repositories;
 
 use Wame\ComponentModule\Entities\ComponentEntity;
-use Wame\ComponentModule\Entities\ComponentLangEntity;
 
 class ComponentRepository extends \Wame\Core\Repositories\BaseRepository
 {
@@ -53,6 +52,8 @@ class ComponentRepository extends \Wame\Core\Repositories\BaseRepository
 	 */
 	public function create($componentEntity)
 	{
+		$this->componentExists($componentEntity);
+		
 		$create = $this->entityManager->persist($componentEntity);
 		
 		$this->entityManager->persist($componentEntity->langs);
@@ -60,6 +61,20 @@ class ComponentRepository extends \Wame\Core\Repositories\BaseRepository
 		if (!$create) {
 			throw new \Wame\Core\Exception\RepositoryException(_('Component could not be created.'));
 		}
+		
+		return $componentEntity;
+	}
+	
+	
+	/**
+	 * Update component
+	 * 
+	 * @param ComponentEntity $componentEntity
+	 * @return ComponentEntity
+	 */
+	public function update($componentEntity)
+	{
+		$this->componentExists($componentEntity, $componentEntity->id);
 		
 		return $componentEntity;
 	}
@@ -75,6 +90,36 @@ class ComponentRepository extends \Wame\Core\Repositories\BaseRepository
 	{
 		$entity = $this->get($criteria);
 		$entity->status = $status;
+	}
+	
+	
+	/**
+	 * Check component exists
+	 * 
+	 * @param ComponentEntity $componentEntity
+	 * @param mixed $without - without component ids
+	 * @return mixed
+	 * @throws \Wame\Core\Exception\RepositoryException
+	 */
+	public function componentExists($componentEntity, $without = null)
+	{
+		$criteria = ['name' => $componentEntity->name, 'status !=' => self::STATUS_REMOVE];
+		
+		if ($without) {
+			if (!is_array($without)) {
+				$without = [$without];
+			}
+			
+			$criteria['id NOT IN'] = $without;
+		}
+		
+		$component = $this->get($criteria);
+		
+		if ($component) {
+			throw new \Wame\Core\Exception\RepositoryException(_('Component with this name already exists.'));
+		} else {
+			return null;
+		}
 	}
 	
 }

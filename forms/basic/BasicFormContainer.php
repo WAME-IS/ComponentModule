@@ -33,18 +33,12 @@ class BasicFormContainer extends BaseFormContainer
     }
 	
 	
-//	public function setDefaultValues($object)
-//	{
-//		$form = $this->getForm();
-//		
-//		$address = $this->addressRepository->get(['user' => $object->id]);
-//
-//		if ($address) {
-//			$form['street']->setDefaultValue($address->street);
-//			$form['houseNumber']->setDefaultValue($address->houseNumber);
-//			$form['zipCode']->setDefaultValue($address->zipCode);
-//			$form['city']->setDefaultValue($address->city);
-//		}
-//	}
+	public function setDefaultValues($object)
+	{
+		$form = $this->getForm();
+
+		$form['title']->setDefaultValue($object->componentEntity->langs[$object->lang]->title);
+		$form['description']->setDefaultValue($object->componentEntity->langs[$object->lang]->description);
+	}
 	
 }
