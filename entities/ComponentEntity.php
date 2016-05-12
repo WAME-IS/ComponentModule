@@ -46,6 +46,11 @@ class ComponentEntity extends \Wame\Core\Entities\BaseEntity
 		return $this->type;
 	}
 	
+	public function getCacheTag()
+	{
+		return $this->type . '/' . $this->id . '_' . $this->name;
+	}
+	
 
 	/** set ************************************************************/
 	
