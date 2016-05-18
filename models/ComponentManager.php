@@ -2,9 +2,10 @@
 
 namespace Wame\ComponentModule\Models;
 
+use Wame\MenuModule\Models\IMenuProvider;
 use Wame\MenuModule\Models\ItemSorter;
 
-class ComponentManager
+class ComponentManager implements IMenuProvider
 {	
 	/** @var array */
 	public $components = [];
