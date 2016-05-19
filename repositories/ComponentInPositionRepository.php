@@ -23,10 +23,16 @@ class ComponentInPositionRepository extends \Wame\Core\Repositories\BaseReposito
 	 */
 	public function create($componentInPositionEntity)
 	{
-		$create = $this->entityManager->persist($componentInPositionEntity);
-		
-		if (!$create) {
-			throw new \Wame\Core\Exception\RepositoryException(_('Component failed to include positions.'));
+		$find = $this->countBy(['component.id' => $componentInPositionEntity->component->id, 'position.id' => $componentInPositionEntity->position->id]);
+
+		if ($find > 0) {
+			throw new \Wame\Core\Exception\RepositoryException(_('This component is already in this position.'));
+		} else {
+			$create = $this->entityManager->persist($componentInPositionEntity);
+
+			if (!$create) {
+				throw new \Wame\Core\Exception\RepositoryException(_('Component failed to include positions.'));
+			}
 		}
 		
 		return $componentInPositionEntity;
@@ -34,15 +40,14 @@ class ComponentInPositionRepository extends \Wame\Core\Repositories\BaseReposito
 	
 	
 	/**
-	 * Delete component in position by criteria
+	 * Update component in position
 	 * 
-	 * @param array $criteria
+	 * @param ComponentInPositionEntity $componentInPositionEntity
+	 * @return ComponentInPositionEntity
 	 */
-	public function delete($criteria)
+	public function update($componentInPositionEntity)
 	{
-		$componentInPositionEntity = $this->find($criteria);
-		
-		$this->remove($componentInPositionEntity);
+		return $componentInPositionEntity;
 	}
 	
 	

@@ -1,0 +1,28 @@
+{if count($componentPositionList) == 0}
+	<div class="alert alert-info">
+		<span class="fa fa-info-circle"></span>
+		{_'This component is not added in any position'}
+	</div>
+{else}
+	<h4>{_'This component is use also'}:</h4>
+	
+	<div class="list-group">
+		<a n:foreach="$componentPositionList as $componentPosition" class="list-group-item" href="{plink Component:position, 'id' => $componentPosition->id}">
+			{var $position = $componentPosition->position}
+			
+			<h4 class="list-group-item-heading">
+				{$position->langs[$lang]->title}
+				<small>[{$position->name}]</small>
+			</h4>
+			
+			<small n:if="$position->langs[$lang]->description" class="list-group-item-text">
+				{$position->langs[$lang]->description}
+			</small>
+		</a>
+	</div>
+{/if}
+
+<a class="btn btn-success" href="{plink Component:addToPosition}">
+	<span class="fa fa-plus"></span>
+	{_'Add to position'}
+</a>
