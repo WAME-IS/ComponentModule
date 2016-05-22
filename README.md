@@ -9,7 +9,7 @@ alebo v prípade rozšírovania modulov
 
 Komponentu môžeme vytvoriť niekoľkými spôsobmi
 
-### 1. Cez factory (továrničku)
+## 1. Cez factory (továrničku)
 Vo factory zaregistrujeme všetky závislosti do `__construct()`
 a vo funkcii `create()` ich predáme do danej komponenty
 
@@ -102,7 +102,7 @@ class TextBlockControl extends BaseControl
 }
 ```
 
-### 2. Cez interface
+## 2. Cez interface
 * výhodou interface je že si všetky závisloti dokáže zaregistrovať sám
 * je kratší takže ho môžeme zapísať rovno do súboru pre komponentu
 * v interface je povinná metóda `create()` ktorej nastavíme `@return` na danú komponentu cez anotáciu
@@ -159,7 +159,7 @@ class TextBlockControl extends BaseControl
 }
 ```
 
-### Template
+## Template
 * defaultná šablóna `default.latte`
 * šablónu môžeme zmeniť cez metódu `setTemplateFile()` 
 pri vytváraní componenty cez `createComponent()`
@@ -180,7 +180,7 @@ do `$this->template`
 {$text|noescape}
 ```
 
-### Config
+## Config
 do configu zaregistrujeme service
 
 *vendor/wame/TextBlockModule/config/**config.textBlock.neon***
@@ -200,8 +200,118 @@ services:
 
 vtedy môžeme cez `setup` spúšťať funkcie napr. z iných modulov, pluginov
 
+## Componentu pridáme do zoznamu komponent v administrácii
 
-### Registrácia do ComponentManager
+Komponenta implementuje interface `Wame\ComponentModule\Models\IComponent`
+kde sú definované všetky potrbné funkcie pre vytvorenie komponenty
+
+* `addItem()` - vytvorí položku do zoznamu
+* `getName()` - názov komponenty ktorý sa použije na identifikáciu komponenty v databáze atď. zapisujeme v camelCase
+* `getTitle()` - názov komponenty zapísaný cez translator
+* `getDescription()` - popis komponenty zapísaný cez translator
+* `getIcon()` - CSS class zápisu ikonky *FontAwesome, Glyphicon...*
+* `getLinkCreate()` - odkaz na vytvorenie komponenty (využijeme `Nette\Application\LinkGenerator`)
+* `getLinkDetail()` - odkaz na detail komponenty (využijeme `Nette\Application\LinkGenerator`) predávasa `$componentEntity`
+* `createComponent()` - funkcia na vytvorenie komponenty predáva sa `$componentInPosition`
+
+
+*vendor/wame/TextBlockModule/vendor/wame/ComponentModule/components/**TextBlockComponent.php***
+```
+<?php
+
+namespace Wame\TextBlockModule\Vendor\Wame\ComponentModule;
+
+use Nette\Application\LinkGenerator;
+use Wame\ComponentModule\Models\IComponent;
+use Wame\MenuModule\Models\Item;
+use Wame\TextBlockModule\Components\ITextBlockControlFactory;
+
+interface ITextBlockComponentFactory
+{
+	/** @return TextBlockComponent */
+	public function create();	
+}
+
+
+class TextBlockComponent implements IComponent
+{	
+	/** @var LinkGenerator */
+	private $linkGenerator;
+
+	/** @var ITextBlockControlFactory */
+	private $ITextBlockControlFactory;
+
+	
+	public function __construct(
+		LinkGenerator $linkGenerator,
+		ITextBlockControlFactory $ITextBlockControlFactory
+	) {
+		$this->linkGenerator = $linkGenerator;
+		$this->ITextBlockControlFactory = $ITextBlockControlFactory;
+	}
+	
+	
+	public function addItem()
+	{
+		$item = new Item();
+		$item->setName($this->getName());
+		$item->setTitle($this->getTitle());
+		$item->setDescription($this->getDescription());
+		$item->setLink($this->getLinkCreate());
+		$item->setIcon($this->getIcon());
+		
+		return $item->getItem();
+	}
+	
+	
+	public function getName()
+	{
+		return 'textBlock';
+	}
+	
+	
+	public function getTitle()
+	{
+		return _('Text block');
+	}
+	
+	
+	public function getDescription()
+	{
+		return _('Create text block');
+	}
+	
+	
+	public function getIcon()
+	{
+		return 'fa fa-list-alt';
+	}
+	
+	
+	public function getLinkCreate()
+	{
+		return $this->linkGenerator->link('Admin:TextBlock:create');
+	}
+
+	
+	public function getLinkDetail($componentEntity)
+	{
+		return $this->linkGenerator->link('Admin:TextBlock:edit', ['id' => $componentEntity->id]);
+	}
+	
+	
+	public function createComponent($componentInPosition)
+	{
+		$control = $this->ITextBlockControlFactory->create();
+		$control->setComponentInPosition($componentInPosition);
+		
+		return $control;
+	}
+	
+}
+```
+
+## Registrácia do ComponentManager
 
 *vendor/wame/TextBlockModule/vendor/wame/ComponentModule/config/**config.textBlock.component.neon***
 ```
