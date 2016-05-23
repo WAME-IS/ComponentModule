@@ -341,7 +341,7 @@ kde sú definované všetky potrbné funkcie pre vytvorenie položky menu
 ```
 <?php
 
-namespace Wame\ArticleModule\Vendor\Wame\MenuModule\Components\MenuManager\Forms;
+namespace Wame\ArticleModule\Vendor\Wame\MenuModule\Components\MenuManager;
 
 use Nette\Application\LinkGenerator;
 use Wame\MenuModule\Models\Item;
@@ -428,5 +428,146 @@ class ArticleMenuItem implements IMenuItem
 	}
 	
 }
+```
+
+položku menu predáme do `MenuManager` cez config
+
+*vendor/wame/ArticleModule/vendor/wame/MenuModule/config/**config.article.menu.neon***
+
+```
+services:
+	MenuManager:
+		setup:
+			- addMenuItemType(Wame\ArticleModule\Vendor\Wame\MenuModule\Components\MenuManager\ArticleMenuItem(), 'article')
+```
+
+## Formulár pre vytvorenie položky menu
+základný formulár *vendor/wame/MenuModule/forms/**MenuItemForm.php*** obsahuje základný formulár s nadradenou položkou, CSS class, ikonka a zobrazovanie len prihláseným, len odhláseným alebo všetkým.
+
+My tento formulár rozšírime len o polia ktoré potrebujeme pre danú položku menu.
+extendujeme `Wame\DynamicObject\Forms\BaseFormContainer`
+kde sú definované funkcie ktoré sú potrebné pre vytvorenie položky menu
+* `render()` - môžeme nastaviť template ak by sme jednotlivé containery formulára vykresľovali ručne
+* `configure()` - zadefinujeme formulárové prvky (formulár si vyžiadame cez `$this->getForm()`)
+* `setDefaultValues()` - ak potrebujeme prvkom nastaviť defaultné hodnoty tak využijeme túto metódu kde sú prístupné všetky parametre z hlavného formulára 
+(formulár si vyžiadame cez `$this->getForm()` a parametre sa nachádzajú v prvom parametri `$object`)
+
+*vendor/wame/ArticleModule/vendor/wame/MenuModule/components/MenuManager/forms/article/**ArticleFormContainer.php***
+
+```
+<?php
+
+namespace Wame\ArticleModule\Vendor\Wame\MenuModule\Components\MenuManager\Forms;
+
+use Wame\DynamicObject\Forms\BaseFormContainer;
+
+interface IArticleFormContainerFactory
+{
+	/** @return ArticleFormContainer */
+	public function create();
+}
+
+
+class ArticleFormContainer extends BaseFormContainer
+{
+    public function render() 
+	{
+        $this->template->_form = $this->getForm();
+        $this->template->render(__DIR__ . '/default.latte');
+    }
+
+	
+    public function configure() 
+	{
+		$form = $this->getForm();
+
+		$form->addAutocomplete('value', _('Article'), '/api/v1/article-search', [
+			'columns' => ['langs.title'],
+			'select' => 'a.id, langs.title'
+		]);
+		
+		$form->addText('alternative_title', _('Alternative title'));
+    }
+	
+	
+	public function setDefaultValues($object)
+	{
+		$form = $this->getForm();
+
+		$form['value']->setDefaultValue($object->menuEntity->value);
+		$form['alternative_title']->setDefaultValue($object->menuEntity->langs[$object->lang]->alternativeTitle);
+	}
+
+}
+```
+
+### Šablóna formulárového kontainera
+Základná šablóna sa volá `default.latte` a nachádza sa hneď pri formulárovom kontaineri
+
+*vendor/wame/ArticleModule/vendor/wame/MenuModule/components/MenuManager/forms/article/**default.latte***
+
+### Vytvorenie formulára
+Formulár vytvoríme v prezentri
+
+* injectneme si `Wame\MenuModule\Forms\MenuItemForm`
+* formuláru nastavíme action (je to názov formulára)
+je to kôli správnemu presmerovaniu po odoslaní formulára kedy sa strácali ďalšie parametre z URL
+* nastavíme typ položky ktorý sa uloží do databázy
+* predáme ID ak by sa jednalo o úpravu položky
+* a pridáme všetky dodatočné formulárove kontainery
+
+*vendor/wame/ArticleModule/vendor/wame/AdminModule/presenters/**ArticlePresenter.php***
+
+```
+<?php
+
+namespace App\AdminModule\Presenters;
+
+use Wame\MenuModule\Forms\MenuItemForm;
+
+class ArticlePresenter extends \App\AdminModule\Presenters\BasePresenter
+{
+	/** @var MenuItemForm @inject */
+	public $menuItemForm;
+
+    /**
+	 * Menu item form
+	 * 
+	 * @return MenuItemForm
+	 */
+	protected function createComponentArticleMenuItemForm()
+	{
+		$form = $this->menuItemForm
+						->setActionForm('articleMenuItemForm')
+						->setType('article')
+						->setId($this->id)
+						->addFormContainer(new \Wame\ArticleModule\Vendor\Wame\MenuModule\Components\MenuManager\Forms\ArticleFormContainer(), 'ArticleFormContainer', 50)
+						->build();
+
+		return $form;
+	}
+    
+	public function renderMenuItem()
+	{
+		if ($this->id) {
+			$this->template->siteTitle = _('Edit article item in menu');
+		} else {
+			$this->template->siteTitle = _('Add article item to menu');
+		}
+	}
+```
+
+### Zavolanie formulára v template
+Formulár zavoláme ako komponentu to nám zaručí že sa formulár celý vygeneruje sám.
+
+*vendor/wame/ArticleModule/vendor/wame/AdminModule/presenters/templates/Article/**menuItem.latte***
+
+```
+{block content}
+	<div class="page-header">
+		<h1>{$siteTitle}</h1>
+	</div>
+	
+	{control articleMenuItemForm}
 ```
 
