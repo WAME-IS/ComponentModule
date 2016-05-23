@@ -320,3 +320,113 @@ services:
 		setup:
 			- addComponent(Wame\TextBlockModule\Vendor\Wame\ComponentModule\TextBlockComponent())
 ```
+
+## Registrácia do MenuManager
+Keď chceme komponentu pridať ako položku menu tak ju zaregistrujeme do MenuManager
+
+Implementuje interface `Wame\MenuModule\Models\DatabaseMenuProvider\IMenuItem`
+kde sú definované všetky potrbné funkcie pre vytvorenie položky menu
+
+* `addItem()` - vytvorí položku do zoznamu
+* `getName()` - názov komponenty ktorý sa použije na identifikáciu komponenty v databáze atď. zapisujeme v camelCase
+* `getTitle()` - názov komponenty zapísaný cez translator
+* `getDescription()` - popis komponenty zapísaný cez translator
+* `getIcon()` - CSS class zápisu ikonky *FontAwesome, Glyphicon...*
+* `getLinkCreate()` - odkaz na vytvorenie komponenty (využijeme `Nette\Application\LinkGenerator`) predáva sa `$menuId`
+* `getLinkUpdate()` - odkaz na detail komponenty (využijeme `Nette\Application\LinkGenerator`) predáva sa `$menuEntity`
+* `getLink()` - odkaz kam bude smerovať po kliknutí na položku menu (využijeme `Nette\Application\LinkGenerator`) predáva sa `$menuEntity`
+
+*vendor/wame/ArticleModule/vendor/wame/MenuModule/components/MenuControl/MenuManager/**ArticleMenuItem.php***
+
+```
+<?php
+
+namespace Wame\ArticleModule\Vendor\Wame\MenuModule\Components\MenuManager\Forms;
+
+use Nette\Application\LinkGenerator;
+use Wame\MenuModule\Models\Item;
+use Wame\MenuModule\Models\DatabaseMenuProvider\IMenuItem;
+use Wame\MenuModule\Repositories\MenuRepository;
+
+interface IArticleMenuItem
+{
+	/** @return ArticleMenuItem */
+	public function create();
+}
+
+
+class ArticleMenuItem implements IMenuItem
+{	
+    /** @var LinkGenerator */
+	private $linkGenerator;
+	
+    /** @var string */
+	private $lang;
+	
+	
+	public function __construct(
+		LinkGenerator $linkGenerator,
+		MenuRepository $menuRepository
+	) {
+		$this->linkGenerator = $linkGenerator;
+		$this->lang = $menuRepository->lang;
+	}
+
+	
+	public function addItem()
+	{
+		$item = new Item();
+		$item->setName($this->getName());
+		$item->setTitle($this->getTitle());
+		$item->setDescription($this->getDescription());
+		$item->setLink($this->getLinkCreate());
+		$item->setIcon($this->getIcon());
+		
+		return $item->getItem();
+	}
+
+	
+	public function getName()
+	{
+		return 'article';
+	}
+	
+	
+	public function getTitle()
+	{
+		return _('Article');
+	}
+	
+	
+	public function getDescription()
+	{
+		return _('Insert link to the article');
+	}
+	
+	
+	public function getIcon()
+	{
+		return 'fa fa-file-text';
+	}
+	
+	
+	public function getLinkCreate($menuId = null)
+	{
+		return $this->linkGenerator->link('Admin:Article:menuItem', ['m' => $menuId]);
+	}
+	
+	
+	public function getLinkUpdate($menuEntity)
+	{
+		return $this->linkGenerator->link('Admin:Article:menuItem', ['id' => $menuEntity->id, 'm' => $menuEntity->component->id]);
+	}
+	
+	
+	public function getLink($menuEntity)
+	{
+		return $this->linkGenerator->link('Article:Article:show', ['id' => $menuEntity->langs[$this->lang]->slug, 'lang' => $this->lang]);
+	}
+	
+}
+```
+
