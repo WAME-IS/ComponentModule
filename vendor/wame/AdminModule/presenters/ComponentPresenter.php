@@ -61,7 +61,7 @@ class ComponentPresenter extends \App\AdminModule\Presenters\BasePresenter
 			$this->redirect(':Admin:Dashboard:');
 		}
 		
-		$this->components = $this->componentRepository->find(['status !=' => ComponentRepository::STATUS_REMOVE]);
+		$this->components = $this->componentRepository->find(['status !=' => ComponentRepository::STATUS_REMOVE, 'inList' => ComponentRepository::SHOW_IN_LIST]);
 	}
 	
 	
