@@ -27,7 +27,7 @@
 					</thead>
 
 					<tbody>
-						<tr n:foreach="$components as $component">
+						<tr n:foreach="$components as $component" n:if="isset($componentManager[$component->type])">
 							<td>
 								{$component->id}
 							</td>
