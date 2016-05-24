@@ -37,7 +37,7 @@ class ComponentInPositionEntity extends \Wame\Core\Entities\BaseEntity
 
 	public function getComponentInPositionName()
 	{
-		return $this->position->name . '_' . $this->component->type . '_' . $this->component->name . '_' . $this->component->id;
+		return $this->position->name . '_' . $this->component->getComponentName();
 	}
 	
 	public function getComponent()
