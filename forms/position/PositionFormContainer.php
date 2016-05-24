@@ -41,7 +41,7 @@ class PositionFormContainer extends BaseFormContainer
 		if ($componentInPositionEntity->component->getParameter('template')) {
 			$componentTemplate = $componentInPositionEntity->component->getParameter('template');
 		} else {
-			$componentTemplate = \App\Core\Components\BaseControl::DEFAULT_TEMPLATE;
+			$componentTemplate = \Wame\Core\Components\BaseControl::DEFAULT_TEMPLATE;
 		}
 		
 		$form['template']->setAttribute('placeholder', $componentTemplate);

@@ -4,7 +4,7 @@ namespace Wame\ComponentModule\Components;
 
 use Nette\Application\IRouter;
 use Nette\Http\Request;
-use App\AdminModule\Components\BaseControl;
+use Wame\AdminModule\Components\BaseControl;
 use Wame\ComponentModule\Repositories\ComponentRepository;
 use Wame\ComponentModule\Repositories\ComponentInPositionRepository;
 
