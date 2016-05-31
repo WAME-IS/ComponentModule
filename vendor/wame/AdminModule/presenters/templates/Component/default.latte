@@ -18,6 +18,7 @@
 					<thead>
 						<tr>
 							<th>#</th>
+							<th>{_'Type'}</th>
 							<th>{_'Title'}</th>
 							<th>{_'Name'}</th>
 							<th>{_'Status'}</th>
@@ -26,13 +27,17 @@
 					</thead>
 
 					<tbody>
-						<tr n:foreach="$components as $component">
+						<tr n:foreach="$components as $component" n:if="isset($componentManager[$component->type])">
 							<td>
 								{$component->id}
 							</td>
+							
+							<td>
+								<span class="{$componentManager[$component->type]->getIcon()}" title="{$componentManager[$component->type]->getTitle()}"></span>
+							</td>
 
 							<td>
-								<div><a href="{$componentManager[$component->type]->getLink($component)}">{$component->langs[$lang]->title}</a></div>
+								<div><a href="{$componentManager[$component->type]->getLinkDetail($component)}">{$component->langs[$lang]->title}</a></div>
 								<small n:if="$component->langs[$lang]->description" class="text-muted">{$component->langs[$lang]->description}</small>
 							</td>
 
@@ -49,7 +54,7 @@
 							</td>
 
 							<td class="text-right">
-								<a class="btn btn-sm btn-warning" href="{$componentManager[$component->type]->getLink($component)}"><span class="fa fa-edit"></span></a>
+								<a class="btn btn-sm btn-warning" href="{$componentManager[$component->type]->getLinkDetail($component)}"><span class="fa fa-edit"></span></a>
 								<a class="btn btn-sm btn-danger" n:href=":Admin:Component:delete, 'id' => $component->id"><span class="fa fa-trash-o"></span></a>
 							</td>
 						</tr>

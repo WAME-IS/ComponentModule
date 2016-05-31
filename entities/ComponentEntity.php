@@ -33,6 +33,11 @@ class ComponentEntity extends \Wame\Core\Entities\BaseEntity
 	 */
 	protected $type;
 	
+	/**
+	 * @ORM\Column(name="in_list", type="integer", nullable=false)
+	 */
+	protected $inList = 1;
+	
 	
 	/** get ************************************************************/
 	
@@ -46,11 +51,20 @@ class ComponentEntity extends \Wame\Core\Entities\BaseEntity
 		return $this->type;
 	}
 	
+	public function getInList()
+	{
+		return $this->inList;
+	}
+	
+	public function getComponentName()
+	{
+		return $this->type . '_' . $this->name . '_' . $this->id;
+	}	
+	
 	public function getCacheTag()
 	{
 		return $this->type . '/' . $this->id . '_' . $this->name;
-	}
-	
+	}	
 
 	/** set ************************************************************/
 	
@@ -64,6 +78,13 @@ class ComponentEntity extends \Wame\Core\Entities\BaseEntity
 	public function setType($type)
 	{
 		$this->type = $type;
+		
+		return $this;
+	}
+	
+	public function setInList($inList)
+	{
+		$this->inList = $inList;
 		
 		return $this;
 	}

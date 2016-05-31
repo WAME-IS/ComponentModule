@@ -13,11 +13,36 @@ interface IComponent
 	public function addItem();
 	
 	/**
-	 * Get link to component detail
+	 * Component name
+	 */
+	public function getName();
+	
+	/**
+	 * Component title
+	 */
+	public function getTitle();
+	
+	/**
+	 * Component description
+	 */
+	public function getDescription();
+	
+	/**
+	 * Component icon
+	 */
+	public function getIcon();
+	
+	/**
+	 * Link to create component [admin]
+	 */
+	public function getLinkCreate();
+	
+	/**
+	 * Get link to component detail [admin]
 	 * 
 	 * @param ComponentEntity $componentEntity
 	 */
-	public function getLink($componentEntity);
+	public function getLinkDetail($componentEntity);
 	
 	/**
 	 * Register component

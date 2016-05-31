@@ -37,7 +37,17 @@ class ComponentInPositionEntity extends \Wame\Core\Entities\BaseEntity
 
 	public function getComponentInPositionName()
 	{
-		return $this->position->name . '_' . $this->component->type . '_' . $this->component->name . '_' . $this->component->id;
+		return $this->position->name . '_' . $this->component->getComponentName();
+	}
+	
+	public function getComponent()
+	{
+		return $this->component;
+	}
+	
+	public function getPosition()
+	{
+		return $this->position;
 	}
 	
 	public function getSort()
@@ -47,6 +57,20 @@ class ComponentInPositionEntity extends \Wame\Core\Entities\BaseEntity
 	
 	
 	/** set ************************************************************/
+
+	public function setComponent($component)
+	{
+		$this->component = $component;
+		
+		return $this;
+	}
+	
+	public function setPosition($position)
+	{
+		$this->position = $position;
+		
+		return $this;
+	}
 
 	public function setSort($sort)
 	{
