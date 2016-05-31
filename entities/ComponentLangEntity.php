@@ -16,6 +16,7 @@ class ComponentLangEntity extends \Wame\Core\Entities\BaseEntity
 	use Columns\Title;
 	use Columns\Description;
 	use Columns\EditDate;
+	use Columns\EditUser;
 
 	/**
      * @ORM\ManyToOne(targetEntity="ComponentEntity", inversedBy="langs")

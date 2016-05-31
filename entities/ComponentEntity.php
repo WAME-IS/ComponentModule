@@ -14,6 +14,7 @@ class ComponentEntity extends \Wame\Core\Entities\BaseEntity
 {
 	use Columns\Identifier;
 	use Columns\CreateDate;
+	use Columns\CreateUser;
 	use Columns\Parameters;
 	use Columns\Status;
 	
