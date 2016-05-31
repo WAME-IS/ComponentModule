@@ -34,7 +34,7 @@ class ComponentForm extends FormFactory
 	public $componentEntity;
 	
 	/** @var ComponentRepository */
-	public $componentRepository;
+	private $componentRepository;
 	
 	/** @var string */
 	public $lang;

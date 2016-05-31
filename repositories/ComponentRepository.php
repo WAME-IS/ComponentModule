@@ -10,9 +10,6 @@ class ComponentRepository extends \Wame\Core\Repositories\BaseRepository
 	const STATUS_ENABLED = 1;
 	const STATUS_DISABLED = 2;
 	
-	const HIDE_IN_LIST = 0;
-	const SHOW_IN_LIST = 1;
-	
 	
 	public function __construct(\Nette\DI\Container $container, \Kdyby\Doctrine\EntityManager $entityManager, \h4kuna\Gettext\GettextSetup $translator, \Nette\Security\User $user, $entityName = null) {
 		parent::__construct($container, $entityManager, $translator, $user, ComponentEntity::class);

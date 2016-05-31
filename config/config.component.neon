@@ -11,10 +11,7 @@ services:
 			- addResourceAction('component', 'delete')
 			- allow('admin', 'component', 'delete')
 
-
 	- Wame\ComponentModule\Vendor\Wame\MenuModule\Components\ComponentMenu\ItemTemplate
-	- Wame\ComponentModule\Components\IComponentPositionListControlFactory
-
 
 	# Entities
 	- Wame\ComponentModule\Entities\ComponentEntity
@@ -36,16 +33,6 @@ services:
 		setup:
 			- addFormContainer(Wame\ComponentModule\Forms\BasicFormContainer(), 'BasicFormContainer', 100)
 			- addFormContainer(Wame\ComponentModule\Forms\AdvancedFormContainer(), 'AdvancedFormContainer', 50)
-
-
-	ComponentPositionForm:
-		class: Wame\ComponentModule\Forms\ComponentPositionForm
-		setup:
-			- addFormContainer(Wame\ComponentModule\Forms\PositionFormContainer(), 'PositionFormContainer', 100)
-
-
-	ComponentAddToPositionForm:
-		class: Wame\ComponentModule\Forms\ComponentAddToPositionForm
 
 
 doctrine:
