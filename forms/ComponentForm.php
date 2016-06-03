@@ -67,7 +67,7 @@ class ComponentForm extends FormFactory
 		$form = $this->createForm();
 
 		if ($this->id) {
-			$form->addSubmit('submit', _('Update'));
+			$form->addSubmit('submit', _('Save'));
 		} else {
 			$form->addSubmit('submit', _('Create'));
 		}
