@@ -57,7 +57,7 @@ class ComponentPresenter extends \App\AdminModule\Presenters\BasePresenter
 	public function actionDefault()
 	{
 		if (!$this->user->isAllowed('component', 'view')) {
-			$this->flashMessage(_('To enter this section you do not have have enough privileges.'), 'danger');
+			$this->flashMessage(_('To enter this section you do not have enough privileges.'), 'danger');
 			$this->redirect(':Admin:Dashboard:');
 		}
 		
@@ -68,7 +68,7 @@ class ComponentPresenter extends \App\AdminModule\Presenters\BasePresenter
 	public function actionPosition()
 	{
 		if (!$this->user->isAllowed('position', 'update')) {
-			$this->flashMessage(_('To enter this section you do not have have enough privileges.'), 'danger');
+			$this->flashMessage(_('To enter this section you do not have enough privileges.'), 'danger');
 			$this->redirect(':Admin:Dashboard:', ['id' => null]);
 		}
 		
@@ -99,7 +99,7 @@ class ComponentPresenter extends \App\AdminModule\Presenters\BasePresenter
 	public function actionAddToPosition()
 	{
 		if (!$this->user->isAllowed('position', 'create')) {
-			$this->flashMessage(_('To enter this section you do not have have enough privileges.'), 'danger');
+			$this->flashMessage(_('To enter this section you do not have enough privileges.'), 'danger');
 			$this->redirect(':Admin:Dashboard:', ['id' => null]);
 		}
 		
