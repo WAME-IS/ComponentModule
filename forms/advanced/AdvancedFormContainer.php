@@ -4,6 +4,7 @@ namespace Wame\ComponentModule\Forms;
 
 use Wame\DynamicObject\Forms\BaseFormContainer;
 
+
 interface IAdvancedFormContainerFactory
 {
 	/** @return BasicFormContainer */
@@ -13,13 +14,6 @@ interface IAdvancedFormContainerFactory
 
 class AdvancedFormContainer extends BaseFormContainer
 {
-    public function render() 
-	{
-        $this->template->_form = $this->getForm();
-        $this->template->render(__DIR__ . '/default.latte');
-    }
-
-	
     protected function configure() 
 	{		
 		$form = $this->getForm();
@@ -36,8 +30,8 @@ class AdvancedFormContainer extends BaseFormContainer
         $form->addText('cache', _('Cache'))
 				->setDefaultValue(0);		
     }
-	
-	
+
+
 	public function setDefaultValues($object)
 	{
 		$form = $this->getForm();
@@ -58,5 +52,5 @@ class AdvancedFormContainer extends BaseFormContainer
 			$form['cache']->setDefaultValue($componentEntity->getParameter('cache'));
 		}
 	}
-	
+
 }

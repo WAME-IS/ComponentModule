@@ -4,6 +4,7 @@ namespace Wame\ComponentModule\Forms;
 
 use Wame\DynamicObject\Forms\BaseFormContainer;
 
+
 interface IBasicFormContainerFactory
 {
 	/** @return AdvancedFormContainer */
@@ -12,14 +13,7 @@ interface IBasicFormContainerFactory
 
 
 class BasicFormContainer extends BaseFormContainer
-{	
-    public function render() 
-	{
-        $this->template->_form = $this->getForm();
-        $this->template->render(__DIR__ . '/default.latte');
-    }
-
-	
+{
     protected function configure() 
 	{		
 		$form = $this->getForm();
@@ -31,8 +25,8 @@ class BasicFormContainer extends BaseFormContainer
 		
         $form->addTextArea('description', _('Description'));		
     }
-	
-	
+
+
 	public function setDefaultValues($object)
 	{
 		$form = $this->getForm();
@@ -40,5 +34,5 @@ class BasicFormContainer extends BaseFormContainer
 		$form['title']->setDefaultValue($object->componentEntity->langs[$object->lang]->title);
 		$form['description']->setDefaultValue($object->componentEntity->langs[$object->lang]->description);
 	}
-	
+
 }

@@ -4,6 +4,7 @@ namespace Wame\ComponentModule\Forms;
 
 use Wame\DynamicObject\Forms\BaseFormContainer;
 
+
 interface IPositionFormContainerFactory
 {
 	/** @return PositionFormContainer */
@@ -13,13 +14,6 @@ interface IPositionFormContainerFactory
 
 class PositionFormContainer extends BaseFormContainer
 {
-    public function render() 
-	{
-        $this->template->_form = $this->getForm();
-        $this->template->render(__DIR__ . '/default.latte');
-    }
-
-	
     protected function configure() 
 	{		
 		$form = $this->getForm();
@@ -30,8 +24,8 @@ class PositionFormContainer extends BaseFormContainer
 		
         $form->addText('cache', _('Cache'));		
     }
-	
-	
+
+
 	public function setDefaultValues($object)
 	{
 		$form = $this->getForm();
@@ -62,5 +56,5 @@ class PositionFormContainer extends BaseFormContainer
 			$form['cache']->setDefaultValue($componentInPositionEntity->getParameter('cache'));
 		}
 	}
-	
+
 }
