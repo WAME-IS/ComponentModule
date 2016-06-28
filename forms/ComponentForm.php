@@ -129,7 +129,7 @@ class ComponentForm extends FormFactory
 		$componentEntity->setType($this->getType());
 		$componentEntity->setName($this->getComponentName($values));
 		$componentEntity->setParameters($this->getParams($values));
-		$componentEntity->setCreateDate($this->formatDate('now'));
+		$componentEntity->setCreateDate(\Wame\Utils\Date::toDateTime('now'));
 		$componentEntity->setCreateUser($this->userEntity);
 		$componentEntity->setStatus(ComponentRepository::STATUS_ENABLED);
 		
@@ -138,7 +138,7 @@ class ComponentForm extends FormFactory
 		$componentLangEntity->setLang($this->lang);
 		$componentLangEntity->setTitle($values['title']);
 		$componentLangEntity->setDescription($values['description']);
-		$componentLangEntity->setEditDate($this->formatDate('now'));
+		$componentLangEntity->setEditDate(\Wame\Utils\Date::toDateTime('now'));
 		$componentLangEntity->setEditUser($this->userEntity);
 		
 		$componentEntity->addLang($this->lang, $componentLangEntity);
@@ -161,7 +161,7 @@ class ComponentForm extends FormFactory
 		$componentLangEntity = $componentEntity->langs[$this->lang];
 		$componentLangEntity->setTitle($values['title']);
 		$componentLangEntity->setDescription($values['description']);
-		$componentLangEntity->setEditDate($this->formatDate('now'));
+		$componentLangEntity->setEditDate(\Wame\Utils\Date::toDateTime('now'));
 		$componentLangEntity->setEditUser($this->userEntity);
 		
 		return $this->componentRepository->update($componentEntity);

@@ -10,7 +10,7 @@ use Wame\Utils\Strings;
  * @ORM\Table(name="wame_component")
  * @ORM\Entity
  */
-class ComponentEntity extends \Wame\Core\Entities\BaseEntity 
+class ComponentEntity extends \Wame\Core\Entities\TranslatableEntity
 {
 	use Columns\Identifier;
 	use Columns\CreateDate;
