@@ -4,69 +4,67 @@ namespace Wame\ComponentModule\Models;
 
 use Wame\MenuModule\Models\IMenuProvider;
 use Wame\MenuModule\Models\ItemSorter;
+use Wame\Utils\Strings;
 
 class ComponentManager implements IMenuProvider
-{	
-	/** @var array */
-	public $components = [];
-	
-	/** @var array */
-	private $removeComponent = [];
-	
-	/** @var ItemSorter */
-	private $itemSorter;
-	
-	
-	public function __construct(ItemSorter $itemSorter) 
-	{
-		$this->itemSorter = $itemSorter;
-	}
-	
-	
-	/**
-	 * Add component
-	 * 
-	 * @param object $component
-	 * @return \Wame\ComponentModule\Models\ComponentManager
-	 */
-	public function addComponent($component)
-	{
-		$name = $this->getClassName($component);
+{
 
-		$this->components[$name] = $component;
-		
-		return $this;
-	}
-	
-	/**
-	 * Add component to remove list
-	 * 
-	 * @param object $component
-	 * @return \Wame\ComponentModule\Models\ComponentManager
-	 */
-	public function removeComponent($component)
-	{
-		$name = $this->getClassName($component);
-		
-		$this->removeComponent[$name] = $name;
-		
-		return $this;
-	}
-	
-	
-	private function removeComponents()
-	{
-		$components = $this->components;
-		
-		foreach ($this->removeComponent as $component) {
-			if (array_key_exists($component, $components)) {
-				unset($components[$component]);
-			}
-		}
-		
-		return $components;
-	}
-	
+    /** @var array */
+    public $components = [];
+
+    /** @var array */
+    private $removeComponent = [];
+
+    /** @var ItemSorter */
+    private $itemSorter;
+
+    public function __construct(ItemSorter $itemSorter)
+    {
+        $this->itemSorter = $itemSorter;
+    }
+
+    /**
+     * Add component
+     * 
+     * @param object $component
+     * @return ComponentManager
+     */
+    public function addComponent($component)
+    {
+        $name = Strings::getClassName($component);
+
+        $this->components[$name] = $component;
+
+        return $this;
+    }
+
+    /**
+     * Add component to remove list
+     * 
+     * @param object $component
+     * @return ComponentManager
+     */
+    public function removeComponent($component)
+    {
+        $name = Strings::getClassName($component);
+
+        $this->removeComponent[$name] = $name;
+
+        return $this;
+    }
+
+    private function removeComponents()
+    {
+        $components = $this->components;
+
+        foreach ($this->removeComponent as $component) {
+            if (array_key_exists($component, $components)) {
+                unset($components[$component]);
+            }
+        }
+
+        return $components;
+    }
 
     /**
      * Get items from services
@@ -75,23 +73,8 @@ class ComponentManager implements IMenuProvider
      */
     public function getItems()
     {
-		$components = $this->removeComponents();
-				
+        $components = $this->removeComponents();
+
         return $this->itemSorter->sort($components);
     }
-	
-	
-	/**
-	 * Get class name from namespace
-	 * 
-	 * @param string $namespace
-	 * @return string
-	 */
-	public function getClassName($namespace)
-	{
-		$reflect = new \ReflectionClass($namespace);
-		
-		return $reflect->getShortName();
-	}
-
 }
