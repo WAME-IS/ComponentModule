@@ -5,9 +5,10 @@ namespace Wame\ComponentModule\Vendor\Wame\MenuModule\Components\ComponentMenu;
 use Nette\Application\IRouter;
 use Nette\Http\Request;
 use Nette\Utils\Html;
+use Nette\Http\Url;
 
 class ItemTemplate extends \Nette\Object
-{	
+{
 	/** @var integer */
 	private $positionId;
 	
@@ -39,14 +40,11 @@ class ItemTemplate extends \Nette\Object
 		} else {
 			$description = '';
 		}
+        
+        $url = new Url($item->link);
+        $url->appendQuery(['p' => $this->positionId]);
 		
-		if ($this->positionId) {
-			$position = '?p=' . $this->positionId;
-		} else {
-			$position = '';
-		}
-		
-		$button = Html::el('p')->setHtml(Html::el('a')->href($item->link . $position)->setClass('btn btn-success')->setHtml(
+		$button = Html::el('p')->setHtml(Html::el('a')->href($url)->setClass('btn btn-success')->setHtml(
 						Html::el('span')->setClass('fa fa-plus') . 
 						Html::el()->setText(' ' . _('Add component'))
 					));
