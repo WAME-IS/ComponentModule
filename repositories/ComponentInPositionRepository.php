@@ -9,6 +9,8 @@ class ComponentInPositionRepository extends \Wame\Core\Repositories\BaseReposito
 {
 	const STATUS_REMOVE = 0;
 	const STATUS_ACTIVE = 1;
+    
+    use \Wame\Core\Repositories\Traits\SortableRepositoryTrait;
 	
 	public function __construct(\Nette\DI\Container $container, \Kdyby\Doctrine\EntityManager $entityManager, \h4kuna\Gettext\GettextSetup $translator, \Nette\Security\User $user, $entityName = null) {
 		parent::__construct($container, $entityManager, $translator, $user, ComponentInPositionEntity::class);
