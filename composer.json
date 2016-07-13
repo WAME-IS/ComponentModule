@@ -1,19 +1,22 @@
 {
-	"name": "wame/ComponentModule",
-	"version": "0.0.1",
-	"description": "CMS WAME admin",
-	"homepage": "http://wame.sk/cms-wame-admin",
-	"authors": [
-		{
-			"name": "Wame",
-			"homepage": "http://wame.sk"
-		}
-	],
-	"require": {
-		"wame/Core": "*",
-		"wame/PositionModule": "*"
-	},
-	"autoload": {
-		"classmap": ["."]
-	}
+    "name": "wame\/ComponentModule",
+    "version": "0.0.1",
+    "description": "CMS WAME admin",
+    "homepage": "http:\/\/wame.sk\/cms-wame-admin",
+    "authors": [
+        {
+            "name": "Wame",
+            "homepage": "http:\/\/wame.sk"
+        }
+    ],
+    "require": {
+        "wame\/Core": "*",
+        "wame\/PositionModule": "*"
+    },
+    "autoload": {
+        "classmap": [
+            "."
+        ]
+    },
+    "type": "wame-module"
 }
