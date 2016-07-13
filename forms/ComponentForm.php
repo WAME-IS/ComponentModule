@@ -157,6 +157,7 @@ class ComponentForm extends FormFactory
 	{
 		$componentEntity = $this->componentRepository->get(['id' => $this->id]);
 		$componentEntity->setParameters($this->getParams($values));
+        $componentEntity->setName($this->getComponentName($values));
 		
 		$componentLangEntity = $componentEntity->langs[$this->lang];
 		$componentLangEntity->setTitle($values['title']);
