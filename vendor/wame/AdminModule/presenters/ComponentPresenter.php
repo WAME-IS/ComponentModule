@@ -3,15 +3,15 @@
 namespace App\AdminModule\Presenters;
 
 use Nette\Utils\Html;
-use Wame\ComponentModule\Models\ComponentManager;
+use Wame\ComponentModule\Registers\ComponentRegister;
 use Wame\ComponentModule\Entities\ComponentEntity;
 use Wame\ComponentModule\Repositories\ComponentRepository;
 use Wame\MenuModule\Components\MenuControl;
-use Wame\PositionModule\Components\PositionListControl;
-use Wame\PositionModule\Components\IPositionListControlFactory;
+use Wame\ComponentModule\Components\PositionListControl;
+use Wame\ComponentModule\Components\IPositionListControlFactory;
 use Wame\ComponentModule\Components\ComponentPositionListControl;
 use Wame\ComponentModule\Components\IComponentPositionListControlFactory;
-use Wame\PositionModule\Repositories\PositionRepository;
+use Wame\ComponentModule\Repositories\PositionRepository;
 use Wame\ComponentModule\Forms\ComponentPositionForm;
 use Wame\ComponentModule\Forms\ComponentAddToPositionForm;
 use Wame\ComponentModule\Entities\ComponentInPositionEntity;
@@ -29,8 +29,8 @@ class ComponentPresenter extends \App\AdminModule\Presenters\BasePresenter
 	/** @var ComponentInPositionEntity */
 	private $componentInPosition;
 
-	/** @var ComponentManager @inject */
-	public $componentManager;
+	/** @var ComponentRegister @inject */
+	public $componentRegister;
 	
 	/** @var ComponentRepository @inject */
 	public $componentRepository;
@@ -62,7 +62,7 @@ class ComponentPresenter extends \App\AdminModule\Presenters\BasePresenter
 		}
 		
 		$this->components = $this->componentRepository->find(['status !=' => ComponentRepository::STATUS_REMOVE, 'inList' => ComponentRepository::SHOW_IN_LIST]);
-	}
+    }
 	
 	
 	public function actionPosition()
@@ -130,7 +130,7 @@ class ComponentPresenter extends \App\AdminModule\Presenters\BasePresenter
 	protected function createComponentAddComponent()
 	{
         $control = $this->IMenuControlFactory->create();
-		$control->addProvider($this->componentManager);
+		$control->addProvider($this->componentRegister);
 
 		$control->setContainerPrototype(Html::el('div')->setClass('com-componentMenu'));
 		$control->setListPrototype(Html::el('div')->setClass('row'));
@@ -197,7 +197,7 @@ class ComponentPresenter extends \App\AdminModule\Presenters\BasePresenter
 	{
 		$this->template->siteTitle = _('Components');
 		$this->template->components = $this->components;
-		$this->template->componentManager = $this->componentManager->components;
+		$this->template->componentRegister = $this->componentRegister;
 	}
 	
 	
@@ -233,7 +233,7 @@ class ComponentPresenter extends \App\AdminModule\Presenters\BasePresenter
 		$componentInPosition = $this->componentInPositionRepository->get(['id' => $this->id]);
 		
 		$this->template->siteTitle = _('Remove component in position');
-		$this->template->cancelLink = $this->componentManager->components[$componentInPosition->component->type]->getLinkDetail($componentInPosition->component);
+		$this->template->cancelLink = $this->componentRegister->getByName($componentInPosition->component->type)->getLinkDetail($componentInPosition->component);
 	}
 	
 	
@@ -270,7 +270,7 @@ class ComponentPresenter extends \App\AdminModule\Presenters\BasePresenter
 		
 		$this->flashMessage(_('Component in position has been successfully removed.'), 'success');
 		
-		$linkDetail = $this->componentManager->components[$componentInPosition->component->type]->getLinkDetail($componentInPosition->component);
+		$linkDetail = $this->componentRegister[$componentInPosition->component->type]->getLinkDetail($componentInPosition->component);
 		$this->redirectUrl($linkDetail);
 	}
 

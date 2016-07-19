@@ -77,9 +77,9 @@ class TextBlockControl extends BaseControl
 	
 	
 	public function __construct(
-        $textBlockRepository
+        DI\Container $container, TextBlockRepository $textBlockRepository
     ) {
-		parent::__construct();
+		parent::__construct(container);
 		
 		$this->textBlockRepository = $textBlockRepository;
 		$this->lang = $textBlockRepository->lang;
@@ -202,7 +202,7 @@ vtedy môžeme cez `setup` spúšťať funkcie napr. z iných modulov, pluginov
 
 ## Componentu pridáme do zoznamu komponent v administrácii
 
-Komponenta implementuje interface `Wame\ComponentModule\Models\IComponent`
+Komponenta implementuje interface `Wame\ComponentModule\Registers\IComponent`
 kde sú definované všetky potrbné funkcie pre vytvorenie komponenty
 
 * `addItem()` - vytvorí položku do zoznamu
@@ -222,7 +222,7 @@ kde sú definované všetky potrbné funkcie pre vytvorenie komponenty
 namespace Wame\TextBlockModule\Vendor\Wame\ComponentModule;
 
 use Nette\Application\LinkGenerator;
-use Wame\ComponentModule\Models\IComponent;
+use Wame\ComponentModule\Registers\IComponent;
 use Wame\MenuModule\Models\Item;
 use Wame\TextBlockModule\Components\ITextBlockControlFactory;
 
@@ -300,25 +300,23 @@ class TextBlockComponent implements IComponent
 	}
 	
 	
-	public function createComponent($componentInPosition)
+	public function createComponent()
 	{
 		$control = $this->ITextBlockControlFactory->create();
-		$control->setComponentInPosition($componentInPosition);
-		
 		return $control;
 	}
 	
 }
 ```
 
-## Registrácia do ComponentManager
+## Registrácia do ComponentRegister
 
 *vendor/wame/TextBlockModule/vendor/wame/ComponentModule/config/**config.textBlock.component.neon***
 ```
 services:
-	ComponentManager:
+	ComponentRegister:
 		setup:
-			- addComponent(Wame\TextBlockModule\Vendor\Wame\ComponentModule\TextBlockComponent())
+			- add(Wame\TextBlockModule\Vendor\Wame\ComponentModule\TextBlockComponent())
 ```
 
 ## Registrácia do MenuManager

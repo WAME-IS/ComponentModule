@@ -22,7 +22,7 @@ class ComponentInPositionEntity extends \Wame\Core\Entities\BaseEntity
 	protected $component;
 
 	/**
-     * @ORM\ManyToOne(targetEntity="\Wame\PositionModule\Entities\PositionEntity")
+     * @ORM\ManyToOne(targetEntity="\Wame\ComponentModule\Entities\PositionEntity")
      * @ORM\JoinColumn(name="position_id", referencedColumnName="id", nullable=false)
      */
 	protected $position;
@@ -37,7 +37,7 @@ class ComponentInPositionEntity extends \Wame\Core\Entities\BaseEntity
 
 	public function getComponentInPositionName()
 	{
-		return $this->position->name . '_' . $this->component->getComponentName();
+		return $this->component->getName();
 	}
 	
 	public function getComponent()

@@ -7,12 +7,12 @@ use Nette\Application\UI\Form;
 use Kdyby\Doctrine\EntityManager;
 use Wame\Utils\CacheManager;
 use Wame\Core\Forms\FormFactory;
-use Wame\ComponentModule\Models\ComponentManager;
+use Wame\ComponentModule\Registers\ComponentRegister;
 use Wame\ComponentModule\Entities\ComponentEntity;
 use Wame\ComponentModule\Repositories\ComponentRepository;
 use Wame\ComponentModule\Entities\ComponentInPositionEntity;
 use Wame\ComponentModule\Repositories\ComponentInPositionRepository;
-use Wame\PositionModule\Repositories\PositionRepository;
+use Wame\ComponentModule\Repositories\PositionRepository;
 
 class ComponentAddToPositionForm extends FormFactory
 {	
@@ -21,12 +21,9 @@ class ComponentAddToPositionForm extends FormFactory
 	
 	/** @var EntityManager */
 	private $entityManager;
-
-	/** @var CacheManager */
-	private $cacheManager;
 	
-	/** @var ComponentManager */
-	private $componentManager;
+	/** @var ComponentRegister */
+	private $componentRegister;
 	
 	/** @var ComponentEntity */
 	private $componentEntity;
@@ -45,9 +42,8 @@ class ComponentAddToPositionForm extends FormFactory
 	
 	
 	public function __construct(
-		EntityManager $entityManager, 
-		CacheManager $cacheManager,
-		ComponentManager $componentManager,
+		EntityManager $entityManager,
+		ComponentRegister $componentRegister,
 		ComponentRepository $componentRepository,
 		ComponentInPositionRepository $componentInPositionRepository,
 		PositionRepository $positionRepository
@@ -55,8 +51,7 @@ class ComponentAddToPositionForm extends FormFactory
 		parent::__construct();
 
 		$this->entityManager = $entityManager;
-		$this->cacheManager = $cacheManager;
-		$this->componentManager = $componentManager;
+		$this->componentRegister = $componentRegister;
 		$this->componentRepository = $componentRepository;
 		$this->componentInPositionRepository = $componentInPositionRepository;
 		$this->positionRepository = $positionRepository;
@@ -90,10 +85,8 @@ class ComponentAddToPositionForm extends FormFactory
 
 			$this->componentInPositionRepository->onCreate($form, $values, $componentInPositionEntity);
 
-			$this->cleanCache($componentInPositionEntity->component->cacheTag);
-
 			$presenter->flashMessage(_('The component was successfully added to the position.'), 'success');
-			$linkDetail = $this->componentManager->components[$componentInPositionEntity->component->type]->getLinkDetail($componentInPositionEntity->component);
+			$linkDetail = $this->componentRegister[$componentInPositionEntity->component->type]->getLinkDetail($componentInPositionEntity->component);
 			$presenter->redirectUrl($linkDetail);
 		} catch (\Exception $e) {
 			if ($e instanceof \Nette\Application\AbortException) {
@@ -158,19 +151,6 @@ class ComponentAddToPositionForm extends FormFactory
 		}
 		
 		return $return;
-	}
-	
-	
-	/**
-	 * Clean cache by tag
-	 * 
-	 * @param string $tag
-	 */
-	private function cleanCache($tag)
-	{
-		$cache = $this->cacheManager;
-		$cache->setTag($tag);
-		$cache->cleanByTag();
 	}
 
 }

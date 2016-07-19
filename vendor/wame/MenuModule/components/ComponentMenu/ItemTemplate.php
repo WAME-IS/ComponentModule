@@ -19,29 +19,28 @@ class ItemTemplate extends \Nette\Object
 	}
 
 
-	public function createItem($element, $item) 
+	public function createItem($element, \Wame\ComponentModule\Registers\IComponent $item) 
 	{
-		$icon = Html::el('div')->addClass('caption')->setHtml(Html::el('span')->addClass($item->icon . ' fa-4x text-primary'));
+		$icon = Html::el('div')->addClass('caption')->setHtml(Html::el('span')->addClass($item->getIcon() . ' fa-4x text-primary'));
 		
 		$caption = $this->getCaption($item);
 		
 		$html = Html::el('div')->setClass('thumbnail text-center')->setHtml($icon . $caption);
 		
-		return $element->addAttributes($item->attributes)->data('name', $item->name)->setHtml($html);
+		return $element->data('name', $item->getName())->setHtml($html);
 	}
-	
 	
 	private function getCaption($item)
 	{
-		$title = Html::el('div')->setClass('lead text-center')->setText($item->title);
+		$title = Html::el('div')->setClass('lead text-center')->setText($item->getTitle());
 		
-		if ($item->description) {
-			$description = $item->description;
+		if ($item->getDescription()) {
+			$description = $item->getDescription();
 		} else {
 			$description = '';
 		}
         
-        $url = new Url($item->link);
+        $url = new Url($item->getLinkCreate());
         $url->appendQuery(['p' => $this->positionId]);
 		
 		$button = Html::el('p')->setHtml(Html::el('a')->href($url)->setClass('btn btn-success')->setHtml(

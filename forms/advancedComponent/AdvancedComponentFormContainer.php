@@ -4,15 +4,7 @@ namespace Wame\ComponentModule\Forms;
 
 use Wame\DynamicObject\Forms\BaseFormContainer;
 
-
-interface IAdvancedFormContainerFactory
-{
-	/** @return BasicFormContainer */
-	function create();
-}
-
-
-class AdvancedFormContainer extends BaseFormContainer
+class AdvancedComponentFormContainer extends BaseFormContainer
 {
     protected function configure() 
 	{		

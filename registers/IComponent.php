@@ -1,9 +1,8 @@
 <?php
 
-namespace Wame\ComponentModule\Models;
+namespace Wame\ComponentModule\Registers;
 
 use Wame\ComponentModule\Entities\ComponentEntity;
-use Wame\ComponentModule\Entities\ComponentInPositionEntity;
 
 interface IComponent
 {
@@ -45,10 +44,8 @@ interface IComponent
 	public function getLinkDetail($componentEntity);
 	
 	/**
-	 * Register component
-	 * 
-	 * @param ComponentInPositionEntity $componentInPosition
+	 * Create new instance of component
 	 */
-	public function createComponent($componentInPosition);
+	public function createComponent();
 	
 }

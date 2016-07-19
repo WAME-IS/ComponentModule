@@ -1,18 +1,34 @@
 {block content}
+	{var $components = $position->components}
+
 	<div class="page-header">
-		<h1>{$siteTitle}</h1>
+		<div class="row">
+			<h1 class="col-md-7">
+				<a n:href="Component:, 'id' => null">{$siteTitle}</a>
+				<small>
+                    <span class="fa fa-angle-right"></span>
+                    {$position->langs[$lang]->title}
+                </small>
+			</h1>
+				
+			<div class="col-md-5 text-right">
+				<a class="{$position->status == 1 ? 'label label-success' : 'label label-danger'}" n:href="ChangeStatus!">{$positionStatusList[$position->status]}</a>
+				<a class="btn btn-sm btn-warning" n:href=":Admin:Position:update, 'id' => $position->id"><span class="fa fa-edit"></span> {_'Edit'}</a>
+				<a class="btn btn-sm btn-danger" n:href=":Admin:Position:delete, 'id' => $position->id"><span class="fa fa-trash-o"></span> {_'Delete'}</a>
+			</div>	
+		</div>
 	</div>
 
 	<div class="row">
 		<div class="col-md-8 col-lg-9">
-			<a n:if="count($components) > 0" class="btn btn-success pull-right" n:href=":Admin:Component:create, 'id' => null">
+			<a n:if="count($components) > 0" class="btn btn-success pull-right" n:href=":Admin:Component:create, 'id' => $id">
 				<span class="fa fa-plus"></span>
 				{_'Add component'}
 			</a>
 
 			{if count($components) == 0}
-				<div class="lead text-muted">{_'You do not have created any components.'}</div>
-				<a class="btn btn-success" n:href=":Admin:Component:create, 'id' => null">{_'Add first component'}</a>
+				<div class="lead text-muted">{_'You do not have created any components in this position.'}</div>
+				<a class="btn btn-success" n:href=":Admin:Component:create, 'id' => $id">{_'Add first component'}</a>
 			{else}
 				<table class="table">
 					<thead>
@@ -27,15 +43,17 @@
 					</thead>
 
 					<tbody>
-						<tr n:foreach="$components as $component" n:if="isset($componentRegister[$component->getType()])">
+						<tr n:foreach="$components as $component">
+							{var $component = $component->component}
+							
 							<td>
 								{$component->id}
 							</td>
-							
+
 							<td>
 								<span class="{$componentRegister[$component->type]->getIcon()}" title="{$componentRegister[$component->type]->getTitle()}"></span>
 							</td>
-
+							
 							<td>
 								<div><a href="{$componentRegister[$component->type]->getLinkDetail($component)}">{$component->langs[$lang]->title}</a></div>
 								<small n:if="$component->langs[$lang]->description" class="text-muted">{$component->langs[$lang]->description}</small>
@@ -47,9 +65,9 @@
 
 							<td>
 								{if $component->status == 1}
-									<span class="label label-success">{_'Enabled'}</span>
+									<span class="label label-success">{$componentStatusList[$component->status]}</span>
 								{elseif $component->status == 2}
-									<span class="label label-danger">{_'Disabled'}</span>
+									<span class="label label-danger">{$componentStatusList[$component->status]}</span>
 								{/if}
 							</td>
 

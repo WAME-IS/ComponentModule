@@ -4,15 +4,7 @@ namespace Wame\ComponentModule\Forms;
 
 use Wame\DynamicObject\Forms\BaseFormContainer;
 
-
-interface IBasicFormContainerFactory
-{
-	/** @return AdvancedFormContainer */
-	function create();
-}
-
-
-class BasicFormContainer extends BaseFormContainer
+class BasicPositionFormContainer extends BaseFormContainer
 {
     protected function configure() 
 	{		
@@ -31,8 +23,8 @@ class BasicFormContainer extends BaseFormContainer
 	{
 		$form = $this->getForm();
 
-		$form['title']->setDefaultValue($object->componentEntity->langs[$object->lang]->title);
-		$form['description']->setDefaultValue($object->componentEntity->langs[$object->lang]->description);
+		$form['title']->setDefaultValue($object->positionEntity->langs[$object->lang]->title);
+		$form['description']->setDefaultValue($object->positionEntity->langs[$object->lang]->description);
 	}
 
 }

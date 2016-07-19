@@ -56,16 +56,6 @@ class ComponentEntity extends \Wame\Core\Entities\TranslatableEntity
 	{
 		return $this->inList;
 	}
-	
-	public function getComponentName()
-	{
-		return $this->type . '_' . $this->name . '_' . $this->id;
-	}	
-	
-	public function getCacheTag()
-	{
-		return $this->type . '/' . $this->id . '_' . $this->name;
-	}	
 
 	/** set ************************************************************/
 	

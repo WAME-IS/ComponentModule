@@ -1,0 +1,2 @@
+services:
+	- {class: Wame\ComponentModule\Vendor\Wame\ComponentModule\Events\ComponentFormListener, tags: [run]}

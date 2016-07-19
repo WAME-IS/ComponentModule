@@ -1,53 +1,77 @@
 services:
-	PermissionObject:
-		setup:
-			- addResource('component')
-			- addResourceAction('component', 'view')
-			- allow('admin', 'component', 'view')
-			- addResourceAction('component', 'create')
-			- allow('admin', 'component', 'create')
-			- addResourceAction('component', 'update')
-			- allow('admin', 'component', 'update')
-			- addResourceAction('component', 'delete')
-			- allow('admin', 'component', 'delete')
+    PermissionObject:
+        setup:
+            - addResource('component')
+            - addResourceAction('component', 'view')
+            - allow('admin', 'component', 'view')
+            - addResourceAction('component', 'create')
+            - allow('admin', 'component', 'create')
+            - addResourceAction('component', 'update')
+            - allow('admin', 'component', 'update')
+            - addResourceAction('component', 'delete')
+            - allow('admin', 'component', 'delete')
+
+            - addResource('position')
+            - addResourceAction('position', 'view')
+            - allow('admin', 'position', 'view')
+            - addResourceAction('position', 'create')
+            - allow('admin', 'position', 'create')
+            - addResourceAction('position', 'update')
+            - allow('admin', 'position', 'update')
+            - addResourceAction('position', 'delete')
+            - allow('admin', 'position', 'delete')
+            - addResourceAction('position', 'changeStatus')
+            - allow('admin', 'position', 'changeStatus')
 
 
-	- Wame\ComponentModule\Vendor\Wame\MenuModule\Components\ComponentMenu\ItemTemplate
-	- Wame\ComponentModule\Components\IComponentPositionListControlFactory
+    # Factories
+    - Wame\ComponentModule\Components\PositionControlLoader
+    - Wame\ComponentModule\Components\IPositionControlFactory
+    - Wame\ComponentModule\Components\IPositionListControlFactory
+    - Wame\ComponentModule\Components\IComponentPositionListControlFactory
 
+    # Repositories
+    - Wame\ComponentModule\Repositories\ComponentRepository
+    - Wame\ComponentModule\Repositories\ComponentInPositionRepository
+    - Wame\ComponentModule\Repositories\PositionRepository
 
-	# Entities
-	- Wame\ComponentModule\Entities\ComponentEntity
-	- Wame\ComponentModule\Entities\ComponentLangEntity
-	- Wame\ComponentModule\Entities\ComponentInPositionEntity
+    # Registers
+    ComponentRegister:
+        class: Wame\ComponentModule\Registers\ComponentRegister
 
+    # Forms
+    ComponentForm:
+        class: Wame\ComponentModule\Forms\ComponentForm
+        setup:
+            - addFormContainer(Wame\ComponentModule\Forms\BasicComponentFormContainer(), 'BasicFormContainer', 100)
+            - addFormContainer(Wame\ComponentModule\Forms\AdvancedComponentFormContainer(), 'AdvancedFormContainer', 50)
+            - addFormContainer(Wame\ComponentModule\Forms\PositionFormContainer(), 'PositionFormContainer')
 
-	# Repositories
-	- Wame\ComponentModule\Repositories\ComponentRepository
-	- Wame\ComponentModule\Repositories\ComponentInPositionRepository
+    ComponentPositionForm:
+        class: Wame\ComponentModule\Forms\ComponentPositionForm
+        setup:
+            - addFormContainer(Wame\ComponentModule\Forms\PositionFormContainer(), 'PositionFormContainer', 100)
 
+    ComponentAddToPositionForm:
+        class: Wame\ComponentModule\Forms\ComponentAddToPositionForm
 
-	ComponentManager:
-		class: Wame\ComponentModule\Models\ComponentManager
+    PositionForm:
+        class: Wame\ComponentModule\Forms\PositionForm
+        setup:
+            - addFormContainer(Wame\ComponentModule\Forms\BasicPositionFormContainer(), 'BasicFormContainer', 100)
+            - addFormContainer(Wame\ComponentModule\Forms\AdvancedPositionFormContainer(), 'AdvancedFormContainer', 50)
 
-
-	ComponentForm:
-		class: Wame\ComponentModule\Forms\ComponentForm
-		setup:
-			- addFormContainer(Wame\ComponentModule\Forms\BasicFormContainer(), 'BasicFormContainer', 100)
-			- addFormContainer(Wame\ComponentModule\Forms\AdvancedFormContainer(), 'AdvancedFormContainer', 50)
-
-
-	ComponentPositionForm:
-		class: Wame\ComponentModule\Forms\ComponentPositionForm
-		setup:
-			- addFormContainer(Wame\ComponentModule\Forms\PositionFormContainer(), 'PositionFormContainer', 100)
-
-
-	ComponentAddToPositionForm:
-		class: Wame\ComponentModule\Forms\ComponentAddToPositionForm
-
+    # Commands
+    UpdatePositionsCommand:
+        class: Wame\ComponentModule\Commands\UpdatePositionsCommand
+        tags: [kdyby.console.command]
+    - Wame\ComponentModule\Commands\PositionsSeeker
 
 doctrine:
-	metadata:
-		Wame\ComponentModule\Entities: %appDir%/../vendor/wame/ComponentModule/entities
+    metadata:
+        Wame\ComponentModule\Entities: %appDir%/../vendor/wame/ComponentModule/entities
+
+nette:
+    latte:
+        macros:
+            - Wame\ComponentModule\Macros\PositionMacros::install

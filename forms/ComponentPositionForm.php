@@ -4,9 +4,8 @@ namespace Wame\ComponentModule\Forms;
 
 use Nette\Application\UI\Form;
 use Kdyby\Doctrine\EntityManager;
-use Wame\Utils\CacheManager;
 use Wame\Core\Forms\FormFactory;
-use Wame\ComponentModule\Models\ComponentManager;
+use Wame\ComponentModule\Registers\ComponentRegister;
 use Wame\ComponentModule\Entities\ComponentInPositionEntity;
 use Wame\ComponentModule\Repositories\ComponentInPositionRepository;
 
@@ -14,12 +13,9 @@ class ComponentPositionForm extends FormFactory
 {	
 	/** @var EntityManager */
 	private $entityManager;
-
-	/** @var CacheManager */
-	private $cacheManager;
 	
-	/** @var ComponentManager */
-	private $componentManager;
+	/** @var ComponentRegister */
+	private $componentRegister;
 	
 	/** @var ComponentInPositionEntity */
 	public $componentInPositionEntity;
@@ -29,16 +25,14 @@ class ComponentPositionForm extends FormFactory
 	
 	
 	public function __construct(
-		EntityManager $entityManager, 
-		CacheManager $cacheManager,
-		ComponentManager $componentManager,
+		EntityManager $entityManager,
+		ComponentRegister $componentRegister,
 		ComponentInPositionRepository $componentInPositionRepository
 	) {
 		parent::__construct();
 
 		$this->entityManager = $entityManager;
-		$this->cacheManager = $cacheManager;
-		$this->componentManager = $componentManager;
+		$this->componentRegister = $componentRegister;
 		$this->componentInPositionRepository = $componentInPositionRepository;
 	}
 
@@ -66,11 +60,9 @@ class ComponentPositionForm extends FormFactory
 
 			$this->componentInPositionRepository->onUpdate($form, $values, $componentInPositionEntity);
 
-			$this->cleanCache($componentInPositionEntity->component->cacheTag);
-
 			$presenter->flashMessage(_('The component in position has been successfully updated.'), 'success');
 
-			$linkDetail = $this->componentManager->components[$componentInPositionEntity->component->type]->getLinkDetail($componentInPositionEntity->component);
+			$linkDetail = $this->componentRegister[$componentInPositionEntity->component->type]->getLinkDetail($componentInPositionEntity->component);
 
 			$presenter->redirectUrl($linkDetail);
 		} catch (\Exception $e) {
@@ -114,19 +106,6 @@ class ComponentPositionForm extends FormFactory
 		];
 		
 		return array_replace($parameters, $array);
-	}
-	
-	
-	/**
-	 * Clean cache by tag
-	 * 
-	 * @param string $tag
-	 */
-	private function cleanCache($tag)
-	{
-		$cache = $this->cacheManager;
-		$cache->setTag($tag);
-		$cache->cleanByTag();
 	}
 
 }

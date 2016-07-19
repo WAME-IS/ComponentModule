@@ -1,0 +1,31 @@
+<h3>{_'Positions'}</h3>
+
+{if count($positions) == 0}
+	<div class="lead text-muted">
+		{_'Do not created any positions.'}
+	</div>
+	
+	<a class="btn btn-success ajax-modal" href="{plink Position:create, 'id' => null}">
+		<span class="fa fa-plus"></span>
+		{_'Create first position'}
+	</a>
+{else}
+	<div class="list-group">
+		<a n:foreach="$positions as $position" class="list-group-item" href="{plink Position:, 'id' => $position->id}">
+			<h4 class="list-group-item-heading">
+				{$position->title}
+				<small>[{$position->name}]</small>
+				<span class="pull-right badge">{count($position->components)}</span>
+			</h4>
+			
+			<small n:if="$position->langs[$lang]->description" class="list-group-item-text">
+				{$position->description}
+			</small>
+		</a>
+	</div>
+				
+	<a class="btn btn-success ajax-modal" href="{plink Position:create, 'id' => null}">
+		<span class="fa fa-plus"></span>
+		{_'Create position'}
+	</a>
+{/if}

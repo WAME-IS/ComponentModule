@@ -5,7 +5,6 @@ namespace Wame\ComponentModule\Forms;
 use Nette\Application\UI\Form;
 use Nette\Security\User;
 use Kdyby\Doctrine\EntityManager;
-use Wame\Utils\CacheManager;
 use Wame\Core\Forms\FormFactory;
 use Wame\ComponentModule\Entities\ComponentEntity;
 use Wame\ComponentModule\Entities\ComponentLangEntity;
@@ -17,9 +16,6 @@ class ComponentForm extends FormFactory
 {	
 	/** @var EntityManager */
 	private $entityManager;
-
-	/** @var CacheManager */
-	private $cacheManager;
 
 	/** @var User */
 	private $user;
@@ -45,8 +41,7 @@ class ComponentForm extends FormFactory
 	
 	public function __construct(
 		User $user,
-		EntityManager $entityManager, 
-		CacheManager $cacheManager,
+		EntityManager $entityManager,
 		ComponentRepository $componentRepository,
 		UserRepository $userRepository
 	) {
@@ -54,7 +49,6 @@ class ComponentForm extends FormFactory
 
 		$this->user = $user;
 		$this->entityManager = $entityManager;
-		$this->cacheManager = $cacheManager;
 		$this->componentRepository = $componentRepository;
 		$this->userRepository = $userRepository;
 		
@@ -93,8 +87,6 @@ class ComponentForm extends FormFactory
 				$componentEntity = $this->update($values);
 				
 				$this->componentRepository->onUpdate($form, $values, $componentEntity);
-
-				$this->cleanCache($componentEntity->cacheTag);
 
 				$presenter->flashMessage(_('The component has been successfully updated.'), 'success');
 			} else {
@@ -233,19 +225,6 @@ class ComponentForm extends FormFactory
 		];
 		
 		return array_replace($parameters, $array);
-	}
-	
-	
-	/**
-	 * Clean cache by tag
-	 * 
-	 * @param string $tag
-	 */
-	private function cleanCache($tag)
-	{
-		$cache = $this->cacheManager;
-		$cache->setTag($tag);
-		$cache->cleanByTag();
 	}
 
 }
