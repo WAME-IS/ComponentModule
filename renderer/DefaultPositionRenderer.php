@@ -4,6 +4,7 @@ namespace ComponentModule\Renderer;
 
 use Nette\Utils\Html;
 use Wame\ComponentModule\Components\PositionControl;
+use Wame\ComponentModule\Paremeters\Readers\ParameterReaders;
 use Wame\Core\Components\BaseControl;
 
 class DefaultPositionRenderer
@@ -58,10 +59,8 @@ class DefaultPositionRenderer
      */
     private function getContainer($control, $defaultParams)
     {
-        $containerParams = $defaultParams;
-//        dump($control->getComponentParameter("container", ParameterReaders::$HTML));
-//        exit();
-//        $containerParams = array_replace_recursive($defaultParams, );
+        $containerParams = $control->getComponentParameter("container", ParameterReaders::$HTML);
+        $containerParams = array_replace_recursive($containerParams, $defaultParams);
 
         if (array_key_exists('tag', $containerParams)) {
             $tag = $containerParams['tag'];

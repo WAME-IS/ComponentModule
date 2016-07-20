@@ -10,6 +10,7 @@ use Nette\InvalidArgumentException;
 use Wame\AdminModule\Components\BaseControl;
 use Wame\ComponentModule\Entities\ComponentInPositionEntity;
 use Wame\ComponentModule\Entities\PositionEntity;
+use Wame\ComponentModule\Paremeters\ArrayParameterSource;
 use Wame\ComponentModule\Registers\ComponentRegister;
 use Wame\ComponentModule\Repositories\ComponentRepository;
 use Wame\ComponentModule\Repositories\PositionRepository;
@@ -69,6 +70,9 @@ class PositionControl extends BaseControl
             throw new Exception("Position $position does not exist in database.");
         }
         $this->position = $positionEntity;
+
+        $this->componentParameters->add(
+            new ArrayParameterSource($this->position->getParameters()), 'position', 20);
 
         $this->loadComponents();
 
