@@ -7,13 +7,13 @@ use ComponentModule\Renderer\IPositionRenderer;
 use Exception;
 use Nette\DI\Container;
 use Nette\InvalidArgumentException;
-use Wame\AdminModule\Components\BaseControl;
 use Wame\ComponentModule\Entities\ComponentInPositionEntity;
 use Wame\ComponentModule\Entities\PositionEntity;
 use Wame\ComponentModule\Paremeters\ArrayParameterSource;
 use Wame\ComponentModule\Registers\ComponentRegister;
 use Wame\ComponentModule\Repositories\ComponentRepository;
 use Wame\ComponentModule\Repositories\PositionRepository;
+use Wame\Core\Components\BaseControl;
 
 interface IPositionControlFactory
 {
@@ -114,7 +114,9 @@ class PositionControl extends BaseControl
                 $componentName = $this->uniqeComponentName($componentInPosition->getComponentInPositionName());
                 $component = $componentType->createComponent($componentInPosition);
 
-                $component->setComponentInPosition($type, $componentInPosition);
+                if ($component instanceof BaseControl) {
+                    $component->setComponentInPosition($type, $componentInPosition);
+                }
 
                 $this->addComponent($component, $componentName);
             } else {
