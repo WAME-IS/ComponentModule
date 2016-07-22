@@ -2,13 +2,13 @@
 
 namespace Wame\ComponentModule\Components;
 
+use Exception;
 use Nette\Application\UI\Control;
 use Nette\Object;
 use Nette\Utils\Strings;
 use Wame\ComponentModule\Entities\PositionUsageEntity;
 use Wame\ComponentModule\Repositories\PositionRepository;
 use Wame\ComponentModule\Repositories\PositionUsageRepository;
-use Wame\Utils\Exception;
 
 class PositionControlLoader extends Object
 {
@@ -71,8 +71,8 @@ class PositionControlLoader extends Object
         $positionUsageEntity->setComponent($controlName);
 
         $this->positionUsageRepository->create($positionUsageEntity);
-        
-        throw new \Exception("Position $positionName saved to usage table, please reload.");
+
+        throw new Exception("Position $positionName saved to usage table, please reload.");
     }
 
     public static function checkStatic($component, $positionName)

@@ -2,10 +2,12 @@
 
 namespace Wame\ComponentModule\Macros;
 
-use Latte\Macros\MacroSet;
+use Latte\CompileException;
 use Latte\Compiler;
 use Latte\MacroNode;
+use Latte\Macros\MacroSet;
 use Latte\PhpWriter;
+use Nette\Utils\Strings;
 
 class PositionMacros extends MacroSet
 {
@@ -40,12 +42,17 @@ class PositionMacros extends MacroSet
 		$method = isset($words[1]) ? ucfirst($words[1]) : '';
 		$method = Strings::match($method, '#^\w*\z#') ? "render$method" : "{\"render$method\"}";
 		$param = $writer->formatArray();
+        $paramList = $param;
 		if (!Strings::contains($node->args, '=>')) {
-			$param = substr($param, $param[0] === '[' ? 1 : 6, -1); // removes array() or []
+			$paramList = substr($paramList, $paramList[0] === '[' ? 1 : 6, -1); // removes array() or []
 		}
 		return ($name[0] === '$' ? "if (is_object($name)) \$_l->tmp = $name; else " : '')
 			. '$_l->tmp = $_control->getComponent(' . $name . '); '
-			. 'if ($_l->tmp instanceof Nette\Application\UI\IRenderable) $_l->tmp->redrawControl(NULL, FALSE); '
-			. ($node->modifiers === '' ? "\$_l->tmp->$method($param)" : $writer->write("ob_start(function () {}); \$_l->tmp->willRender($method, $param); echo %modify(ob_get_clean())"));
+			. 'if ($_l->tmp instanceof \Nette\Application\UI\IRenderable) $_l->tmp->redrawControl(NULL, FALSE); '
+            . 'if ($_l->tmp instanceof \Wame\Core\Components\BaseControl) {'
+			. ($node->modifiers === '' ? "\$_l->tmp->willRender(\"$method\", $param);" : $writer->write("ob_start(function () {}); \$_l->tmp->willRender(\"$method\", $param); echo %modify(ob_get_clean())"))
+            . '} else {'
+            . ($node->modifiers === '' ? "\$_l->tmp->$method($paramList);" : $writer->write("ob_start(function () {}); \$_l->tmp->$method($paramList); echo %modify(ob_get_clean())"))
+            . '}';
 	}
 }

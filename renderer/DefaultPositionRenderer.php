@@ -41,7 +41,11 @@ class DefaultPositionRenderer
 
             //$control->getComponentParameter("render");
 
-            $component->render();
+            if($component instanceof BaseControl) {
+                $component->willRender("render");
+            } else {
+                $component->render();
+            }
 
             echo $listItemContainer->endTag();
         }

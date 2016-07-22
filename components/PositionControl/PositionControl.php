@@ -126,6 +126,24 @@ class PositionControl extends BaseControl
 
         return $this;
     }
+    
+    protected function attached($control)
+    {
+        parent::attached($control);
+        $this->checkForCycle();
+    }
+    
+    private function checkForCycle() {
+        $parent = $this->getParent();
+        while($parent) {
+            if($parent instanceof PositionControl) {
+                if($parent->getPositionName() == $this->getPositionName()) {
+                    throw new \Nette\InvalidArgumentException("Position {$this->getPositionName()} has position {$this->getPositionName()} inside it!");
+                }
+            }
+            $parent = $parent->getParent();
+        }
+    }
 
     private function uniqeComponentName($originalName)
     {
