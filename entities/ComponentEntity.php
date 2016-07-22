@@ -4,13 +4,14 @@ namespace Wame\ComponentModule\Entities;
 
 use Doctrine\ORM\Mapping as ORM;
 use Wame\Core\Entities\Columns;
+use Wame\Core\Entities\TranslatableEntity;
 use Wame\Utils\Strings;
 
 /**
  * @ORM\Table(name="wame_component")
  * @ORM\Entity
  */
-class ComponentEntity extends \Wame\Core\Entities\TranslatableEntity
+class ComponentEntity extends TranslatableEntity
 {
 	use Columns\Identifier;
 	use Columns\CreateDate;

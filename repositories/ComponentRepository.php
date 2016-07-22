@@ -60,13 +60,9 @@ class ComponentRepository extends TranslatableRepository
     {
         $this->componentExists($componentEntity);
 
-        $create = $this->entityManager->persist($componentEntity);
+        $this->entityManager->persist($componentEntity);
 
         $this->entityManager->persist($componentEntity->langs);
-
-        if (!$create) {
-            throw new RepositoryException(_('Component could not be created.'));
-        }
 
         return $componentEntity;
     }

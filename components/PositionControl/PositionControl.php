@@ -25,6 +25,8 @@ interface IPositionControlFactory
 class PositionControl extends BaseControl
 {
 
+    const COMPONENT_TYPE_CLASS = 'pos-%s';
+
     /** @var PositionRepository */
     private $positionRepository;
 
@@ -63,16 +65,26 @@ class PositionControl extends BaseControl
      */
     public function setPosition($position)
     {
-        $this->positionName = $position;
-
-        $positionEntity = $this->positionRepository->get(['name' => $position, 'status' => PositionRepository::STATUS_ENABLED]);
-        if (!$positionEntity) {
-            throw new Exception("Position $position does not exist in database.");
+        if (is_object($position) && $position instanceof PositionEntity) {
+            $positionEntity = $position;
+            $positionName = $position->name;
+        } elseif (is_string($position)) {
+            $positionEntity = $this->positionRepository->get(['name' => $position, 'status' => PositionRepository::STATUS_ENABLED]);
+            if (!$positionEntity) {
+                throw new Exception("Position $position does not exist in database.");
+            }
+            $positionName = $position;
+        } else {
+            throw new InvalidArgumentException("Argument position has wrong type.");
         }
+
         $this->position = $positionEntity;
+        $this->positionName = $positionName;
 
         $this->componentParameters->add(
             new ArrayParameterSource($this->position->getParameters()), 'position', 20);
+        $this->componentParameters->add(
+            new ArrayParameterSource(['container' => ['class' => sprintf(self::COMPONENT_TYPE_CLASS, $this->positionName)]]), 'positionDefaultClass', 1);
 
         $this->loadComponents();
 
@@ -95,6 +107,7 @@ class PositionControl extends BaseControl
             }
 
             $type = $componentInPosition->component->type;
+
             $componentType = $this->componentRegister->getByName($type);
             if ($componentType) {
 

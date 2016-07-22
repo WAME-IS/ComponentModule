@@ -3,26 +3,27 @@
 namespace Wame\ComponentModule\Entities;
 
 use Doctrine\ORM\Mapping as ORM;
+use Wame\Core\Entities\BaseEntity;
 use Wame\Core\Entities\Columns;
 
 /**
  * @ORM\Table(name="wame_component_in_position")
  * @ORM\Entity
  */
-class ComponentInPositionEntity extends \Wame\Core\Entities\BaseEntity 
+class ComponentInPositionEntity extends BaseEntity 
 {
 	use Columns\Identifier;
 	use Columns\Parameters;
 	
 
 	/**
-     * @ORM\ManyToOne(targetEntity="ComponentEntity", inversedBy="component")
+     * @ORM\ManyToOne(targetEntity="ComponentEntity", fetch="EAGER")
      * @ORM\JoinColumn(name="component_id", referencedColumnName="id", nullable=false)
      */
 	protected $component;
 
 	/**
-     * @ORM\ManyToOne(targetEntity="\Wame\ComponentModule\Entities\PositionEntity")
+     * @ORM\ManyToOne(targetEntity="PositionEntity", fetch="EAGER")
      * @ORM\JoinColumn(name="position_id", referencedColumnName="id", nullable=false)
      */
 	protected $position;

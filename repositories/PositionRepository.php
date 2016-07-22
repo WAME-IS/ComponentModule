@@ -60,13 +60,9 @@ class PositionRepository extends TranslatableRepository
 	{
 		$this->checkPositionExists(['name' => $positionEntity->name]);
 
-		$create = $this->entityManager->persist($positionEntity);
+		$this->entityManager->persist($positionEntity);
 		
 		$this->entityManager->persist($positionEntity->langs);
-		
-		if (!$create) {
-			throw new RepositoryException(_('Position could not be created.'));
-		}
 		
 		return $positionEntity;
 	}

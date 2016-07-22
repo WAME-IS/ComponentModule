@@ -30,11 +30,7 @@ class ComponentInPositionRepository extends \Wame\Core\Repositories\BaseReposito
 		if ($find > 0) {
 			throw new \Wame\Core\Exception\RepositoryException(_('This component is already in this position.'));
 		} else {
-			$create = $this->entityManager->persist($componentInPositionEntity);
-
-			if (!$create) {
-				throw new \Wame\Core\Exception\RepositoryException(_('Component failed to include positions.'));
-			}
+			$this->entityManager->persist($componentInPositionEntity);
 		}
 		
 		return $componentInPositionEntity;

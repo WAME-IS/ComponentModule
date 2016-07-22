@@ -28,7 +28,6 @@ class DefaultPositionRenderer
     function render($positionControl)
     {   
         $listContainerDefault = $this->defaults['list'];
-        $listContainerDefault['data-position'] = $positionControl->getPositionName();
         $listContainer = $this->getContainer($positionControl, $listContainerDefault);
 
         echo $listContainer->startTag();
@@ -36,7 +35,7 @@ class DefaultPositionRenderer
         foreach ($positionControl->getComponents() as $component) {
 
             $listItemContainerDefault = $this->defaults['listItem'];
-            $listItemContainer = $this->getContainer($positionControl, $listItemContainerDefault);
+            $listItemContainer = $this->getContainer($component, $listItemContainerDefault);
 
             echo $listItemContainer->startTag();
 
@@ -66,7 +65,7 @@ class DefaultPositionRenderer
             $tag = $containerParams['tag'];
             unset($containerParams['tag']);
         }
-
+        
         return Html::el($tag, $containerParams);
     }
 }
