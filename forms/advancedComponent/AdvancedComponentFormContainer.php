@@ -18,9 +18,6 @@ class AdvancedComponentFormContainer extends BaseFormContainer
 
 		$form->addText('template', _('Template'))
 				->setAttribute('placeholder', 'default.latte');
-		
-        $form->addText('cache', _('Cache'))
-				->setDefaultValue(0);		
     }
 
 
@@ -38,10 +35,6 @@ class AdvancedComponentFormContainer extends BaseFormContainer
 		
 		if ($componentEntity->getParameter('template')) {
 			$form['template']->setDefaultValue($componentEntity->getParameter('template'));
-		}
-		
-		if ($componentEntity->getParameter('cache')) {
-			$form['cache']->setDefaultValue($componentEntity->getParameter('cache'));
 		}
 	}
 
