@@ -59,12 +59,6 @@ class ComponentForm extends FormFactory
 	public function build()
 	{		
 		$form = $this->createForm();
-
-		if ($this->id) {
-			$form->addSubmit('submit', _('Save'));
-		} else {
-			$form->addSubmit('submit', _('Create'));
-		}
 		
 		if ($this->id) {
 			$this->componentEntity = $this->componentRepository->get(['id' => $this->id]);
@@ -219,12 +213,29 @@ class ComponentForm extends FormFactory
 	private function getParams($values, $parameters = [])
 	{
 		$array = [
-			'cache' => $values['cache'],
-			'class' => $values['class'],
+			'container' => $this->convertContainerAttributesToDatabase($values['container']),
 			'template' => $values['template']
 		];
 		
 		return array_replace($parameters, $array);
 	}
+    
+    
+    /**
+     * Convert container attributes to database
+     * 
+     * @param array $attributes
+     * @return array
+     */
+    private function convertContainerAttributesToDatabase($attributes)
+    {
+        $return = [];
+        
+        foreach ($attributes as $attribute) {
+            $return[$attribute['name']] = $attribute['value'];
+        }
+        
+        return $return;
+    }
 
 }
