@@ -94,9 +94,6 @@ class TextBlockControl extends BaseControl
         $this->template->component = $this->componentInPosition->component;
         $this->template->title = $this->componentInPosition->component->langs[$this->lang]->title;
         $this->template->text = $textBlock->langs[$this->lang]->text;
-
-		$this->getTemplateFile(); // vyrieší použitie správneho súboru pre template
-		$this->template->render();
 	}
 
 }
@@ -151,9 +148,6 @@ class TextBlockControl extends BaseControl
         $this->template->component = $this->componentInPosition->component;
         $this->template->title = $this->componentInPosition->component->langs[$this->lang]->title;
         $this->template->text = $textBlock->langs[$this->lang]->text;
-
-		$this->getTemplateFile(); // vyrieší použitie správneho súboru pre template
-		$this->template->render();
 	}
 
 }
