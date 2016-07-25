@@ -115,7 +115,10 @@ class PositionControl extends BaseControl
                 $component = $componentType->createComponent($componentInPosition);
 
                 if ($component instanceof BaseControl) {
-                    $component->setComponentInPosition($type, $componentInPosition);
+                    $component->setComponentInPosition($componentInPosition);
+                    
+                    $component->componentParameters->add(
+                        new ArrayParameterSource(['container' => ['class' => sprintf(self::COMPONENT_TYPE_CLASS, $type)]]), 'componentDefaultClass', 1);
                 }
 
                 $this->addComponent($component, $componentName);
