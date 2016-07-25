@@ -18,6 +18,9 @@ use Wame\ComponentModule\Entities\ComponentInPositionEntity;
 use Wame\ComponentModule\Repositories\ComponentInPositionRepository;
 use Wame\ComponentModule\Vendor\Wame\MenuModule\Components\ComponentMenu\ItemTemplate;
 
+use Wame\DataGridControl\IDataGridControlFactory;
+use Wame\ComponentModule\Vendor\Wame\AdminModule\Grids\ComponentGrid;
+
 class ComponentPresenter extends \App\AdminModule\Presenters\BasePresenter
 {
 	/** @var array */
@@ -52,6 +55,12 @@ class ComponentPresenter extends \App\AdminModule\Presenters\BasePresenter
 	
 	/** @var ItemTemplate @inject */
 	public $itemTemplate;
+    
+    /** @var IDataGridControlFactory @inject */
+	public $gridControl;
+    
+    /** @var ComponentGrid @inject */
+	public $componentGrid;
 	
 	
 	public function actionDefault()
@@ -190,6 +199,22 @@ class ComponentPresenter extends \App\AdminModule\Presenters\BasePresenter
 		$form = $this->componentAddToPositionForm->setId($this->id)->build();
 
 		return $form;
+	}
+    
+    /**
+     * Component component grid
+     * @param type $name
+     * @return type
+     */
+    protected function createComponentComponentGrid($name)
+	{
+		$grid = $this->gridControl->create();
+		$grid->setGridName($name);
+		$grid->setDataSource($this->components);
+		
+		$grid->setProvider($this->componentGrid);
+		
+		return $grid;
 	}
 	
 	

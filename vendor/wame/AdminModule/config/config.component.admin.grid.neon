@@ -1,0 +1,11 @@
+services:
+    ComponentGrid:
+        class: Wame\ComponentModule\Vendor\Wame\AdminModule\Grids\ComponentGrid
+        setup:
+            - addColumn(Wame\DataGridControl\IdGridColumn())
+            - addColumn(Wame\ComponentModule\Vendor\Wame\AdminModule\Grids\Columns\TypeGridColumn())
+            - addColumn(Wame\DataGridControl\TitleGridColumn())
+#            - addColumn(Wame\DataGridControl\NameGridColumn())
+            - addColumn(Wame\DataGridControl\StatusGridColumn())
+            - addColumn(Wame\DataGridControl\EditGridAction())
+            - addColumn(Wame\DataGridControl\DeleteGridAction())

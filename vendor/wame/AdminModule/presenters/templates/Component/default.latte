@@ -14,6 +14,8 @@
 				<div class="lead text-muted">{_'You do not have created any components.'}</div>
 				<a class="btn btn-success" n:href=":Admin:Component:create, 'id' => null">{_'Add first component'}</a>
 			{else}
+                {control componentGrid}
+                
 				<table class="table">
 					<thead>
 						<tr>
