@@ -8,7 +8,7 @@ use Nette\DI\Container;
 use Nette\Security\User;
 use Wame\ComponentModule\Entities\ComponentEntity;
 use Wame\Core\Exception\RepositoryException;
-use Wame\Core\Repositories\TranslatableRepository;
+use Wame\LanguageModule\Repositories\TranslatableRepository;
 
 class ComponentRepository extends TranslatableRepository
 {
