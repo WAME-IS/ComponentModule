@@ -25,7 +25,8 @@ interface IPositionControlFactory
 class PositionControl extends BaseControl
 {
 
-    const COMPONENT_TYPE_CLASS = 'pos-%s';
+    const POSITION_ID_CLASS = 'pos-%s',
+        COMPONENT_ID_CLASS = 'cnt-%s';
 
     /** @var PositionRepository */
     private $positionRepository;
@@ -84,7 +85,7 @@ class PositionControl extends BaseControl
         $this->componentParameters->add(
             new ArrayParameterSource($this->position->getParameters()), 'position', 20);
         $this->componentParameters->add(
-            new ArrayParameterSource(['container' => ['class' => sprintf(self::COMPONENT_TYPE_CLASS, $this->positionName)]]), 'positionDefaultClass', 1);
+            new ArrayParameterSource(['container' => ['class' => sprintf(self::POSITION_ID_CLASS, $this->positionName)]]), 'positionDefaultClass', 1);
 
         $this->loadComponents();
 
@@ -116,9 +117,9 @@ class PositionControl extends BaseControl
 
                 if ($component instanceof BaseControl) {
                     $component->setComponentInPosition($componentInPosition);
-                    
+
                     $component->componentParameters->add(
-                        new ArrayParameterSource(['container' => ['class' => sprintf(self::COMPONENT_TYPE_CLASS, $type)]]), 'componentDefaultClass', 1);
+                        new ArrayParameterSource(['container' => ['class' => sprintf(self::COMPONENT_ID_CLASS, $type)]]), 'componentDefaultClass', 1);
                 }
 
                 $this->addComponent($component, $componentName);
@@ -129,18 +130,19 @@ class PositionControl extends BaseControl
 
         return $this;
     }
-    
+
     protected function attached($control)
     {
         parent::attached($control);
         $this->checkForCycle();
     }
-    
-    private function checkForCycle() {
+
+    private function checkForCycle()
+    {
         $parent = $this->getParent();
-        while($parent) {
-            if($parent instanceof PositionControl) {
-                if($parent->getPositionName() == $this->getPositionName()) {
+        while ($parent) {
+            if ($parent instanceof PositionControl) {
+                if ($parent->getPositionName() == $this->getPositionName()) {
                     throw new \Nette\InvalidArgumentException("Position {$this->getPositionName()} has position {$this->getPositionName()} inside it!");
                 }
             }

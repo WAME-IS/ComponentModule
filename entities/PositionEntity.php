@@ -4,7 +4,7 @@ namespace Wame\ComponentModule\Entities;
 
 use Doctrine\ORM\Mapping as ORM;
 use Wame\Core\Entities\Columns;
-use Wame\Core\Entities\TranslatableEntity;
+use Wame\LanguageModule\Entities\TranslatableEntity;
 use Wame\Utils\Strings;
 
 /**
