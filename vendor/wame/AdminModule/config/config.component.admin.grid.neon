@@ -4,8 +4,15 @@ services:
         setup:
             - addColumn(Wame\DataGridControl\IdGridColumn())
             - addColumn(Wame\ComponentModule\Vendor\Wame\AdminModule\Grids\Columns\TypeGridColumn())
-            - addColumn(Wame\DataGridControl\TitleGridColumn())
-#            - addColumn(Wame\DataGridControl\NameGridColumn())
+#            - addColumn(Wame\DataGridControl\TitleGridColumn())
+            - addColumn(Wame\ComponentModule\Vendor\Wame\AdminModule\Grids\Columns\TitleLinkGridColumn())
+            - addColumn(Wame\ComponentModule\Vendor\Wame\AdminModule\Grids\Columns\NameGridColumn())
             - addColumn(Wame\DataGridControl\StatusGridColumn())
-            - addColumn(Wame\DataGridControl\EditGridAction())
+#            - addColumn(Wame\DataGridControl\EditGridAction())
             - addColumn(Wame\DataGridControl\DeleteGridAction())
+
+    CreateComponentGrid:
+        class: Wame\ComponentModule\Vendor\Wame\AdminModule\Grids\CreateComponentGrid
+        setup:
+            - addColumn(Wame\ComponentModule\Vendor\Wame\AdminModule\Grids\Columns\CreateComponent\NameGridColumn())
+            - addColumn(Wame\DataGridControl\DescriptionGridColumn())

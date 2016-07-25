@@ -20,6 +20,9 @@ use Wame\ComponentModule\Vendor\Wame\MenuModule\Components\ComponentMenu\ItemTem
 
 use Wame\DataGridControl\IDataGridControlFactory;
 use Wame\ComponentModule\Vendor\Wame\AdminModule\Grids\ComponentGrid;
+use Wame\ComponentModule\Vendor\Wame\AdminModule\Grids\CreateComponentGrid;
+
+use Doctrine\Common\Collections\Criteria;
 
 class ComponentPresenter extends \App\AdminModule\Presenters\BasePresenter
 {
@@ -61,8 +64,13 @@ class ComponentPresenter extends \App\AdminModule\Presenters\BasePresenter
     
     /** @var ComponentGrid @inject */
 	public $componentGrid;
+    
+    /** @var CreateComponentGrid @inject */
+	public $createComponentGrid;
 	
 	
+    /** actions ***************************************************************/
+    
 	public function actionDefault()
 	{
 		if (!$this->user->isAllowed('component', 'view')) {
@@ -71,6 +79,13 @@ class ComponentPresenter extends \App\AdminModule\Presenters\BasePresenter
 		}
 		
 		$this->components = $this->componentRepository->find(['status !=' => ComponentRepository::STATUS_REMOVE, 'inList' => ComponentRepository::SHOW_IN_LIST]);
+        
+        $criteriaCollection = new \Doctrine\Common\Collections\ArrayCollection($this->components);
+        
+        $criteria = Criteria::create()
+                ->where(Criteria::expr()->in('type', $this->componentRegister->getList()));
+        
+        $this->components = $criteriaCollection->matching($criteria)->toArray();
     }
 	
 	
@@ -130,93 +145,8 @@ class ComponentPresenter extends \App\AdminModule\Presenters\BasePresenter
 		}
 	}
 	
-	
-	/**
-	 * Add component menu
-	 * 
-	 * @return MenuControl
-	 */
-	protected function createComponentAddComponent()
-	{
-        $control = $this->IMenuControlFactory->create();
-		$control->addProvider($this->componentRegister);
-
-		$control->setContainerPrototype(Html::el('div')->setClass('com-componentMenu'));
-		$control->setListPrototype(Html::el('div')->setClass('row'));
-		$control->setItemPrototype(Html::el('div')->setClass('col-xs-6 col-sm-4 col-lg-3'));
-		$control->setItemTemplate($this->itemTemplate);
-        
-		return $control;
-	}  
-	
-	
-	/**
-	 * Position list
-	 * 
-	 * @return PositionListControl
-	 */
-	protected function createComponentPositionList()
-	{
-        $control = $this->IPositionListControlFactory->create();
-        
-		return $control;
-	}
-	
-	
-	/**
-	 * Component position list
-	 * 
-	 * @return ComponentPositionListControl
-	 */
-	protected function createComponentComponentPositionList()
-	{
-        $control = $this->IComponentPositionListControlFactory->create();
-        
-		return $control;
-	}
-	
-	
-	/**
-	 * Component position form
-	 * 
-	 * @return ComponentPositionForm
-	 */
-	protected function createComponentComponentPositionForm()
-	{
-		$form = $this->componentPositionForm->setId($this->id)->build();
-
-		return $form;
-	}
-	
-	
-	/**
-	 * Component add to position form
-	 * 
-	 * @return ComponentAddToPositionForm
-	 */
-	protected function createComponentComponentAddToPositionForm()
-	{
-		$form = $this->componentAddToPositionForm->setId($this->id)->build();
-
-		return $form;
-	}
     
-    /**
-     * Component component grid
-     * @param type $name
-     * @return type
-     */
-    protected function createComponentComponentGrid($name)
-	{
-		$grid = $this->gridControl->create();
-		$grid->setGridName($name);
-		$grid->setDataSource($this->components);
-		
-		$grid->setProvider($this->componentGrid);
-		
-		return $grid;
-	}
-	
+    /** renders ***************************************************************/
 	
 	public function renderDefault()
 	{
@@ -261,7 +191,8 @@ class ComponentPresenter extends \App\AdminModule\Presenters\BasePresenter
 		$this->template->cancelLink = $this->componentRegister->getByName($componentInPosition->component->type)->getLinkDetail($componentInPosition->component);
 	}
 	
-	
+	/** handles ***************************************************************/
+    
 	/**
 	 * Delete component
 	 */
@@ -298,5 +229,130 @@ class ComponentPresenter extends \App\AdminModule\Presenters\BasePresenter
 		$linkDetail = $this->componentRegister[$componentInPosition->component->type]->getLinkDetail($componentInPosition->component);
 		$this->redirectUrl($linkDetail);
 	}
+    
+    
+    /** components ************************************************************/
+    
+    /**
+	 * Add component menu
+	 * 
+	 * @return MenuControl
+	 */
+	protected function createComponentAddComponent()
+	{
+        $control = $this->IMenuControlFactory->create();
+		$control->addProvider($this->componentRegister);
+
+		$control->setContainerPrototype(Html::el('div')->setClass('com-componentMenu'));
+		$control->setListPrototype(Html::el('div')->setClass('row'));
+		$control->setItemPrototype(Html::el('div')->setClass('col-xs-6 col-sm-4 col-lg-3'));
+		$control->setItemTemplate($this->itemTemplate);
+        
+		return $control;
+	}  
+	
+	/**
+	 * Position list
+	 * 
+	 * @return PositionListControl
+	 */
+	protected function createComponentPositionList()
+	{
+        $control = $this->IPositionListControlFactory->create();
+        
+		return $control;
+	}
+	
+	/**
+	 * Component position list
+	 * 
+	 * @return ComponentPositionListControl
+	 */
+	protected function createComponentComponentPositionList()
+	{
+        $control = $this->IComponentPositionListControlFactory->create();
+        
+		return $control;
+	}
+	
+	/**
+	 * Component position form
+	 * 
+	 * @return ComponentPositionForm
+	 */
+	protected function createComponentComponentPositionForm()
+	{
+		$form = $this->componentPositionForm->setId($this->id)->build();
+
+		return $form;
+	}
+	
+	/**
+	 * Component add to position form
+	 * 
+	 * @return ComponentAddToPositionForm
+	 */
+	protected function createComponentComponentAddToPositionForm()
+	{
+		$form = $this->componentAddToPositionForm->setId($this->id)->build();
+
+		return $form;
+	}
+    
+    /**
+     * Component component grid
+     * 
+     * @param type $name
+     * @return type
+     */
+    protected function createComponentComponentGrid($name)
+	{
+		$grid = $this->gridControl->create();
+		$grid->setGridName($name);
+		$grid->setDataSource($this->components);
+//        $grid->setDataSource($this->componentRepository->createQueryBuilder('a'));
+		
+		$grid->setProvider($this->componentGrid);
+		
+		return $grid;
+	}
+    
+    /**
+     * Component component grid
+     * 
+     * @param type $name
+     * @return type
+     */
+    protected function createComponentCreateComponentGrid($name)
+	{
+		$grid = $this->gridControl->create();
+		$grid->setGridName($name);
+		$grid->setDataSource($this->getComponentsArray());
+//        $grid->setTreeView();
+//        $grid->setDataSource($this->componentRepository->createQueryBuilder('a'));
+		
+		$grid->setProvider($this->createComponentGrid);
+		
+		return $grid;
+	}
+    
+    
+    private function getComponentsArray()
+    {
+        $components = [];
+        
+        foreach($this->componentRegister->getAll() as $i => $component) {
+            /* @var $component \Wame\ComponentModule\Registers\IComponent */
+            
+            $components[] = (object) [
+                'id' => $i,
+                'name' => $component->getName(),
+                'description' => $component->getDescription(),
+                'createAction' => $component->getLinkCreate()
+            ];
+        }
+        
+        return $components;
+    }
 
 }

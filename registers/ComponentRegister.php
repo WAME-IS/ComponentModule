@@ -27,4 +27,16 @@ class ComponentRegister extends PriorityRegister implements IMenuProvider
     {//TODO remove, with IMenuProvider
         return $this->getAll();
     }
+    
+    public function getList()
+    {
+        $arr = [];
+        
+        foreach($this->array as $item) {
+            $arr[] = $item['name'];
+        }
+        
+        return $arr;
+    }
+    
 }
