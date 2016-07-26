@@ -3,8 +3,10 @@
 namespace Wame\ComponentModule\Entities;
 
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\Criteria;
 use Wame\Core\Entities\Columns;
 use Wame\LanguageModule\Entities\TranslatableEntity;
+use Wame\ComponentModule\Repositories\PositionRepository;
 use Wame\Utils\Strings;
 
 /**
@@ -39,8 +41,12 @@ class PositionEntity extends TranslatableEntity
 	
 	public function getComponents()
 	{
-//        $crieteria = Criteria::create()->where(Criteria::expr()->neq("status", PositionRepository::STATUS_REMOVE));
-        return $this->components;//->matching($crieteria);
+//        $criteria = Criteria::create()
+//                    ->where(
+//                        Criteria::expr()->neq('component.status', PositionRepository::STATUS_REMOVE)
+//                    );
+
+        return $this->components;//->matching($criteria)->toArray();
 	}
 	
 	public function getName()

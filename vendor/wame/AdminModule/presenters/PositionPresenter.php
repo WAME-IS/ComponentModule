@@ -2,6 +2,7 @@
 
 namespace App\AdminModule\Presenters;
 
+use Doctrine\Common\Collections\Criteria;
 use Wame\ComponentModule\Entities\PositionEntity;
 use Wame\ComponentModule\Repositories\PositionRepository;
 use Wame\ComponentModule\Forms\PositionForm;
@@ -30,6 +31,9 @@ class PositionPresenter extends \App\AdminModule\Presenters\BasePresenter
 	/** @var PositionEntity */
 	private $position;
 	
+	/** @var array */
+	private $components;
+	
 	
 	public function actionDefault()
 	{
@@ -54,6 +58,14 @@ class PositionPresenter extends \App\AdminModule\Presenters\BasePresenter
 			$this->flashMessage(_('This position is removed.'), 'danger');
 			$this->redirect(':Admin:Component:', ['id' => null]);
 		}
+        
+        $criteriaCollection = new \Doctrine\Common\Collections\ArrayCollection($this->position->components->toArray());
+        
+        $criteria = Criteria::create()
+                    ->where(Criteria::expr()->in('ComponentType', $this->componentRegister->getList()))
+                    ->andWhere(Criteria::expr()->neq('ComponentStatus', ComponentRepository::STATUS_REMOVE));
+        
+        $this->components = $criteriaCollection->matching($criteria);
 	}
 	
 	
@@ -150,6 +162,7 @@ class PositionPresenter extends \App\AdminModule\Presenters\BasePresenter
 	{
 		$this->template->siteTitle = _('Components');
 		$this->template->position = $this->position;
+		$this->template->components = $this->components;
 		$this->template->positionStatusList = $this->positionRepository->getStatusList();
 		$this->template->componentStatusList = $this->componentRepository->getStatusList();
 		$this->template->componentRegister = $this->componentRegister;

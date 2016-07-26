@@ -55,6 +55,16 @@ class ComponentInPositionEntity extends BaseEntity
 	{
 		return $this->sort;
 	}
+    
+	public function getComponentType()
+	{
+		return $this->component->getType();
+	}
+    
+	public function getComponentStatus()
+	{
+		return $this->component->getStatus();
+	}
 	
 	
 	/** set ************************************************************/
