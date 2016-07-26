@@ -11,6 +11,8 @@ use Wame\ComponentModule\Entities\ComponentLangEntity;
 use Wame\ComponentModule\Repositories\ComponentRepository;
 use Wame\UserModule\Entities\UserEntity;
 use Wame\UserModule\Repositories\UserRepository;
+use Wame\ComponentModule\Paremeters\ContainerAttributes;
+
 
 class ComponentForm extends FormFactory
 {	
@@ -83,15 +85,15 @@ class ComponentForm extends FormFactory
 				$this->componentRepository->onUpdate($form, $values, $componentEntity);
 
 				$presenter->flashMessage(_('The component has been successfully updated.'), 'success');
+                $presenter->redirect('this');
 			} else {
 				$componentEntity = $this->create($values);
 				
 				$this->componentRepository->onCreate($form, $values, $componentEntity);
 
 				$presenter->flashMessage(_('The component was successfully created.'), 'success');
+                $presenter->redirect(':Admin:Component:', ['id' => null]);
 			}
-
-			$presenter->redirect(':Admin:Component:', ['id' => null]);
 		} catch (\Exception $e) {
 			if ($e instanceof \Nette\Application\AbortException) {
 				throw $e;
@@ -213,29 +215,11 @@ class ComponentForm extends FormFactory
 	private function getParams($values, $parameters = [])
 	{
 		$array = [
-			'container' => $this->convertContainerAttributesToDatabase($values['container']),
+			'container' => ContainerAttributes::toDatabase($values['container']),
 			'template' => $values['template']
 		];
 		
 		return array_replace($parameters, $array);
 	}
-    
-    
-    /**
-     * Convert container attributes to database
-     * 
-     * @param array $attributes
-     * @return array
-     */
-    private function convertContainerAttributesToDatabase($attributes)
-    {
-        $return = [];
-        
-        foreach ($attributes as $attribute) {
-            $return[$attribute['name']] = $attribute['value'];
-        }
-        
-        return $return;
-    }
 
 }

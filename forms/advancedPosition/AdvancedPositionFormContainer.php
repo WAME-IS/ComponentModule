@@ -17,7 +17,7 @@ class AdvancedPositionFormContainer extends BaseFormContainer
         $form->addText('class', _('CSS class'));		
 
         $form->addText('template', _('Template'))
-				->setAttribute('placeholded', 'default.latte');		
+				->setAttribute('placeholder', 'default.latte');
     }
 
 

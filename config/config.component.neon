@@ -54,7 +54,9 @@ services:
     ComponentPositionForm:
         class: Wame\ComponentModule\Forms\ComponentPositionForm
         setup:
-            - addFormContainer(Wame\ComponentModule\Forms\PositionFormContainer(), 'PositionFormContainer', 100)
+            - addFormContainer(Wame\ComponentModule\Forms\ComponentPositionFormContainer(), 'ComponentPositionFormContainer', 100)
+            - addFormContainer(Wame\DynamicObject\Forms\FormGroupContainer(), 'SubmitFormGroupContainer')
+            - addFormContainer(Wame\DynamicObject\Forms\SubmitFormContainer(), 'SubmitFormContainer')
 
     ComponentAddToPositionForm:
         class: Wame\ComponentModule\Forms\ComponentAddToPositionForm

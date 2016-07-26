@@ -7,12 +7,15 @@ use Wame\DynamicObject\Forms\BaseFormContainer;
 use Wame\ComponentModule\Paremeters\ContainerAttributes;
 
 
-class ContainerComponentFormContainer extends BaseFormContainer
+class ComponentPositionFormContainer extends BaseFormContainer
 {
     protected function configure() 
 	{		
 		$form = $this->getForm();
         
+        $form->addText('template', _('Template'))
+				->setAttribute('placeholder', 'default.latte');
+
         $form->addGroup(_('Container'))->setOption('description', _('You can add attributes for container that component wrapper.'));
         
         $attributes = $form->addDynamic('container', function (Container $container) 
@@ -40,11 +43,13 @@ class ContainerComponentFormContainer extends BaseFormContainer
 	{
 		$form = $this->getForm();
 		
-		$componentEntity = $object->componentEntity;
+		$componentEntity = $object->componentInPositionEntity;
 
 		if ($componentEntity->getParameter('container')) {
 			$form['container']->setDefaults(ContainerAttributes::fromDatabase($componentEntity->getParameter('container')));
 		}
+        
+        $form['template']->setDefaultValue($componentEntity->getParameter('template'));
 	}
 
 }

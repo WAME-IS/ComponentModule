@@ -6,8 +6,11 @@ use Nette\Application\UI\Form;
 use Kdyby\Doctrine\EntityManager;
 use Wame\Core\Forms\FormFactory;
 use Wame\ComponentModule\Registers\ComponentRegister;
+use Wame\ComponentModule\Entities\ComponentEntity;
 use Wame\ComponentModule\Entities\ComponentInPositionEntity;
 use Wame\ComponentModule\Repositories\ComponentInPositionRepository;
+use Wame\ComponentModule\Paremeters\ContainerAttributes;
+
 
 class ComponentPositionForm extends FormFactory
 {	
@@ -16,6 +19,9 @@ class ComponentPositionForm extends FormFactory
 	
 	/** @var ComponentRegister */
 	private $componentRegister;
+	
+	/** @var ComponentEntity */
+	public $componentEntity;
 	
 	/** @var ComponentInPositionEntity */
 	public $componentInPositionEntity;
@@ -40,8 +46,6 @@ class ComponentPositionForm extends FormFactory
 	public function build()
 	{		
 		$form = $this->createForm();
-
-		$form->addSubmit('submit', _('Edit'));
 
 		$this->componentInPositionEntity = $this->componentInPositionRepository->get(['id' => $this->id]);
 		$this->setDefaultValues();
@@ -100,8 +104,7 @@ class ComponentPositionForm extends FormFactory
 	private function getParams($values, $parameters = [])
 	{
 		$array = [
-			'cache' => $values['cache'],
-			'class' => $values['class'],
+			'container' => ContainerAttributes::toDatabase($values['container']),
 			'template' => $values['template']
 		];
 		
