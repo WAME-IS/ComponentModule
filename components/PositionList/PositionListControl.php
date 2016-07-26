@@ -30,8 +30,6 @@ class PositionListControl extends BaseControl
 	public function render()
 	{
 		$this->template->positions = $this->positionRepository->find(['status !=' => PositionRepository::STATUS_REMOVE]);
-
-		$this->componentRender();
 	}
 
 }

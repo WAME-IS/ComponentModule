@@ -27,10 +27,7 @@ class ComponentPositionListControl extends BaseControl
 
     /** @var integer */
     private $id;
-
-    /** @var string */
-    private $lang;
-
+    
     public function __construct(
     Container $container, IRouter $router, Request $httpRequest, ComponentRepository $componentRepository, ComponentInPositionRepository $componentInPositionRepository
     )
@@ -41,7 +38,6 @@ class ComponentPositionListControl extends BaseControl
         $this->componentInPositionRepository = $componentInPositionRepository;
 
         $this->id = $router->match($httpRequest)->getParameter('id');
-        $this->lang = $componentInPositionRepository->lang;
     }
 
     public function render()
@@ -49,9 +45,5 @@ class ComponentPositionListControl extends BaseControl
         $component = $this->componentRepository->get(['id' => $this->id]);
 
         $this->template->componentPositionList = $this->componentInPositionRepository->find(['component' => $component]);
-        $this->template->lang = $this->lang;
-
-        $this->getTemplateFile();
-        $this->template->render();
     }
 }
