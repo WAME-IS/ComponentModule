@@ -16,7 +16,7 @@ class DefaultParameterReader implements IParameterReader
                     if ($arrayValue === null) {
                         $arrayValue = [];
                     }
-                    $arrayValue = array_merge_recursive($arrayValue, $value);
+                    $arrayValue = array_replace_recursive($arrayValue, $value);
                 } else {
                     return $value;
                 }

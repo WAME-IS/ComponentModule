@@ -62,12 +62,14 @@ class DefaultPositionRenderer
      */
     private function getContainer($control, $defaultParams)
     {
-        $containerParams = $control->getComponentParameter("container", ParameterReaders::$HTML);
-        $containerParams = array_replace_recursive($containerParams, $defaultParams);
+        $containerParams = $control->getComponentParameter("container");
+        $containerParams = array_replace_recursive($defaultParams, $containerParams);
 
         if (array_key_exists('tag', $containerParams)) {
             $tag = $containerParams['tag'];
             unset($containerParams['tag']);
+        } else {
+            throw new \Nette\InvalidArgumentException("Container has to have tag specified.");
         }
         
         return Html::el($tag, $containerParams);
