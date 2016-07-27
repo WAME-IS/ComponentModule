@@ -50,16 +50,17 @@ class PositionControlLoader extends Object
      * 
      * @param Control $control
      * @param string $positionName
+     * @return boolean Whenever position is loaded
      */
     public function check(Control $control, $positionName)
     {
         if ($control->getComponent('position' . Strings::firstUpper($positionName), false)) {
-            return;
+            return true;
         }
 
         $position = $this->positionRepository->get(['name' => $positionName]);
         if (!$position) {
-            throw new Exception("Position $positionName does not exist in database.");
+            $position = $this->createPosition($positionName);
         }
 
         $presenterName = $control->getPresenter()->getName();
@@ -71,12 +72,33 @@ class PositionControlLoader extends Object
         $positionUsageEntity->setComponent($controlName);
 
         $this->positionUsageRepository->create($positionUsageEntity);
+        
+        return false;
+    }
 
-        throw new Exception("Position $positionName saved to usage table, please reload.");
+    private function createPosition($position)
+    {
+        $newPositionEntity = new PositionEntity();
+
+        $newPositionEntity->setName($position);
+        $newPositionEntity->setStatus(PositionRepository::STATUS_ENABLED);
+        $newPositionEntity->setCreateDate(new \DateTime());
+
+        $newPositionLangEntity = new PositionLangEntity();
+
+        $newPositionLangEntity->setPosition($newPositionEntity);
+        $newPositionLangEntity->setTitle($position);
+        $newPositionLangEntity->setEditDate(new \DateTime());
+        $newPositionLangEntity->setLang($this->positionRepository->lang);
+        $newPositionEntity->addLang($this->positionRepository->lang, $newPositionLangEntity);
+
+        $this->positionRepository->create($newPositionEntity);
+
+        return $newPositionEntity;
     }
 
     public static function checkStatic($component, $positionName)
     {
-        self::$instance->check($component, $positionName);
+        return self::$instance->check($component, $positionName);
     }
 }
