@@ -10,6 +10,8 @@ use Wame\ComponentModule\Components\PositionListControl;
 use Wame\ComponentModule\Components\IPositionListControlFactory;
 use Wame\ComponentModule\Repositories\ComponentRepository;
 use Wame\ComponentModule\Registers\ComponentRegister;
+use Wame\DataGridControl\IDataGridControlFactory;
+use Wame\ComponentModule\Vendor\Wame\AdminModule\Grids\PositionGrid;
 
 class PositionPresenter extends \App\AdminModule\Presenters\BasePresenter
 {	
@@ -33,6 +35,12 @@ class PositionPresenter extends \App\AdminModule\Presenters\BasePresenter
 	
 	/** @var array */
 	private $components;
+    
+    /** @var IDataGridControlFactory @inject */
+	public $gridControl;
+    
+    /** @var PositionGrid @inject */
+	public $positionGrid;
 	
 	
 	public function actionDefault()
@@ -65,7 +73,7 @@ class PositionPresenter extends \App\AdminModule\Presenters\BasePresenter
                     ->where(Criteria::expr()->in('ComponentType', $this->componentRegister->getList()))
                     ->andWhere(Criteria::expr()->neq('ComponentStatus', ComponentRepository::STATUS_REMOVE));
         
-        $this->components = $criteriaCollection->matching($criteria);
+        $this->components = $criteriaCollection->matching($criteria)->toArray();
 	}
 	
 	
@@ -127,34 +135,6 @@ class PositionPresenter extends \App\AdminModule\Presenters\BasePresenter
 			$this->flashMessage(_('This position is removed.'), 'danger');
 			$this->redirect(':Admin:Component:', ['id' => null]);
 		}
-	}
-	
-	
-	/**
-	 * Position form
-	 * 
-	 * @return PositionForm
-	 */
-	protected function createComponentPositionForm()
-	{
-		$control = $this->positionForm
-							->setId($this->id)
-							->build();
-		
-		return $control;
-	}
-	
-	
-	/**
-	 * Position list
-	 * 
-	 * @return PositionListControl
-	 */
-	protected function createComponentPositionList()
-	{
-        $control = $this->IPositionListControlFactory->create();
-        
-		return $control;
 	}
 	
 	
@@ -222,6 +202,55 @@ class PositionPresenter extends \App\AdminModule\Presenters\BasePresenter
 		$this->positionRepository->changeStatus(['id' => $this->id]);
 		
 		$this->redirect('this');
+	}
+    
+    
+    /** components ************************************************************/
+    
+    /**
+	 * Position form
+	 * 
+	 * @return PositionForm
+	 */
+	protected function createComponentPositionForm()
+	{
+		$control = $this->positionForm
+							->setId($this->id)
+							->build();
+		
+		return $control;
+	}
+	
+	
+	/**
+	 * Position list
+	 * 
+	 * @return PositionListControl
+	 */
+	protected function createComponentPositionList()
+	{
+        $control = $this->IPositionListControlFactory->create();
+        
+		return $control;
+	}
+    
+    
+    /**
+     * Component component grid
+     * 
+     * @param type $name
+     * @return type
+     */
+    protected function createComponentPositionGrid($name)
+	{
+		$grid = $this->gridControl->create();
+		$grid->setGridName($name);
+		$grid->setDataSource($this->components);
+//        $grid->setDataSource($this->componentRepository->createQueryBuilder('a'));
+		
+		$grid->setProvider($this->positionGrid);
+		
+		return $grid;
 	}
 	
 }
