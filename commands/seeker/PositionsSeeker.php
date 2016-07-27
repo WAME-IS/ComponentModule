@@ -2,43 +2,53 @@
 
 namespace Wame\ComponentModule\Commands\Seeker;
 
-use Nette\Application\IPresenterFactory;
-use Nette\Application\PresenterFactory;
-use Nette\Application\UI\Presenter;
-use Nette\DI\Container;
-use Nette\Loaders\RobotLoader;
+use Nette\InvalidStateException;
 use Nette\Object;
-use function dump;
+use Nette\Utils\Finder;
+use Nette\Utils\Strings;
 
 class PositionsSeeker extends Object
 {
 
-    /** @var RobotLoader */
-    private $robotLoader;
-    
-    /** @var PresenterFactory */
-    private $presenterFactory;
-    
-    public function __construct(Container $container, IPresenterFactory $presenterFactory)
+    const POSITION_PATTERN = '-\{position (.*?)\}-';
+    //const POSITION_PATTERN = '-\{position (.*?)\}|\{control position(.*?)\}-';
+
+    /** @var string[] */
+    private $directories;
+
+    public function __construct($directories = null)
     {
-        $this->robotLoader = $container->getService('robotLoader');
-        $this->presenterFactory = $presenterFactory;
+        $this->directories = $directories;
+        
+        $this->addDirectory(VENDOR_PATH.'/'.PACKAGIST_NAME);
+        $this->addDirectory(TEMPLATES_PATH);
+        $this->addDirectory(APP_PATH);
+    }
+
+    public function addDirectory($directory)
+    {
+        $this->directories[] = $directory;
     }
 
     public function seek()
     {
-        $classes = $this->robotLoader->getIndexedClasses();
-        foreach ($classes as $class => $classFile) {
-            $parents = @class_parents($class);
-            if(in_array(Presenter::class, $parents)) {
-                $this->seekInPresenter($class);
+        $positions = [];
+
+        if (!$this->directories) {
+            throw new InvalidStateException("You have to add at least one directory to PositionSeeker.");
+        }
+
+        foreach ($this->directories as $directory) {
+            foreach (Finder::find("*.latte")->from($directory) as $file) {
+                $latte = file_get_contents($file);
+                $match = Strings::match($latte, self::POSITION_PATTERN);
+                
+                if($match && !in_array($match[1], $positions)) {
+                    $positions[] = $match[1];
+                }
             }
         }
-    }
-    
-    private function seekInPresenter($presenterClass)
-    {
-        $name = $this->presenterFactory->unformatPresenterClass($presenterClass);
-        dump($name);
+
+        return $positions;
     }
 }

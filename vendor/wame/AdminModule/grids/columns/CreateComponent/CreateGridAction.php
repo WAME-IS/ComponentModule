@@ -2,6 +2,8 @@
 
 namespace Wame\ComponentModule\Vendor\Wame\AdminModule\Grids\Columns\CreateComponent;
 
+use Wame\DataGridControl\BaseGridColumn;
+
 class CreateGridAction extends BaseGridColumn
 {
 	public function addColumn($grid)
