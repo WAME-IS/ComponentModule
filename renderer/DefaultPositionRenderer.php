@@ -62,7 +62,7 @@ class DefaultPositionRenderer
      */
     private function getContainer($control, $defaultParams)
     {
-        $containerParams = $control->getComponentParameter("container");
+        $containerParams = $control->getComponentParameter("container", ParameterReaders::$HTML);
         $containerParams = array_replace_recursive($defaultParams, $containerParams);
 
         if (array_key_exists('tag', $containerParams)) {
