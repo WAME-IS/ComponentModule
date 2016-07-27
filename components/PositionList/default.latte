@@ -18,7 +18,7 @@
 				<span class="pull-right badge">{count($position->components)}</span>
 			</h4>
 			
-			<small n:if="$position->langs[$lang]->description" class="list-group-item-text">
+			<small n:if="$position->description" class="list-group-item-text">
 				{$position->description}
 			</small>
 		</a>

@@ -16,3 +16,13 @@ services:
         setup:
             - addColumn(Wame\ComponentModule\Vendor\Wame\AdminModule\Grids\Columns\CreateComponent\NameGridColumn())
             - addColumn(Wame\DataGridControl\DescriptionGridColumn())
+
+    PositionGrid:
+        class: Wame\ComponentModule\Vendor\Wame\AdminModule\Grids\PositionGrid
+        setup:
+            - addColumn(Wame\ComponentModule\Vendor\Wame\AdminModule\Grids\Columns\PositionGrid\IdGridColumn())
+            - addColumn(Wame\ComponentModule\Vendor\Wame\AdminModule\Grids\Columns\PositionGrid\TypeGridColumn())
+            - addColumn(Wame\ComponentModule\Vendor\Wame\AdminModule\Grids\Columns\PositionGrid\TitleLinkGridColumn())
+            - addColumn(Wame\ComponentModule\Vendor\Wame\AdminModule\Grids\Columns\PositionGrid\NameGridColumn())
+            - addColumn(Wame\ComponentModule\Vendor\Wame\AdminModule\Grids\Columns\PositionGrid\StatusGridColumn())
+            - addColumn(Wame\DataGridControl\DeleteGridAction())

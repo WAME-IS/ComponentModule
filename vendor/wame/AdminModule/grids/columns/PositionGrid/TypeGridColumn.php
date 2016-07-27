@@ -1,6 +1,6 @@
 <?php
 
-namespace Wame\ComponentModule\Vendor\Wame\AdminModule\Grids\Columns;
+namespace Wame\ComponentModule\Vendor\Wame\AdminModule\Grids\Columns\PositionGrid;
 
 use Wame\DataGridControl\BaseGridColumn;
 use Wame\ComponentModule\Registers\ComponentRegister;
@@ -23,8 +23,8 @@ class TypeGridColumn extends BaseGridColumn
 		$grid->addColumnText('type', _('Type'))
 				->setRenderer(function($item) {
                   return Html::el('span')
-                          ->setClass($this->componentRegister[$item->getType()]->getIcon())
-                          ->setTitle($this->componentRegister[$item->getType()]->getTitle()); //, '<span class="' .  . '" title="'. $this->componentRegister[$item->getType()]->getTitle() .'"></span>';
+                          ->setClass($this->componentRegister[$item->component->getType()]->getIcon())
+                          ->setTitle($this->componentRegister[$item->component->getType()]->getTitle()); //, '<span class="' .  . '" title="'. $this->componentRegister[$item->getType()]->getTitle() .'"></span>';
 				});
 		
 		return $grid;

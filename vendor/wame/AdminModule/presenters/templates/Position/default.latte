@@ -5,7 +5,7 @@
 				<a n:href="Component:, 'id' => null">{$siteTitle}</a>
 				<small>
                     <span class="fa fa-angle-right"></span>
-                    {$position->langs[$lang]->title}
+                    {$position->title}
                 </small>
 			</h1>
 				
@@ -28,54 +28,7 @@
 				<div class="lead text-muted">{_'You do not have created any components in this position.'}</div>
 				<a class="btn btn-success" n:href=":Admin:Component:create, 'id' => $id">{_'Add first component'}</a>
 			{else}
-				<table class="table">
-					<thead>
-						<tr>
-							<th>#</th>
-							<th>{_'Type'}</th>
-							<th>{_'Title'}</th>
-							<th>{_'Name'}</th>
-							<th>{_'Status'}</th>
-							<th></th>
-						</tr>
-					</thead>
-
-					<tbody>
-						<tr n:foreach="$components as $component">
-							{var $component = $component->component}
-							
-							<td>
-								{$component->id}
-							</td>
-
-							<td>
-								<span class="{$componentRegister[$component->type]->getIcon()}" title="{$componentRegister[$component->type]->getTitle()}"></span>
-							</td>
-							
-							<td>
-								<div><a href="{$componentRegister[$component->type]->getLinkDetail($component)}">{$component->langs[$lang]->title}</a></div>
-								<small n:if="$component->langs[$lang]->description" class="text-muted">{$component->langs[$lang]->description}</small>
-							</td>
-
-							<td>
-								{$component->name}
-							</td>
-
-							<td>
-								{if $component->status == 1}
-									<span class="label label-success">{$componentStatusList[$component->status]}</span>
-								{elseif $component->status == 2}
-									<span class="label label-danger">{$componentStatusList[$component->status]}</span>
-								{/if}
-							</td>
-
-							<td class="text-right">
-								<a class="btn btn-sm btn-warning" href="{$componentRegister[$component->type]->getLinkDetail($component)}"><span class="fa fa-edit"></span></a>
-								<a class="btn btn-sm btn-danger" n:href=":Admin:Component:delete, 'id' => $component->id"><span class="fa fa-trash-o"></span></a>
-							</td>
-						</tr>
-					</tbody>
-				</table>
+                {control positionGrid}
 			{/if}
 		</div>
 		
