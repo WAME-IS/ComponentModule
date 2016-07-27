@@ -32,12 +32,12 @@ abstract class AbastractComponentPresenter extends ComponentPresenter
     
 	public function renderCreate()
 	{
-		$this->template->siteTitle = _('Create '.$this->getComponentName());
+		$this->template->siteTitle = _('Create') . ' ' . $this->getComponentName();
 	}
 	
 	public function renderEdit()
 	{
-		$this->template->siteTitle = _('Edit '.$this->getComponentName());
+		$this->template->siteTitle = _('Edit') . ' ' . $this->getComponentName();
 	}
     
     protected abstract function getComponentIdentifier();
