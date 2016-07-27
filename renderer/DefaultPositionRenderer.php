@@ -26,31 +26,37 @@ class DefaultPositionRenderer
      * @return string
      */
     function render($positionControl)
-    {   
+    {
         $listContainerDefault = $this->defaults['list'];
         $listContainer = $this->getContainer($positionControl, $listContainerDefault);
 
-        echo $listContainer->startTag();
+        if ($listContainer) {
+            echo $listContainer->startTag();
+        }
 
         foreach ($positionControl->getComponents() as $component) {
 
             $listItemContainerDefault = $this->defaults['listItem'];
             $listItemContainer = $this->getContainer($component, $listItemContainerDefault);
 
-            echo $listItemContainer->startTag();
+            if ($listItemContainer) {
+                echo $listItemContainer->startTag();
+            }
 
-            //$control->getComponentParameter("render");
-
-            if($component instanceof BaseControl) {
+            if ($component instanceof BaseControl) {
                 $component->willRender("render");
             } else {
                 $component->render();
             }
 
-            echo $listItemContainer->endTag();
+            if ($listItemContainer) {
+                echo $listItemContainer->endTag();
+            }
         }
 
-        echo $listContainer->endTag();
+        if ($listContainer) {
+            echo $listContainer->endTag();
+        }
     }
 
     /**
@@ -65,13 +71,9 @@ class DefaultPositionRenderer
         $containerParams = $control->getComponentParameter("container", ParameterReaders::$HTML);
         $containerParams = array_replace_recursive($defaultParams, $containerParams);
 
-        if (array_key_exists('tag', $containerParams)) {
-            $tag = $containerParams['tag'];
+        if (array_key_exists('tag', $containerParams) && $tag = $containerParams['tag']) {
             unset($containerParams['tag']);
-        } else {
-            throw new \Nette\InvalidArgumentException("Container has to have tag specified.");
+            return Html::el($tag, $containerParams);
         }
-        
-        return Html::el($tag, $containerParams);
     }
 }
