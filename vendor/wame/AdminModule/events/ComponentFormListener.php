@@ -1,6 +1,6 @@
 <?php
 
-namespace Wame\ComponentModule\Vendor\Wame\ComponentModule\Events;
+namespace Wame\ComponentModule\Vendor\Wame\AdminModule\Events;
 
 use Nette\Object;
 use Wame\ComponentModule\Repositories\ComponentRepository;
