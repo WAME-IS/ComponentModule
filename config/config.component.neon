@@ -44,29 +44,34 @@ services:
     ComponentForm:
         class: Wame\ComponentModule\Forms\ComponentForm
         setup:
-            - addFormContainer(Wame\ComponentModule\Forms\BasicComponentFormContainer(), 'BasicFormContainer', 100)
-            - addFormContainer(Wame\ComponentModule\Forms\ContainerComponentFormContainer(), 'ContainerComponentFormContainer', 75)
-            - addFormContainer(Wame\ComponentModule\Forms\AdvancedComponentFormContainer(), 'AdvancedFormContainer', 50)
-            - addFormContainer(Wame\ComponentModule\Forms\PositionFormContainer(), 'PositionFormContainer', 25)
+            - addFormContainer(Wame\ComponentModule\Forms\Component\BasicFormContainer(), 'BasicFormContainer', 100)
+            - addFormContainer(Wame\DynamicObject\Forms\FormGroupContainer(), 'AdvancedFormGroupContainer', 80)
+            - addFormContainer(Wame\ComponentModule\Forms\Component\NameFormContainer(), 'NameFormContainer', 75)
+            - addFormContainer(Wame\ComponentModule\Forms\Component\TemplateFormContainer(), 'TemplateFormContainer', 70)
+            - addFormContainer(Wame\ComponentModule\Forms\Component\PositionFormContainer(), 'PositionFormContainer', 65)
+            - addFormContainer(Wame\ComponentModule\Forms\Component\ContainerFormContainer(), 'ContainerFormContainer', 50)
             - addFormContainer(Wame\DynamicObject\Forms\FormGroupContainer(), 'SubmitFormGroupContainer')
             - addFormContainer(Wame\DynamicObject\Forms\SubmitFormContainer(), 'SubmitFormContainer')
 
     ComponentPositionForm:
         class: Wame\ComponentModule\Forms\ComponentPositionForm
         setup:
-            - addFormContainer(Wame\ComponentModule\Forms\ComponentPositionFormContainer(), 'ComponentPositionFormContainer', 100)
+            - addFormContainer(Wame\ComponentModule\Forms\ComponentPosition\TemplateFormContainer(), 'TemplateFormContainer', 100)
+            - addFormContainer(Wame\ComponentModule\Forms\ComponentPosition\ContainerFormContainer(), 'ContainerFormContainer', 75)
             - addFormContainer(Wame\DynamicObject\Forms\FormGroupContainer(), 'SubmitFormGroupContainer')
             - addFormContainer(Wame\DynamicObject\Forms\SubmitFormContainer(), 'SubmitFormContainer')
+
 
     ComponentAddToPositionForm:
         class: Wame\ComponentModule\Forms\ComponentAddToPositionForm
 
+
     PositionForm:
         class: Wame\ComponentModule\Forms\PositionForm
         setup:
-            - addFormContainer(Wame\ComponentModule\Forms\BasicPositionFormContainer(), 'BasicFormContainer', 100)
-            - addFormContainer(Wame\ComponentModule\Forms\PositionNameFormContainer(), 'PositionNameFormContainer', 75)
-            - addFormContainer(Wame\ComponentModule\Forms\ContainerPositionFormContainer(), 'ContainerPositionFormContainer', 50)
+            - addFormContainer(Wame\ComponentModule\Forms\Position\BasicFormContainer(), 'BasicFormContainer', 100)
+            - addFormContainer(Wame\ComponentModule\Forms\Position\NameFormContainer(), 'NameFormContainer', 75)
+            - addFormContainer(Wame\ComponentModule\Forms\Position\ContainerFormContainer(), 'ContainerFormContainer', 50)
             - addFormContainer(Wame\DynamicObject\Forms\FormGroupContainer(), 'SubmitFormGroupContainer')
             - addFormContainer(Wame\DynamicObject\Forms\SubmitFormContainer(), 'SubmitFormContainer')
 

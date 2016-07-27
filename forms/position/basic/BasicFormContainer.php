@@ -1,10 +1,11 @@
 <?php
 
-namespace Wame\ComponentModule\Forms;
+namespace Wame\ComponentModule\Forms\Position;
 
 use Wame\DynamicObject\Forms\BaseFormContainer;
 
-class BasicPositionFormContainer extends BaseFormContainer
+
+class BasicFormContainer extends BaseFormContainer
 {
     protected function configure() 
 	{		

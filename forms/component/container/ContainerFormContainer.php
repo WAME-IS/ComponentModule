@@ -1,16 +1,16 @@
 <?php
 
-namespace Wame\ComponentModule\Forms;
+namespace Wame\ComponentModule\Forms\Component;
 
 use Nette\Forms\Container;
 use Wame\DynamicObject\Forms\BaseFormContainer;
 use Wame\ComponentModule\Paremeters\ContainerAttributes;
 
 
-class ContainerPositionFormContainer extends BaseFormContainer
+class ContainerFormContainer extends BaseFormContainer
 {
-    protected function configure() 
-	{		
+    protected function configure()
+    {
 		$form = $this->getForm();
         
         $form->addGroup(_('Container'));
@@ -34,7 +34,7 @@ class ContainerPositionFormContainer extends BaseFormContainer
         $form->getCurrentGroup()->add($tag);
 
         $add = $attributes->addSubmit('add', _('Add attribute'))
-                    ->setOption('description', _('Attributes for container wrapper position.'))
+                    ->setOption('description', _('Attributes for container wrapper component.'))
                     ->setAttribute('class', 'btn btn-default')
                     ->setValidationScope(false)
                     ->addCreateOnClick(true);
@@ -47,10 +47,10 @@ class ContainerPositionFormContainer extends BaseFormContainer
 	{
 		$form = $this->getForm();
 		
-		$positionEntity = $object->positionEntity;
+		$componentEntity = $object->componentEntity;
 
-		if ($positionEntity->getParameter('container')) {
-			$form['container']->setDefaults(ContainerAttributes::fromDatabase($positionEntity->getParameter('container')));
+		if ($componentEntity->getParameter('container')) {
+			$form['container']->setDefaults(ContainerAttributes::fromDatabase($componentEntity->getParameter('container')));
 		}
 	}
 

@@ -1,6 +1,6 @@
 <?php
 
-namespace Wame\ComponentModule\Forms;
+namespace Wame\ComponentModule\Forms\Component;
 
 use Nette\Application\IRouter;
 use Nette\Http\Request;
