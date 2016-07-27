@@ -23,7 +23,7 @@ abstract class AbastractComponentPresenter extends ComponentPresenter
 	protected function createComponentEditForm()
 	{
 		$form = $this->componentForm
-						->setType($this->getComponentName())
+						->setType($this->getComponentIdentifier())
 						->setId($this->id)
 						->build();
 		
