@@ -65,7 +65,10 @@ services:
         class: Wame\ComponentModule\Forms\PositionForm
         setup:
             - addFormContainer(Wame\ComponentModule\Forms\BasicPositionFormContainer(), 'BasicFormContainer', 100)
-            - addFormContainer(Wame\ComponentModule\Forms\AdvancedPositionFormContainer(), 'AdvancedFormContainer', 50)
+            - addFormContainer(Wame\ComponentModule\Forms\PositionNameFormContainer(), 'PositionNameFormContainer', 75)
+            - addFormContainer(Wame\ComponentModule\Forms\ContainerPositionFormContainer(), 'ContainerPositionFormContainer', 50)
+            - addFormContainer(Wame\DynamicObject\Forms\FormGroupContainer(), 'SubmitFormGroupContainer')
+            - addFormContainer(Wame\DynamicObject\Forms\SubmitFormContainer(), 'SubmitFormContainer')
 
     # Commands
     UpdatePositionsCommand:

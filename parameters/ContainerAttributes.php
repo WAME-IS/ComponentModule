@@ -15,7 +15,14 @@ class ContainerAttributes
     {
         $return = [];
         
-        foreach ($attributes as $attribute) {
+        $attr = $attributes;
+        
+        if (isset($attr['tag'])) {
+            $return['tag'] = $attr['tag'];
+            unset($attr['tag']);
+        }
+        
+        foreach ($attr as $attribute) {
             $return[$attribute['name']] = $attribute['value'];
         }
         
@@ -33,7 +40,14 @@ class ContainerAttributes
     {
         $return = [];
         
-        foreach ($attributes as $name => $value) {
+        $attr = $attributes;
+        
+        if (isset($attr['tag'])) {
+            $return['tag'] = $attr['tag'];
+            unset($attr['tag']);
+        }
+        
+        foreach ($attr as $name => $value) {
             $return[] = [
                 'name' => $name,
                 'value' => $value

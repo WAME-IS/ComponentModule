@@ -11,6 +11,8 @@ use Wame\ComponentModule\Entities\PositionLangEntity;
 use Wame\ComponentModule\Repositories\PositionRepository;
 use Wame\UserModule\Repositories\UserRepository;
 use Wame\UserModule\Entities\UserEntity;
+use Wame\ComponentModule\Paremeters\ContainerAttributes;
+
 
 class PositionForm extends FormFactory
 {	
@@ -56,12 +58,6 @@ class PositionForm extends FormFactory
 	public function build()
 	{		
 		$form = $this->createForm();
-
-		if ($this->id) {
-			$form->addSubmit('submit', _('Update'));
-		} else {
-			$form->addSubmit('submit', _('Create'));
-		}
 		
 		if ($this->id) {
 			$this->positionEntity = $this->positionRepository->get(['id' => $this->id]);
@@ -185,8 +181,7 @@ class PositionForm extends FormFactory
 	private function getParams($values, $parameters = [])
 	{
 		$array = [
-			'class' => $values['class'],
-			'template' => $values['template']
+			'container' => ContainerAttributes::toDatabase($values['container'])
 		];
 		
 		return array_replace($parameters, $array);
