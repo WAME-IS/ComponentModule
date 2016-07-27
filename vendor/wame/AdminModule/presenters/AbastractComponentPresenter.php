@@ -30,15 +30,18 @@ abstract class AbastractComponentPresenter extends ComponentPresenter
 		return $form;
 	}
     
+    
 	public function renderCreate()
 	{
-		$this->template->siteTitle = _('Create') . ' ' . $this->getComponentName();
+		$this->template->siteTitle = $this->getComponentName();
 	}
+    
 	
 	public function renderEdit()
 	{
-		$this->template->siteTitle = _('Edit') . ' ' . $this->getComponentName();
+		$this->template->siteTitle = $this->getComponentName();
 	}
+    
     
     protected abstract function getComponentIdentifier();
     

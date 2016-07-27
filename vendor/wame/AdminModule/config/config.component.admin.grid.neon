@@ -1,4 +1,7 @@
 services:
+    # Events
+    - {class: Wame\ComponentModule\Vendor\Wame\AdminModule\Events\ComponentFormListener, tags: [run]}
+
     ComponentGrid:
         class: Wame\ComponentModule\Vendor\Wame\AdminModule\Grids\ComponentGrid
         setup:
