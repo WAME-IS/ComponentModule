@@ -1,6 +1,6 @@
 <?php
 
-namespace ComponentModule\Renderer;
+namespace Wame\ComponentModule\Renderer;
 
 use Nette\Utils\Html;
 use Wame\ComponentModule\Components\PositionControl;

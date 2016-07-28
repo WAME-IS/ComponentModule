@@ -92,7 +92,12 @@ class ComponentForm extends FormFactory
 				$this->componentRepository->onCreate($form, $values, $componentEntity);
 
 				$presenter->flashMessage(_('The component was successfully created.'), 'success');
-                $presenter->redirect(':Admin:Component:', ['id' => null]);
+                
+                if (isset($values['position'][0])) {
+                    $presenter->redirect(':Admin:Position:', ['id' => $values['position'][0]]);
+                } else {
+                    $presenter->redirect(':Admin:Component:', ['id' => null]);
+                }
 			}
 		} catch (\Exception $e) {
 			if ($e instanceof \Nette\Application\AbortException) {
