@@ -307,11 +307,13 @@ class PositionPresenter extends \App\AdminModule\Presenters\BasePresenter
      */
     protected function createComponentComponentInPositionGrid()
 	{
-        $components = $this->componentInPositionRepository->createQueryBuilder('a');
-        $components->andWhere($components->expr()->eq('a.position', $this->id));
+        $qb = $this->componentInPositionRepository->createQueryBuilder('a');
+        $qb->join(\Wame\ComponentModule\Entities\ComponentEntity::class, 'c', \Doctrine\ORM\Query\Expr\Join::WITH, 'a.component = c.id');
+        $qb->andWhere($qb->expr()->eq('a.position', $this->id));
+        $qb->andWhere($qb->expr()->neq('c.status', 0));
         
 		$grid = $this->gridControl->create();
-		$grid->setDataSource($components);
+		$grid->setDataSource($qb);
 		$grid->setProvider($this->componentInPositionGrid);
 		$grid->setSortable();
         

@@ -1,6 +1,6 @@
 <?php
 
-namespace Wame\ComponentModule\Vendor\Wame\AdminModule\Grids\Columns\PositionGrid;
+namespace Wame\ComponentModule\Vendor\Wame\AdminModule\Grids\Columns\ComponentInPositionGrid;
 
 use Wame\DataGridControl\BaseGridColumn;
 
@@ -35,11 +35,12 @@ class StatusGridColumn extends BaseGridColumn
                     ->setParameter('id', $id)
                     ->getQuery()->getSingleResult();
             
-            $item->status = $new_status;
+            $item->component->status = $new_status;
             
             if ($this->grid->presenter->isAjax()) {
                 $this->grid->redrawItem($id);
             }
         }
 	}
+    
 }

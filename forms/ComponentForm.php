@@ -94,7 +94,7 @@ class ComponentForm extends FormFactory
 				$presenter->flashMessage(_('The component was successfully created.'), 'success');
                 
                 if (isset($values['position'][0])) {
-                    $presenter->redirect(':Admin:Position:', ['id' => $values['position'][0]]);
+                    $presenter->redirect(':Admin:Position:show', ['id' => $values['position'][0]]);
                 } else {
                     $presenter->redirect(':Admin:Component:', ['id' => null]);
                 }
