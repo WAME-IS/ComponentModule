@@ -2,8 +2,6 @@
 
 namespace Wame\ComponentModule\Components;
 
-use ComponentModule\Renderer\DefaultPositionRenderer;
-use ComponentModule\Renderer\IPositionRenderer;
 use Exception;
 use Nette\DI\Container;
 use Nette\InvalidArgumentException;
@@ -11,6 +9,8 @@ use Wame\ComponentModule\Entities\ComponentInPositionEntity;
 use Wame\ComponentModule\Entities\PositionEntity;
 use Wame\ComponentModule\Paremeters\ArrayParameterSource;
 use Wame\ComponentModule\Registers\ComponentRegister;
+use Wame\ComponentModule\Renderer\DefaultPositionRenderer;
+use Wame\ComponentModule\Renderer\IPositionRenderer;
 use Wame\ComponentModule\Repositories\ComponentRepository;
 use Wame\ComponentModule\Repositories\PositionRepository;
 use Wame\Core\Components\BaseControl;
@@ -82,6 +82,10 @@ class PositionControl extends BaseControl
         $this->position = $positionEntity;
         $this->positionName = $positionName;
 
+        if($this->position->status != PositionRepository::STATUS_ENABLED) {
+            return;
+        }
+        
         $this->componentParameters->add(
             new ArrayParameterSource($this->position->getParameters()), 'position', 20);
         $this->componentParameters->add(
@@ -143,7 +147,7 @@ class PositionControl extends BaseControl
         while ($parent) {
             if ($parent instanceof PositionControl) {
                 if ($parent->getPositionName() == $this->getPositionName()) {
-                    throw new \Nette\InvalidArgumentException("Position {$this->getPositionName()} has position {$this->getPositionName()} inside it!");
+                    throw new InvalidArgumentException("Position {$this->getPositionName()} has position {$this->getPositionName()} inside it!");
                 }
             }
             $parent = $parent->getParent();
@@ -163,10 +167,19 @@ class PositionControl extends BaseControl
 
     public function render()
     {
+        if($this->position->status != PositionRepository::STATUS_ENABLED) {
+            return;
+        }
+        
         $renderer = $this->getRenderer();
         $renderer->render($this);
     }
-
+   
+    protected function componentRender()
+    {
+        //disable default rendering
+    }
+    
     /**
      * Gets renderer used to render components in position
      * 

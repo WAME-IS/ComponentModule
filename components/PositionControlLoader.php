@@ -2,10 +2,12 @@
 
 namespace Wame\ComponentModule\Components;
 
-use Exception;
+use DateTime;
 use Nette\Application\UI\Control;
 use Nette\Object;
 use Nette\Utils\Strings;
+use Wame\ComponentModule\Entities\PositionEntity;
+use Wame\ComponentModule\Entities\PositionLangEntity;
 use Wame\ComponentModule\Entities\PositionUsageEntity;
 use Wame\ComponentModule\Repositories\PositionRepository;
 use Wame\ComponentModule\Repositories\PositionUsageRepository;
@@ -82,13 +84,13 @@ class PositionControlLoader extends Object
 
         $newPositionEntity->setName($position);
         $newPositionEntity->setStatus(PositionRepository::STATUS_ENABLED);
-        $newPositionEntity->setCreateDate(new \DateTime());
+        $newPositionEntity->setCreateDate(new DateTime());
 
         $newPositionLangEntity = new PositionLangEntity();
 
         $newPositionLangEntity->setPosition($newPositionEntity);
         $newPositionLangEntity->setTitle($position);
-        $newPositionLangEntity->setEditDate(new \DateTime());
+        $newPositionLangEntity->setEditDate(new DateTime());
         $newPositionLangEntity->setLang($this->positionRepository->lang);
         $newPositionEntity->addLang($this->positionRepository->lang, $newPositionLangEntity);
 
