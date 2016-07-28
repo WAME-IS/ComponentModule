@@ -22,10 +22,6 @@ class ContainerAttributes
             unset($attr['tag']);
         }
         
-        if ($return['tag'] == '') {
-            unset($return['tag']);
-        }
-        
         foreach ($attr as $attribute) {
             $return[$attribute['name']] = $attribute['value'];
         }
