@@ -191,6 +191,7 @@ class ComponentPresenter extends \App\AdminModule\Presenters\BasePresenter
 		$this->template->cancelLink = $this->componentRegister->getByName($componentInPosition->component->type)->getLinkDetail($componentInPosition->component);
 	}
 	
+    
 	/** handles ***************************************************************/
     
 	/**
@@ -305,12 +306,22 @@ class ComponentPresenter extends \App\AdminModule\Presenters\BasePresenter
      * @param type $name
      * @return type
      */
-    protected function createComponentComponentGrid($name)
+    protected function createComponentComponentGrid()
 	{
+        $components = $this->componentRepository->createQueryBuilder();
+        $components
+            ->andWhere($components->expr()->andX(
+//                $components->expr()->neq('a.status', ComponentRepository::STATUS_REMOVE),
+                $components->expr()->eq('a.inList', ComponentRepository::SHOW_IN_LIST)
+            ));
+        
 		$grid = $this->gridControl->create();
-		$grid->setGridName($name);
-		$grid->setDataSource($this->components);
-//        $grid->setDataSource($this->componentRepository->createQueryBuilder('a'));
+		$grid->setDataSource($components);
+        
+//        $grid->setRowCallback(function($item, $tr) use ($components) {
+//            $exists = $components->resetDQLParts()->andWhere($components->expr()->in('a.type', $this->componentRegister->getList()))->andWhere('a.id = :id')->setParameter('id', $item->id)->getQuery()->getOneOrNullResult();
+//            $tr->addClass('super-' . count($exists));
+//        });
 		
 		$grid->setProvider($this->componentGrid);
 		
@@ -323,10 +334,9 @@ class ComponentPresenter extends \App\AdminModule\Presenters\BasePresenter
      * @param type $name
      * @return type
      */
-    protected function createComponentCreateComponentGrid($name)
+    protected function createComponentCreateComponentGrid()
 	{
 		$grid = $this->gridControl->create();
-		$grid->setGridName($name);
 		$grid->setDataSource($this->getComponentsArray());
 //        $grid->setTreeView();
 //        $grid->setDataSource($this->componentRepository->createQueryBuilder('a'));

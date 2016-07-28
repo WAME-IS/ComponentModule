@@ -22,9 +22,15 @@ class TypeGridColumn extends BaseGridColumn
     {
 		$grid->addColumnText('type', _('Type'))
 				->setRenderer(function($item) {
-                  return Html::el('span')
-                          ->setClass($this->componentRegister[$item->getType()]->getIcon())
-                          ->setTitle($this->componentRegister[$item->getType()]->getTitle()); //, '<span class="' .  . '" title="'. $this->componentRegister[$item->getType()]->getTitle() .'"></span>';
+                    if($this->componentRegister[$item->getType()]) {
+                        return Html::el('span')
+                            ->setClass($this->componentRegister[$item->getType()]->getIcon())
+                            ->setTitle($this->componentRegister[$item->getType()]->getTitle()); //, '<span class="' .  . '" title="'. $this->componentRegister[$item->getType()]->getTitle() .'"></span>';
+                    } else {
+                        return Html::el('span')
+                                ->setClass('fa fa-question')
+                                ->setTitle($item->getType());
+                    }
 				});
 		
 		return $grid;

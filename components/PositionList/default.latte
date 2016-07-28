@@ -11,7 +11,7 @@
 	</a>
 {else}
 	<div class="list-group">
-		<a n:foreach="$positions as $position" class="list-group-item" href="{plink Position:, 'id' => $position->id}">
+		<a n:foreach="$positions as $position" class="list-group-item" href="{plink Position:show, 'id' => $position->id}">
 			<h4 class="list-group-item-heading">
 				{$position->title}
 				<small>[{$position->name}]</small>

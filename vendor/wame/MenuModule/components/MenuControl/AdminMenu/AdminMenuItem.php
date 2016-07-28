@@ -32,6 +32,18 @@ class AdminMenuItem implements \Wame\MenuModule\Models\IMenuItem
 		$item->setTitle(_('Components'));
 		$item->setLink($this->linkGenerator->link('Admin:Component:', ['id' => null]));
 		$item->setIcon('fa fa-puzzle-piece');
+        
+        $item->addNode($this->componentsPositions());
+		
+		return $item->getItem();
+	}
+    
+    private function componentsPositions()
+	{
+		$item = new Item();
+		$item->setName('components-positions');
+		$item->setTitle(_('Positions'));
+		$item->setLink($this->linkGenerator->link('Admin:Position:', ['id' => null]));
 		
 		return $item->getItem();
 	}

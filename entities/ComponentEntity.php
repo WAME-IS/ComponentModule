@@ -39,6 +39,11 @@ class ComponentEntity extends TranslatableEntity
 	 * @ORM\Column(name="in_list", type="integer", nullable=false)
 	 */
 	protected $inList = 1;
+    
+    /**
+     * @ORM\OneToMany(targetEntity="ComponentInPositionEntity", mappedBy="component")
+     */
+	protected $positions;
 	
 	
 	/** get ************************************************************/

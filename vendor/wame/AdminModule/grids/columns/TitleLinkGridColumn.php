@@ -20,9 +20,13 @@ class TitleLinkGridColumn extends BaseGridColumn
 	public function addColumn($grid) {
         $grid->addColumnText('title', _('Title'))
 				->setRenderer(function($item) {
-                    return Html::el('a')
-                            ->addAttributes(['href' => $this->componentRegister[$item->type]->getLinkDetail($item)])
-                            ->setText($item->title);
+                    if($this->componentRegister[$item->type]) {
+                        return Html::el('a')
+                                ->addAttributes(['href' => $this->componentRegister[$item->type]->getLinkDetail($item)])
+                                ->setText($item->title);
+                    } else {
+                        return $item->title;
+                    }
 				});
 		
 		return $grid;

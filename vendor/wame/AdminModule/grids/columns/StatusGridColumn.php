@@ -1,18 +1,19 @@
 <?php
 
-namespace Wame\ComponentModule\Vendor\Wame\AdminModule\Grids\Columns\PositionGrid;
+namespace Wame\ComponentModule\Vendor\Wame\AdminModule\Grids\Columns;
 
 use Wame\DataGridControl\BaseGridColumn;
 
 class StatusGridColumn extends BaseGridColumn
 {
-	private $grid;
+    private $grid;
     
-	
-	public function addColumn($grid) {
-		$this->grid = $grid;
-		
-		$grid->addColumnStatus('status', _('Status'), 'component.status')
+    
+	public function addColumn($grid)
+    {
+        $this->grid = $grid;
+        
+		$grid->addColumnStatus('status', _('Status'))
 				->addOption(1, _('Enabled'))
 					->setIcon('check')
 					->setClass('btn-success')
@@ -28,7 +29,7 @@ class StatusGridColumn extends BaseGridColumn
 	
 	public function statusChange($id, $new_status)
 	{
-		if($this->grid->getDataSource() instanceof \Doctrine\ORM\QueryBuilder) {
+        if($this->grid->getDataSource() instanceof \Doctrine\ORM\QueryBuilder) {
             $query = $this->grid->getDataSource();
             
             $item = $query->andWhere("a.id = :id")
@@ -42,4 +43,5 @@ class StatusGridColumn extends BaseGridColumn
             }
         }
 	}
+    
 }
