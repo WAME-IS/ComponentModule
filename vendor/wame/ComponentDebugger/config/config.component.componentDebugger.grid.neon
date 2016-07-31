@@ -1,0 +1,4 @@
+services:
+    ComponentDebuggerRegister:
+        setup:
+            - add(Wame\ComponentModule\Vendor\Wame\ComponentDebugger\Registers\Types\PositionComponentDebugger())
