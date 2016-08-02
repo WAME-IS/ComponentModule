@@ -1,6 +1,6 @@
 <?php
 
-namespace Wame\ComponentModule\Vendor\Wame\AdminModule\Grids\Columns;
+namespace Wame\ComponentModule\Vendor\Wame\AdminModule\Grids\Columns\Component;
 
 use Wame\DataGridControl\BaseGridColumn;
 

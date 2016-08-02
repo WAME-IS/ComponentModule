@@ -6,11 +6,11 @@ services:
         class: Wame\ComponentModule\Vendor\Wame\AdminModule\Grids\ComponentGrid
         setup:
             - addColumn(Wame\DataGridControl\IdGridColumn())
-            - addColumn(Wame\ComponentModule\Vendor\Wame\AdminModule\Grids\Columns\TypeGridColumn())
+            - addColumn(Wame\ComponentModule\Vendor\Wame\AdminModule\Grids\Columns\Component\TypeGridColumn())
 #            - addColumn(Wame\DataGridControl\TitleGridColumn())
-            - addColumn(Wame\ComponentModule\Vendor\Wame\AdminModule\Grids\Columns\TitleLinkGridColumn())
-            - addColumn(Wame\ComponentModule\Vendor\Wame\AdminModule\Grids\Columns\NameGridColumn())
-            - addColumn(Wame\ComponentModule\Vendor\Wame\AdminModule\Grids\Columns\StatusGridColumn())
+            - addColumn(Wame\ComponentModule\Vendor\Wame\AdminModule\Grids\Columns\Component\TitleLinkGridColumn())
+            - addColumn(Wame\ComponentModule\Vendor\Wame\AdminModule\Grids\Columns\Component\NameGridColumn())
+            - addColumn(Wame\ComponentModule\Vendor\Wame\AdminModule\Grids\Columns\Component\StatusGridColumn())
 #            - addColumn(Wame\DataGridControl\EditGridAction())
             - addColumn(Wame\DataGridControl\DeleteGridAction())
 
@@ -23,12 +23,12 @@ services:
     ComponentInPositionGrid:
         class: Wame\ComponentModule\Vendor\Wame\AdminModule\Grids\ComponentInPositionGrid
         setup:
-            - addColumn(Wame\ComponentModule\Vendor\Wame\AdminModule\Grids\Columns\ComponentInPositionGrid\IdGridColumn())
-            - addColumn(Wame\ComponentModule\Vendor\Wame\AdminModule\Grids\Columns\ComponentInPositionGrid\TypeGridColumn())
-            - addColumn(Wame\ComponentModule\Vendor\Wame\AdminModule\Grids\Columns\ComponentInPositionGrid\TitleLinkGridColumn())
-            - addColumn(Wame\ComponentModule\Vendor\Wame\AdminModule\Grids\Columns\ComponentInPositionGrid\NameGridColumn())
-            - addColumn(Wame\ComponentModule\Vendor\Wame\AdminModule\Grids\Columns\ComponentInPositionGrid\StatusGridColumn())
-            - addColumn(Wame\DataGridControl\DeleteGridAction())
+            - addColumn(Wame\ComponentModule\Vendor\Wame\AdminModule\Grids\Columns\ComponentInPosition\IdGridColumn())
+            - addColumn(Wame\ComponentModule\Vendor\Wame\AdminModule\Grids\Columns\ComponentInPosition\TypeGridColumn())
+            - addColumn(Wame\ComponentModule\Vendor\Wame\AdminModule\Grids\Columns\ComponentInPosition\TitleLinkGridColumn())
+            - addColumn(Wame\ComponentModule\Vendor\Wame\AdminModule\Grids\Columns\ComponentInPosition\NameGridColumn())
+            - addColumn(Wame\ComponentModule\Vendor\Wame\AdminModule\Grids\Columns\ComponentInPosition\StatusGridColumn())
+            - addColumn(Wame\ComponentModule\Vendor\Wame\AdminModule\Grids\Columns\ComponentInPosition\DeleteGridAction())
 
     PositionGrid:
         class: Wame\ComponentModule\Vendor\Wame\AdminModule\Grids\PositionGrid

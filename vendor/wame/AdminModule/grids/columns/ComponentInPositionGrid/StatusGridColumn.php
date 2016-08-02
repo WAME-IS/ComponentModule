@@ -1,6 +1,6 @@
 <?php
 
-namespace Wame\ComponentModule\Vendor\Wame\AdminModule\Grids\Columns\ComponentInPositionGrid;
+namespace Wame\ComponentModule\Vendor\Wame\AdminModule\Grids\Columns\ComponentInPosition;
 
 use Wame\DataGridControl\BaseGridColumn;
 
