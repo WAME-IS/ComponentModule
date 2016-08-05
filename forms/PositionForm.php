@@ -82,7 +82,7 @@ class PositionForm extends FormFactory
 				$this->positionRepository->onUpdate($positionEntity, $form, $values);
 
 				$presenter->flashMessage(_('The position has been successfully updated.'), 'success');
-				$presenter->redirect(':Admin:Position:', ['id' => $this->id]);
+				$presenter->redirect(':Admin:Position:show', ['id' => $this->id]);
 			} else {
 				$positionEntity = $this->create($values);
 				
