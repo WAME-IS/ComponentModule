@@ -2,7 +2,9 @@
 
 namespace Wame\ComponentModule\Renderer;
 
+use Nette\Application\UI\Control;
 use Nette\Utils\Html;
+use Tracy\Debugger;
 use Wame\ComponentModule\Components\PositionControl;
 use Wame\ComponentModule\Paremeters\Readers\ParameterReaders;
 use Wame\Core\Components\BaseControl;
@@ -30,18 +32,14 @@ class DefaultPositionRenderer
         $listContainerDefault = $this->defaults['list'];
         $listContainer = $this->getContainer($positionControl, $listContainerDefault);
 
-        if ($listContainer) {
-            echo $listContainer->startTag();
-        }
+        $this->renderContainerStart($listContainer, $positionControl);
 
         foreach ($positionControl->getComponents() as $component) {
 
             $listItemContainerDefault = $this->defaults['listItem'];
             $listItemContainer = $this->getContainer($component, $listItemContainerDefault);
 
-            if ($listItemContainer) {
-                echo $listItemContainer->startTag();
-            }
+            $this->renderContainerStart($listItemContainer, $component);
 
             if ($component instanceof BaseControl) {
                 $component->willRender("render");
@@ -49,13 +47,39 @@ class DefaultPositionRenderer
                 $component->render();
             }
 
-            if ($listItemContainer) {
-                echo $listItemContainer->endTag();
-            }
+            $this->renderContainerEnd($listItemContainer, $component);
         }
 
-        if ($listContainer) {
-            echo $listContainer->endTag();
+        $this->renderContainerEnd($listContainer, $positionControl);
+    }
+
+    /**
+     * @param Html $container
+     * @param Control $control
+     */
+    private function renderContainerStart($container, $control)
+    {
+        if ($container) {
+            echo $container->startTag();
+        } else {
+            if (Debugger::isEnabled()) {
+                echo '<!-- ' . $control->getUniqueId() . ' -->';
+            }
+        }
+    }
+
+    /**
+     * @param Html $container
+     * @param Control $control
+     */
+    private function renderContainerEnd($container, $control)
+    {
+        if ($container) {
+            echo $container->endTag();
+        } else {
+            if (Debugger::isEnabled()) {
+                echo '<!-- end ' . $control->getUniqueId() . ' -->';
+            }
         }
     }
 
