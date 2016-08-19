@@ -4,18 +4,17 @@ namespace App\AdminModule\Presenters;
 
 use Doctrine\Common\Collections\Criteria;
 use Wame\ComponentModule\Entities\PositionEntity;
-use Wame\ComponentModule\Repositories\PositionRepository;
 use Wame\ComponentModule\Forms\PositionForm;
 use Wame\ComponentModule\Components\PositionListControl;
 use Wame\ComponentModule\Components\IPositionListControlFactory;
 use Wame\ComponentModule\Repositories\ComponentRepository;
+use Wame\ComponentModule\Repositories\ComponentInPositionRepository;
+use Wame\ComponentModule\Repositories\PositionRepository;
 use Wame\ComponentModule\Registers\ComponentRegister;
-use Wame\DataGridControl\IDataGridControlFactory;
 use Wame\ComponentModule\Vendor\Wame\AdminModule\Grids\PositionGrid;
 use Wame\ComponentModule\Vendor\Wame\AdminModule\Grids\ComponentInPositionGrid;
-use Wame\ComponentModule\Repositories\ComponentInPositionRepository;
 
-class PositionPresenter extends \App\AdminModule\Presenters\BasePresenter
+class PositionPresenter extends BasePresenter
 {	
 	/** @var IPositionListControlFactory @inject */
 	public $IPositionListControlFactory;
@@ -34,9 +33,6 @@ class PositionPresenter extends \App\AdminModule\Presenters\BasePresenter
 
 	/** @var PositionForm @inject */
 	public $positionForm; 
-    
-    /** @var IDataGridControlFactory @inject */
-	public $gridControl;
     
     /** @var PositionGrid @inject */
 	public $positionGrid;
@@ -254,7 +250,7 @@ class PositionPresenter extends \App\AdminModule\Presenters\BasePresenter
     /** components ************************************************************/
     
     /**
-	 * Position form
+	 * Position form component
 	 * 
 	 * @return PositionForm
 	 */
@@ -269,7 +265,7 @@ class PositionPresenter extends \App\AdminModule\Presenters\BasePresenter
 	
 	
 	/**
-	 * Position list
+	 * Position list component
 	 * 
 	 * @return PositionListControl
 	 */
@@ -282,28 +278,23 @@ class PositionPresenter extends \App\AdminModule\Presenters\BasePresenter
     
     
     /**
-     * Component component grid
+     * ComponentPosition grid component
      * 
-     * @param type $name
-     * @return type
+     * @return PositionGrid
      */
     protected function createComponentPositionGrid()
 	{
-        $components = $this->positionRepository->createQueryBuilder('a');
+        $qb = $this->positionRepository->createQueryBuilder('a');
+		$this->positionGrid->setDataSource($qb);
+		$this->positionGrid->setSortable();
         
-		$grid = $this->gridControl->create();
-		$grid->setDataSource($components);
-		$grid->setProvider($this->positionGrid);
-		$grid->setSortable();
-        
-		return $grid;
+		return $this->positionGrid;
 	}
     
     /**
-     * Component component grid
+     * ComponentInPosition grid component
      * 
-     * @param type $name
-     * @return type
+     * @return ComponentInPositionGrid
      */
     protected function createComponentComponentInPositionGrid()
 	{
@@ -312,12 +303,10 @@ class PositionPresenter extends \App\AdminModule\Presenters\BasePresenter
         $qb->andWhere($qb->expr()->eq('a.position', $this->id));
         $qb->andWhere($qb->expr()->neq('c.status', 0));
         
-		$grid = $this->gridControl->create();
-		$grid->setDataSource($qb);
-		$grid->setProvider($this->componentInPositionGrid);
-		$grid->setSortable();
+		$this->componentInPositionGrid->setDataSource($qb);
+		$this->componentInPositionGrid->setSortable();
         
-		return $grid;
+		return $this->componentInPositionGrid;
 	}
 	
 }

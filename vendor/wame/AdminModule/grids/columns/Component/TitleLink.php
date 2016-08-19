@@ -2,12 +2,13 @@
 
 namespace Wame\ComponentModule\Vendor\Wame\AdminModule\Grids\Columns\Component;
 
-use Wame\DataGridControl\BaseGridColumn;
-use Wame\ComponentModule\Registers\ComponentRegister;
 use Nette\Utils\Html;
+use Wame\DataGridControl\BaseGridItem;
+use Wame\ComponentModule\Registers\ComponentRegister;
 
-class TitleLinkGridColumn extends BaseGridColumn
+class TitleLink extends BaseGridItem
 {
+    /** @var ComponentRegister */
     private $componentRegister;
     
     
@@ -17,7 +18,9 @@ class TitleLinkGridColumn extends BaseGridColumn
     }
     
     
-	public function addColumn($grid) {
+	/** {@inheritDoc} */
+	public function render($grid)
+	{
         $grid->addColumnText('title', _('Title'))
 				->setRenderer(function($item) {
                     if($this->componentRegister[$item->type]) {
@@ -31,4 +34,5 @@ class TitleLinkGridColumn extends BaseGridColumn
 		
 		return $grid;
 	}
+    
 }

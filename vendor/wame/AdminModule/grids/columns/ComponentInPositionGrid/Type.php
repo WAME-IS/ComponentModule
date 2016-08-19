@@ -2,13 +2,13 @@
 
 namespace Wame\ComponentModule\Vendor\Wame\AdminModule\Grids\Columns\ComponentInPosition;
 
-use Wame\DataGridControl\BaseGridColumn;
+use Nette\Utils\Html;
+use Wame\DataGridControl\BaseGridItem;
 use Wame\ComponentModule\Registers\ComponentRegister;
 
-use Nette\Utils\Html;
-
-class TypeGridColumn extends BaseGridColumn
+class Type extends BaseGridItem
 {
+    /** @var ComponentRegister */
     private $componentRegister;
     
     
@@ -18,8 +18,9 @@ class TypeGridColumn extends BaseGridColumn
     }
     
     
-	public function addColumn($grid)
-    {
+	/** {@inheritDoc} */
+	public function render($grid)
+	{
 		$grid->addColumnText('type', _('Type'))
 				->setRenderer(function($item) {
                   return Html::el('span')

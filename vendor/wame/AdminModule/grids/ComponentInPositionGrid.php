@@ -2,7 +2,7 @@
 
 namespace Wame\ComponentModule\Vendor\Wame\AdminModule\Grids;
 
-class ComponentInPositionGrid extends \Wame\DataGridControl\GridProvider
+class ComponentInPositionGrid extends \Wame\DataGridControl\DataGridControl
 {
     
 }

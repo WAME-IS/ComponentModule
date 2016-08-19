@@ -13,9 +13,25 @@ abstract class AbastractComponentPresenter extends ComponentPresenter
 
 	/** @var PositionRepository @inject */
 	public $positionRepository;
+    
+    
+    /** renders ***************************************************************/
+    
+	public function renderCreate()
+	{
+		$this->template->siteTitle = $this->getComponentName();
+	}
+    
 	
-
-	/**
+	public function renderEdit()
+	{
+		$this->template->siteTitle = $this->getComponentName();
+	}
+    
+    
+    /** components ************************************************************/
+    
+    /**
 	 * Shop product component form
 	 * 
 	 * @return ComponentForm
@@ -31,20 +47,16 @@ abstract class AbastractComponentPresenter extends ComponentPresenter
 	}
     
     
-	public function renderCreate()
-	{
-		$this->template->siteTitle = $this->getComponentName();
-	}
+    /** methods ***************************************************************/
     
-	
-	public function renderEdit()
-	{
-		$this->template->siteTitle = $this->getComponentName();
-	}
-    
-    
+    /**
+     * Get component identifier
+     */
     protected abstract function getComponentIdentifier();
     
+    /**
+     * Get component name
+     */
     protected abstract function getComponentName();
 	
 }

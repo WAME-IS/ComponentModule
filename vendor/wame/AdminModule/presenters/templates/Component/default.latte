@@ -5,11 +5,6 @@
 
 	<div class="row">
 		<div class="col-md-8 col-lg-9">
-			<a n:if="count($components) > 0" class="btn btn-success pull-right" n:href=":Admin:Component:create, 'id' => null">
-				<span class="fa fa-plus"></span>
-				{_'Add component'}
-			</a>
-
 			{if count($components) == 0}
 				<div class="lead text-muted">{_'You do not have created any components.'}</div>
 				<a class="btn btn-success" n:href=":Admin:Component:create, 'id' => null">{_'Add first component'}</a>

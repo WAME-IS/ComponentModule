@@ -1,12 +1,13 @@
 <?php
 
-namespace Wame\ComponentModule\Vendor\Wame\AdminModule\Grids\Columns\Component;
+namespace Wame\ComponentModule\Vendor\Wame\AdminModule\Grids\Columns\ComponentInPosition;
 
 use Wame\ComponentModule\Registers\ComponentRegister;
-use Wame\DataGridControl\BaseGridColumn;
+use Wame\DataGridControl\BaseGridItem;
 
-class DeleteGridAction extends BaseGridColumn
+class Delete extends BaseGridItem
 {
+    /** @var ComponentRegister */
     private $componentRegister;
     
     
@@ -16,12 +17,15 @@ class DeleteGridAction extends BaseGridColumn
     }
     
     
-	public function addColumn($grid) {
-		$grid->addAction('delete', '', ":Admin:Component:delete")
+	/** {@inheritDoc} */
+	public function render($grid)
+	{
+		$grid->addAction('delete', '', ":Admin:Component:delete", ['id' => 'component.id'])
 			->setIcon('trash')
 			->setTitle(_('Delete'))
 			->setClass('btn btn-xs btn-danger ajax-modal');
 		
 		return $grid;
 	}
+    
 }

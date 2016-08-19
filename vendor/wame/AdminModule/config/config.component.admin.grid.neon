@@ -5,37 +5,35 @@ services:
     ComponentGrid:
         class: Wame\ComponentModule\Vendor\Wame\AdminModule\Grids\ComponentGrid
         setup:
-            - addColumn(Wame\DataGridControl\IdGridColumn())
-            - addColumn(Wame\ComponentModule\Vendor\Wame\AdminModule\Grids\Columns\Component\TypeGridColumn())
-#            - addColumn(Wame\DataGridControl\TitleGridColumn())
-            - addColumn(Wame\ComponentModule\Vendor\Wame\AdminModule\Grids\Columns\Component\TitleLinkGridColumn())
-            - addColumn(Wame\ComponentModule\Vendor\Wame\AdminModule\Grids\Columns\Component\NameGridColumn())
-            - addColumn(Wame\ComponentModule\Vendor\Wame\AdminModule\Grids\Columns\Component\StatusGridColumn())
-#            - addColumn(Wame\DataGridControl\EditGridAction())
-            - addColumn(Wame\DataGridControl\DeleteGridAction())
+            - add(Wame\DataGridControl\Columns\Id())
+            - add(Wame\ComponentModule\Vendor\Wame\AdminModule\Grids\Columns\Component\Type())
+            - add(Wame\ComponentModule\Vendor\Wame\AdminModule\Grids\Columns\Component\TitleLink())
+            - add(Wame\DataGridControl\Columns\Name())
+            - add(Wame\ComponentModule\Vendor\Wame\AdminModule\Grids\Columns\Component\Status())
+            - add(Wame\DataGridControl\Actions\Delete())
+            - add(Wame\DataGridControl\ToolbarButtons\Add())
 
     CreateComponentGrid:
         class: Wame\ComponentModule\Vendor\Wame\AdminModule\Grids\CreateComponentGrid
         setup:
-            - addColumn(Wame\DataGridControl\NameGridColumn())
-            - addColumn(Wame\DataGridControl\DescriptionGridColumn())
+            - add(Wame\DataGridControl\Columns\Name())
+            - add(Wame\DataGridControl\Columns\Description())
 
     ComponentInPositionGrid:
         class: Wame\ComponentModule\Vendor\Wame\AdminModule\Grids\ComponentInPositionGrid
         setup:
-            - addColumn(Wame\ComponentModule\Vendor\Wame\AdminModule\Grids\Columns\ComponentInPosition\IdGridColumn())
-            - addColumn(Wame\ComponentModule\Vendor\Wame\AdminModule\Grids\Columns\ComponentInPosition\TypeGridColumn())
-            - addColumn(Wame\ComponentModule\Vendor\Wame\AdminModule\Grids\Columns\ComponentInPosition\TitleLinkGridColumn())
-            - addColumn(Wame\ComponentModule\Vendor\Wame\AdminModule\Grids\Columns\ComponentInPosition\NameGridColumn())
-            - addColumn(Wame\ComponentModule\Vendor\Wame\AdminModule\Grids\Columns\ComponentInPosition\StatusGridColumn())
-            - addColumn(Wame\ComponentModule\Vendor\Wame\AdminModule\Grids\Columns\ComponentInPosition\DeleteGridAction())
+            - add(Wame\ComponentModule\Vendor\Wame\AdminModule\Grids\Columns\ComponentId())
+            - add(Wame\ComponentModule\Vendor\Wame\AdminModule\Grids\Columns\ComponentInPosition\Type())
+            - add(Wame\ComponentModule\Vendor\Wame\AdminModule\Grids\Columns\ComponentInPosition\TitleLink())
+            - add(Wame\ComponentModule\Vendor\Wame\AdminModule\Grids\Columns\ComponentName())
+            - add(Wame\ComponentModule\Vendor\Wame\AdminModule\Grids\Columns\ComponentStatus())
+            - add(Wame\ComponentModule\Vendor\Wame\AdminModule\Grids\Columns\ComponentInPosition\Delete())
 
     PositionGrid:
         class: Wame\ComponentModule\Vendor\Wame\AdminModule\Grids\PositionGrid
         setup:
-            - addColumn(Wame\DataGridControl\IdGridColumn())
-            - addColumn(Wame\DataGridControl\NameGridColumn())
-            - addColumn(Wame\DataGridControl\TitleLinkGridColumn())
-            - addColumn(Wame\DataGridControl\DescriptionGridColumn())
-#            - addColumn(Wame\ComponentModule\Vendor\Wame\AdminModule\Grids\Columns\StatusGridColumn())
-            - addColumn(Wame\DataGridControl\DeleteGridAction())
+            - add(Wame\DataGridControl\Columns\Id())
+            - add(Wame\DataGridControl\Columns\Name())
+            - add(Wame\DataGridControl\Columns\TitleLinkEdit())
+            - add(Wame\DataGridControl\Columns\Description())
+            - add(Wame\DataGridControl\Actions\Delete())

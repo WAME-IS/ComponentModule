@@ -3,10 +3,10 @@
 namespace App\AdminModule\Presenters;
 
 use Nette\Utils\Html;
+use Doctrine\Common\Collections\Criteria;
 use Wame\ComponentModule\Registers\ComponentRegister;
 use Wame\ComponentModule\Entities\ComponentEntity;
 use Wame\ComponentModule\Repositories\ComponentRepository;
-use Wame\MenuModule\Components\MenuControl;
 use Wame\ComponentModule\Components\PositionListControl;
 use Wame\ComponentModule\Components\IPositionListControlFactory;
 use Wame\ComponentModule\Components\ComponentPositionListControl;
@@ -17,14 +17,11 @@ use Wame\ComponentModule\Forms\ComponentAddToPositionForm;
 use Wame\ComponentModule\Entities\ComponentInPositionEntity;
 use Wame\ComponentModule\Repositories\ComponentInPositionRepository;
 use Wame\ComponentModule\Vendor\Wame\MenuModule\Components\ComponentMenu\ItemTemplate;
-
-use Wame\DataGridControl\IDataGridControlFactory;
 use Wame\ComponentModule\Vendor\Wame\AdminModule\Grids\ComponentGrid;
 use Wame\ComponentModule\Vendor\Wame\AdminModule\Grids\CreateComponentGrid;
+use Wame\MenuModule\Components\MenuControl;
 
-use Doctrine\Common\Collections\Criteria;
-
-class ComponentPresenter extends \App\AdminModule\Presenters\BasePresenter
+class ComponentPresenter extends BasePresenter
 {
 	/** @var array */
 	public $components = [];
@@ -58,9 +55,6 @@ class ComponentPresenter extends \App\AdminModule\Presenters\BasePresenter
 	
 	/** @var ItemTemplate @inject */
 	public $itemTemplate;
-    
-    /** @var IDataGridControlFactory @inject */
-	public $gridControl;
     
     /** @var ComponentGrid @inject */
 	public $componentGrid;
@@ -235,7 +229,7 @@ class ComponentPresenter extends \App\AdminModule\Presenters\BasePresenter
     /** components ************************************************************/
     
     /**
-	 * Add component menu
+	 * Add component component
 	 * 
 	 * @return MenuControl
 	 */
@@ -253,7 +247,7 @@ class ComponentPresenter extends \App\AdminModule\Presenters\BasePresenter
 	}  
 	
 	/**
-	 * Position list
+	 * Position list component
 	 * 
 	 * @return PositionListControl
 	 */
@@ -265,7 +259,7 @@ class ComponentPresenter extends \App\AdminModule\Presenters\BasePresenter
 	}
 	
 	/**
-	 * Component position list
+	 * Component position list component
 	 * 
 	 * @return ComponentPositionListControl
 	 */
@@ -277,7 +271,7 @@ class ComponentPresenter extends \App\AdminModule\Presenters\BasePresenter
 	}
 	
 	/**
-	 * Component position form
+	 * Component position form component
 	 * 
 	 * @return ComponentPositionForm
 	 */
@@ -289,7 +283,7 @@ class ComponentPresenter extends \App\AdminModule\Presenters\BasePresenter
 	}
 	
 	/**
-	 * Component add to position form
+	 * Component add to position form component
 	 * 
 	 * @return ComponentAddToPositionForm
 	 */
@@ -301,31 +295,18 @@ class ComponentPresenter extends \App\AdminModule\Presenters\BasePresenter
 	}
     
     /**
-     * Component component grid
+     * Component grid component
      * 
      * @param type $name
      * @return type
      */
     protected function createComponentComponentGrid()
 	{
-        $components = $this->componentRepository->createQueryBuilder();
-        $components
-            ->andWhere($components->expr()->andX(
-//                $components->expr()->neq('a.status', ComponentRepository::STATUS_REMOVE),
-                $components->expr()->eq('a.inList', ComponentRepository::SHOW_IN_LIST)
-            ));
-        
-		$grid = $this->gridControl->create();
-		$grid->setDataSource($components);
-        
-//        $grid->setRowCallback(function($item, $tr) use ($components) {
-//            $exists = $components->resetDQLParts()->andWhere($components->expr()->in('a.type', $this->componentRegister->getList()))->andWhere('a.id = :id')->setParameter('id', $item->id)->getQuery()->getOneOrNullResult();
-//            $tr->addClass('super-' . count($exists));
-//        });
+        $qb = $this->componentRepository->createQueryBuilder('a');
+        $qb->andWhere($qb->expr()->eq('a.inList', ComponentRepository::SHOW_IN_LIST));
+		$this->componentGrid->setDataSource($qb);
 		
-		$grid->setProvider($this->componentGrid);
-		
-		return $grid;
+		return $this->componentGrid;
 	}
     
     /**
@@ -336,17 +317,18 @@ class ComponentPresenter extends \App\AdminModule\Presenters\BasePresenter
      */
     protected function createComponentCreateComponentGrid()
 	{
-		$grid = $this->gridControl->create();
-		$grid->setDataSource($this->getComponentsArray());
-//        $grid->setTreeView();
-//        $grid->setDataSource($this->componentRepository->createQueryBuilder('a'));
+//        $qb = $this->componentRepository->createQueryBuilder('a');
+		$this->createComponentGrid->setDataSource($this->getComponentsArray());
 		
-		$grid->setProvider($this->createComponentGrid);
-		
-		return $grid;
+		return $this->createComponentGrid;
 	}
     
     
+    /**
+     * Get component array
+     * 
+     * @return ComponentEntity[]    components
+     */
     private function getComponentsArray()
     {
         $components = [];

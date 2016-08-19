@@ -87,9 +87,9 @@ class PositionControl extends BaseControl
         }
         
         $this->componentParameters->add(
-            new ArrayParameterSource($this->position->getParameters()), 'position', 20);
+            new ArrayParameterSource($this->position->getParameters()), 'position', ['priority' => 20]);
         $this->componentParameters->add(
-            new ArrayParameterSource(['container' => ['class' => sprintf(self::POSITION_ID_CLASS, $this->positionName)]]), 'positionDefaultClass', 1);
+            new ArrayParameterSource(['container' => ['class' => sprintf(self::POSITION_ID_CLASS, $this->positionName)]]), 'positionDefaultClass', ['priority' => 1]);
 
         $this->loadComponents();
 
@@ -123,7 +123,7 @@ class PositionControl extends BaseControl
                     $component->setComponentInPosition($componentInPosition);
 
                     $component->componentParameters->add(
-                        new ArrayParameterSource(['container' => ['class' => sprintf(self::COMPONENT_ID_CLASS, $type)]]), 'componentDefaultClass', 1);
+                        new ArrayParameterSource(['container' => ['class' => sprintf(self::COMPONENT_ID_CLASS, $type)]]), 'componentDefaultClass', ['priority' => 1]);
                 }
 
                 $this->addComponent($component, $componentName);
