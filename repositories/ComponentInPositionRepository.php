@@ -23,7 +23,6 @@ class ComponentInPositionRepository extends \Wame\Core\Repositories\BaseReposito
 		parent::__construct($container, $entityManager, $translator, $user, ComponentInPositionEntity::class);
 	}
     
-	
 	/**
 	 * Add component in position
 	 * 
