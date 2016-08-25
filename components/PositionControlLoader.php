@@ -23,6 +23,11 @@ class PositionControlLoader extends Object
 
     /** @var PositionUsageRepository */
     private $positionUsageRepository;
+    
+    /** @var array */
+    private $positionsInPresenter;
+    
+    /** @var static */
     private static $instance;
 
     public function __construct(IPositionControlFactory $IPositionControlFactory, PositionRepository $positionRepository, PositionUsageRepository $positionUsageRepository)
@@ -39,13 +44,29 @@ class PositionControlLoader extends Object
         $presenterName = $control->getPresenter()->getName();
         $controlName = $control->getUniqueId();
 
-        $positionUsages = $this->positionUsageRepository->find(['presenter' => $presenterName, 'component' => $controlName]);
-        foreach ($positionUsages as $positionUsage) {
-            $position = $positionUsage->position;
+        $this->loadPresenter($presenterName);
+        
+        if(!isset($this->positionsInPresenter[$controlName])) {
+            return; //has no positions
+        }
+        
+        foreach ($this->positionsInPresenter[$controlName] as $position) {
             $positionName = 'position' . Strings::firstUpper($position->name);
             
             if (!isset($control->getComponents()[$positionName])) {
                 $control->addComponent($this->IPositionControlFactory->create($position), $positionName);
+            }
+        }
+    }
+    
+    private function loadPresenter($presenterName) {
+        if(!$this->positionsInPresenter) {
+            $positionUsages = $this->positionUsageRepository->find(['presenter' => $presenterName]);
+            foreach($positionUsages as $usage) {
+                if(!isset($this->positionsInPresenter[$usage->component])) {
+                    $this->positionsInPresenter[$usage->component] = [];
+                }
+                $this->positionsInPresenter[$usage->component][] = $usage->position;
             }
         }
     }

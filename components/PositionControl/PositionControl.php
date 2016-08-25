@@ -2,6 +2,7 @@
 
 namespace Wame\ComponentModule\Components;
 
+use Doctrine\Common\Collections\Criteria;
 use Exception;
 use Nette\DI\Container;
 use Nette\InvalidArgumentException;
@@ -82,10 +83,10 @@ class PositionControl extends BaseControl
         $this->position = $positionEntity;
         $this->positionName = $positionName;
 
-        if($this->position->status != PositionRepository::STATUS_ENABLED) {
+        if ($this->position->status != PositionRepository::STATUS_ENABLED) {
             return;
         }
-        
+
         $this->componentParameters->add(
             new ArrayParameterSource($this->position->getParameters()), 'position', ['priority' => 20]);
         $this->componentParameters->add(
@@ -103,8 +104,9 @@ class PositionControl extends BaseControl
      */
     private function loadComponents()
     {
-        $this->componentsInPosition = $this->position->getComponents();
-
+        $criteria = Criteria::create()->orderBy(["sort" => Criteria::DESC]);
+        $this->componentsInPosition = $this->position->getComponents()->matching($criteria);
+        
         foreach ($this->componentsInPosition as $componentInPosition) {
 
             if ($componentInPosition->component->status != ComponentRepository::STATUS_ENABLED) {
@@ -167,19 +169,19 @@ class PositionControl extends BaseControl
 
     public function render()
     {
-        if($this->position->status != PositionRepository::STATUS_ENABLED) {
+        if ($this->position->status != PositionRepository::STATUS_ENABLED) {
             return;
         }
-        
+
         $renderer = $this->getRenderer();
         $renderer->render($this);
     }
-   
+
     protected function componentRender()
     {
         //disable default rendering
     }
-    
+
     /**
      * Gets renderer used to render components in position
      * 

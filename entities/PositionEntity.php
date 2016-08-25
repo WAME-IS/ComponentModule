@@ -41,12 +41,7 @@ class PositionEntity extends TranslatableEntity
 	
 	public function getComponents()
 	{
-//        $criteria = Criteria::create()
-//                    ->where(
-//                        Criteria::expr()->neq('component.status', PositionRepository::STATUS_REMOVE)
-//                    );
-
-        return $this->components;//->matching($criteria)->toArray();
+        return $this->components;
 	}
 	
 	public function getName()
