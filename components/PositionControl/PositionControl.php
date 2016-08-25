@@ -4,17 +4,20 @@ namespace Wame\ComponentModule\Components;
 
 use Doctrine\Common\Collections\Criteria;
 use Exception;
+use Nette\Application\UI\Control;
 use Nette\DI\Container;
 use Nette\InvalidArgumentException;
-use Wame\ComponentModule\Entities\ComponentInPositionEntity;
+use Tracy\Debugger;
 use Wame\ComponentModule\Entities\PositionEntity;
 use Wame\ComponentModule\Paremeters\ArrayParameterSource;
 use Wame\ComponentModule\Registers\ComponentRegister;
-use Wame\ComponentModule\Renderer\DefaultPositionRenderer;
-use Wame\ComponentModule\Renderer\IPositionRenderer;
+use Wame\ComponentModule\Renderer\PositionRenderer;
 use Wame\ComponentModule\Repositories\ComponentRepository;
 use Wame\ComponentModule\Repositories\PositionRepository;
 use Wame\Core\Components\BaseControl;
+use Wame\ListControl\Components\ISimpleEmptyListControlFactory;
+use Wame\ListControl\Components\ListControl;
+use Wame\ListControl\Renderer\IListRenderer;
 
 interface IPositionControlFactory
 {
@@ -23,7 +26,7 @@ interface IPositionControlFactory
     public function create($position);
 }
 
-class PositionControl extends BaseControl
+class PositionControl extends ListControl
 {
 
     const POSITION_ID_CLASS = 'pos-%s',
@@ -41,20 +44,19 @@ class PositionControl extends BaseControl
     /** @var PositionEntity */
     private $position;
 
-    /** @var ComponentInPositionEntity[] */
-    private $componentsInPosition;
+    /** @var Control[] */
+    private $listComponents;
 
-    /** @var IPositionRenderer */
-    private $renderer;
+    /** @var ISimpleEmptyListControlFactory */
+    private $ISimpleEmptyListControlFactory;
 
-    public function __construct(
-    Container $container, PositionRepository $positionRepository, ComponentRegister $componentRegister, $position
-    )
+    public function __construct(Container $container, PositionRepository $positionRepository, ComponentRegister $componentRegister, ISimpleEmptyListControlFactory $ISimpleEmptyListControlFactory, $position)
     {
         parent::__construct($container);
 
         $this->positionRepository = $positionRepository;
         $this->componentRegister = $componentRegister;
+        $this->ISimpleEmptyListControlFactory = $ISimpleEmptyListControlFactory;
 
         $this->setPosition($position);
     }
@@ -80,21 +82,15 @@ class PositionControl extends BaseControl
             throw new InvalidArgumentException("Argument position has wrong type.");
         }
 
-        $this->position = $positionEntity;
         $this->positionName = $positionName;
+        $this->position = $positionEntity;
 
-        if ($this->position->status != PositionRepository::STATUS_ENABLED) {
-            return;
-        }
+        $this->getListComponents();
 
         $this->componentParameters->add(
             new ArrayParameterSource($this->position->getParameters()), 'position', ['priority' => 20]);
         $this->componentParameters->add(
             new ArrayParameterSource(['container' => ['class' => sprintf(self::POSITION_ID_CLASS, $this->positionName)]]), 'positionDefaultClass', ['priority' => 1]);
-
-        $this->loadComponents();
-
-        return $this;
     }
 
     /**
@@ -102,12 +98,18 @@ class PositionControl extends BaseControl
      * 
      * @return PositionControl
      */
-    private function loadComponents()
+    public function getListComponents()
     {
+        if (is_array($this->listComponents)) {
+            return $this->listComponents;
+        }
+
+        $this->listComponents = [];
+
         $criteria = Criteria::create()->orderBy(["sort" => Criteria::DESC]);
-        $this->componentsInPosition = $this->position->getComponents()->matching($criteria);
-        
-        foreach ($this->componentsInPosition as $componentInPosition) {
+        $componentsInPosition = $this->position->getComponents()->matching($criteria);
+
+        foreach ($componentsInPosition as $componentInPosition) {
 
             if ($componentInPosition->component->status != ComponentRepository::STATUS_ENABLED) {
                 continue;
@@ -128,13 +130,22 @@ class PositionControl extends BaseControl
                         new ArrayParameterSource(['container' => ['class' => sprintf(self::COMPONENT_ID_CLASS, $type)]]), 'componentDefaultClass', ['priority' => 1]);
                 }
 
+                $this->listComponents[$componentName] = $component;
                 $this->addComponent($component, $componentName);
             } else {
                 throw new InvalidArgumentException("Invalid component type $type");
             }
         }
 
-        return $this;
+        return $this->listComponents;
+    }
+
+    public function getListComponent($id)
+    {
+        $components = $this->getListComponents();
+        if (isset($components[$id])) {
+            return $components[$id];
+        }
     }
 
     protected function attached($control)
@@ -167,42 +178,17 @@ class PositionControl extends BaseControl
         return $name;
     }
 
-    public function render()
-    {
-        if ($this->position->status != PositionRepository::STATUS_ENABLED) {
-            return;
-        }
-
-        $renderer = $this->getRenderer();
-        $renderer->render($this);
-    }
-
-    protected function componentRender()
-    {
-        //disable default rendering
-    }
-
     /**
-     * Gets renderer used to render components in position
+     * Gets renderer used to render components in list
      * 
-     * @return IPositionRenderer
+     * @return IListRenderer
      */
-    function getRenderer()
+    public function getRenderer()
     {
         if (!$this->renderer) {
-            $this->renderer = new DefaultPositionRenderer();
+            $this->renderer = new PositionRenderer();
         }
         return $this->renderer;
-    }
-
-    /**
-     * Sets renderer used to render components in position
-     * 
-     * @param IPositionRenderer $renderer
-     */
-    function setRenderer(IPositionRenderer $renderer)
-    {
-        $this->renderer = $renderer;
     }
 
     /**
@@ -221,11 +207,8 @@ class PositionControl extends BaseControl
         return $this->position;
     }
 
-    /**
-     * @return ComponentInPositionEntity[]
-     */
-    function getComponentsInPosition()
+    public function createComponentNoItems()
     {
-        return $this->componentsInPosition;
+        return $this->ISimpleEmptyListControlFactory->create();
     }
 }

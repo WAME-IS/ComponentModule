@@ -52,7 +52,6 @@ class PositionControlLoader extends Object
         
         foreach ($this->positionsInPresenter[$controlName] as $position) {
             $positionName = 'position' . Strings::firstUpper($position->name);
-            
             if (!isset($control->getComponents()[$positionName])) {
                 $control->addComponent($this->IPositionControlFactory->create($position), $positionName);
             }
