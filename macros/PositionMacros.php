@@ -23,12 +23,15 @@ class PositionMacros extends MacroSet
     public function macroPosition(MacroNode $node, PhpWriter $writer)
     {
         return $writer->write('$_positionName = %node.word;'
-                . '\Wame\ComponentModule\Components\PositionControlLoader::checkStatic($_control, $_positionName);'
-                . '$_position = $_control->getComponent("position".Nette\Utils\Strings::firstUpper($_positionName));'
-                . 'if ($_position instanceof \Wame\Core\Components\BaseControl) {'
-                . ($node->modifiers === '' ? "\$_position->willRender(\"render\");" : $writer->write("ob_start(function () {}); \$_position->willRender(\"render\"); echo %modify(ob_get_clean())"))
+                . 'if(\Wame\ComponentModule\Components\PositionControlLoader::checkStatic($_control, $_positionName)) {'
+                    . '$_position = $_control->getComponent("position".Nette\Utils\Strings::firstUpper($_positionName));'
+                    . 'if ($_position instanceof \Wame\Core\Components\BaseControl) {'
+                        . ($node->modifiers === '' ? "\$_position->willRender(\"render\");" : $writer->write("ob_start(function () {}); \$_position->willRender(\"render\"); echo %modify(ob_get_clean())"))
+                    . '} else {'
+                        . ($node->modifiers === '' ? "\$_position->render();" : $writer->write("ob_start(function () {}); \$_position->render(); echo %modify(ob_get_clean())"))
+                    . '}'
                 . '} else {'
-                . ($node->modifiers === '' ? "\$_position->render();" : $writer->write("ob_start(function () {}); \$_position->render(); echo %modify(ob_get_clean())"))
+                    . 'echo "<script type=\"text/javascript\">location.reload();</script>";'
                 . '}'
                 . '$_position=null;$_positionName=null;');
     }
