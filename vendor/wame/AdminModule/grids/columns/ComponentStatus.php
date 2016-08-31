@@ -2,9 +2,7 @@
 
 namespace Wame\ComponentModule\Vendor\Wame\AdminModule\Grids\Columns;
 
-use Wame\DataGridControl\BaseGridItem;
-
-class ComponentStatus extends BaseGridItem
+class ComponentStatus extends \Wame\DataGridControl\Columns\Status
 {
 	/** {@inheritDoc} */
 	public function render($grid)

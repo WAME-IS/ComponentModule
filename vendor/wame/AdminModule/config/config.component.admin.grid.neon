@@ -32,8 +32,8 @@ services:
     PositionGrid:
         class: Wame\ComponentModule\Vendor\Wame\AdminModule\Grids\PositionGrid
         setup:
-            - add(Wame\DataGridControl\Columns\Id())
-            - add(Wame\DataGridControl\Columns\Name())
-            - add(Wame\DataGridControl\Columns\TitleLinkEdit())
-            - add(Wame\DataGridControl\Columns\Description())
+            - add(Wame\DataGridControl\Columns\Id(), null, {priority: 90})
+            - add(Wame\DataGridControl\Columns\Name(), null, {priority: 70})
+            - add(Wame\DataGridControl\Columns\TitleLinkShow(), null, {priority: 50})
+            - add(Wame\DataGridControl\Columns\Description(), null, {priority: 30})
             - add(Wame\DataGridControl\Actions\Delete())
