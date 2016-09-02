@@ -190,8 +190,7 @@ class PositionPresenter extends BasePresenter
     
     public function handleSort($item_id, $prev_id, $next_id)
     {
-        $item = $this->componentInPositionRepository->get(['id' => $item_id]);
-        $this->componentInPositionRepository->moveAfter($item, $prev_id);
+        $this->componentInPositionRepository->move($item_id, $prev_id, $next_id);
         
         $this->flashMessage(
             "Id: $item_id, Previous id: $prev_id, Next id: $next_id",
@@ -302,9 +301,11 @@ class PositionPresenter extends BasePresenter
         $qb->join(\Wame\ComponentModule\Entities\ComponentEntity::class, 'c', \Doctrine\ORM\Query\Expr\Join::WITH, 'a.component = c.id');
         $qb->andWhere($qb->expr()->eq('a.position', $this->id));
         $qb->andWhere($qb->expr()->neq('c.status', 0));
+        $qb->orderBy('a.sort', 'DESC');
         
 		$this->componentInPositionGrid->setDataSource($qb);
 		$this->componentInPositionGrid->setSortable();
+//        $this->componentInPositionGrid->setDefaultSort(['sort' => 'DESC']);
         
 		return $this->componentInPositionGrid;
 	}
