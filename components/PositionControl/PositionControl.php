@@ -7,7 +7,6 @@ use Exception;
 use Nette\Application\UI\Control;
 use Nette\DI\Container;
 use Nette\InvalidArgumentException;
-use Tracy\Debugger;
 use Wame\ComponentModule\Entities\PositionEntity;
 use Wame\ComponentModule\Paremeters\ArrayParameterSource;
 use Wame\ComponentModule\Registers\ComponentRegister;
