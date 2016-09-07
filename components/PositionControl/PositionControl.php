@@ -55,6 +55,9 @@ class PositionControl extends ListControl
         $this->positionRepository = $positionRepository;
         $this->componentRegister = $componentRegister;
         $this->ISimpleEmptyListControlFactory = $ISimpleEmptyListControlFactory;
+
+        $this->componentParameters->add(
+            new ArrayParameterSource(['listContainer' => ['tag' => null], 'listItemContainer' => ['tag' => null]]), 'listContainers', ['priority' => 1]);
         
         $this->setPosition($position);
     }

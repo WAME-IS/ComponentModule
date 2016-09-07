@@ -10,12 +10,14 @@ use Wame\ListControl\Renderer\SimpleListRenderer;
 
 class PositionRenderer extends SimpleListRenderer
 {
+    //TODO refactor (remove)
+    
     private $renderingComponent;
 
-    protected function renderComponent($component)
+    protected function renderComponent($component, $listItemContainer)
     {
         $this->renderingComponent = $component;
-        parent::renderComponent($component);
+        parent::renderComponent($component, $listItemContainer);
     }
 
     /**
