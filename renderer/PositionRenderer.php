@@ -5,11 +5,10 @@ namespace Wame\ComponentModule\Renderer;
 use Nette\Application\UI\Control;
 use Nette\Utils\Html;
 use Tracy\Debugger;
-use Wame\ComponentModule\Components\PositionControl;
-use Wame\ComponentModule\Paremeters\Readers\ParameterReaders;
 use Wame\Core\Components\BaseControl;
+use Wame\ListControl\Renderer\SimpleListRenderer;
 
-class PositionRenderer extends \Wame\ListControl\Renderer\SimpleListRenderer
+class PositionRenderer extends SimpleListRenderer
 {
     private $renderingComponent;
 

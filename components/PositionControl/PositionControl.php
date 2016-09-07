@@ -55,7 +55,7 @@ class PositionControl extends ListControl
         $this->positionRepository = $positionRepository;
         $this->componentRegister = $componentRegister;
         $this->ISimpleEmptyListControlFactory = $ISimpleEmptyListControlFactory;
-
+        
         $this->setPosition($position);
     }
 
