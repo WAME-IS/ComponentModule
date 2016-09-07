@@ -28,8 +28,7 @@ interface IPositionControlFactory
 class PositionControl extends ListControl
 {
 
-    const POSITION_ID_CLASS = 'pos-%s',
-        COMPONENT_ID_CLASS = 'cnt-%s';
+    const POSITION_ID_CLASS = 'pos-%s';
 
     /** @var PositionRepository */
     private $positionRepository;
@@ -88,6 +87,7 @@ class PositionControl extends ListControl
 
         $this->componentParameters->add(
             new ArrayParameterSource($this->position->getParameters()), 'position', ['priority' => 20]);
+        $this->componentParameters->remove('componentDefaultClass');
         $this->componentParameters->add(
             new ArrayParameterSource(['container' => ['class' => sprintf(self::POSITION_ID_CLASS, $this->positionName)]]), 'positionDefaultClass', ['priority' => 1]);
     }
@@ -125,8 +125,9 @@ class PositionControl extends ListControl
                 if ($component instanceof BaseControl) {
                     $component->setComponentInPosition($componentInPosition);
 
+                    //TOOD remove
                     $component->componentParameters->add(
-                        new ArrayParameterSource(['container' => ['class' => sprintf(self::COMPONENT_ID_CLASS, $type)]]), 'componentDefaultClass', ['priority' => 1]);
+                        new ArrayParameterSource(['container' => ['class' => sprintf(BaseControl::COMPONENT_ID_CLASS, $type)]]), 'componentInPositionClass', ['priority' => 0]);
                 }
 
                 $this->listComponents[$componentName] = $component;
