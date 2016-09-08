@@ -15,6 +15,8 @@ class PositionRepository extends TranslatableRepository
 	const STATUS_REMOVE = 0;
 	const STATUS_ENABLED = 1;
 	const STATUS_DISABLED = 2;
+    const HIDE_IN_LIST = 0;
+    const SHOW_IN_LIST = 1;
 	
 	
 	public function __construct(Container $container, EntityManager $entityManager, GettextSetup $translator, User $user, $entityName = null) {
@@ -27,7 +29,7 @@ class PositionRepository extends TranslatableRepository
 	 * 
 	 * @return array
 	 */
-	public function getStatusList()
+	public static function getStatusList()
 	{
 		return [
 			self::STATUS_REMOVE => _('Remove'),

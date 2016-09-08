@@ -3,11 +3,10 @@
 namespace Wame\ComponentModule\Entities;
 
 use Doctrine\ORM\Mapping as ORM;
-use Doctrine\Common\Collections\Criteria;
 use Wame\Core\Entities\Columns;
 use Wame\LanguageModule\Entities\TranslatableEntity;
-use Wame\ComponentModule\Repositories\PositionRepository;
 use Wame\Utils\Strings;
+
 
 /**
  * @ORM\Table(name="wame_position")
@@ -21,6 +20,7 @@ class PositionEntity extends TranslatableEntity
 	use Columns\Parameters;
 	use Columns\Status;
 
+    
 	/**
      * @ORM\OneToMany(targetEntity="PositionLangEntity", mappedBy="position")
      */
@@ -35,6 +35,11 @@ class PositionEntity extends TranslatableEntity
 	 * @ORM\Column(name="name", type="string", nullable=true)
 	 */
 	protected $name;
+    
+	/**
+	 * @ORM\Column(name="in_list", type="integer", nullable=false)
+	 */
+	protected $inList = 1;
 	
 	
 	/** get ************************************************************/
@@ -49,6 +54,11 @@ class PositionEntity extends TranslatableEntity
 		return $this->name;
 	}
 	
+	public function getInList()
+	{
+		return $this->inList;
+	}
+    
 
 	/** set ************************************************************/
 	
@@ -59,4 +69,11 @@ class PositionEntity extends TranslatableEntity
 		return $this;
 	}
 	
+	public function setInList($inList)
+	{
+		$this->inList = $inList;
+		
+		return $this;
+	}
+
 }

@@ -21,13 +21,19 @@ class ItemTemplate extends \Nette\Object
 
 	public function createItem($element, \Wame\ComponentModule\Registers\IComponent $item) 
 	{
-		$icon = Html::el('div')->addClass('caption')->setHtml(Html::el('span')->addClass($item->getIcon() . ' fa-4x text-primary'));
+        if ($item->getLinkCreate() != null) {
+            $icon = Html::el('div')->addClass('caption')->setHtml(Html::el('span')->addClass($item->getIcon() . ' fa-4x text-primary'));
+
+            $caption = $this->getCaption($item);
+
+            $html = Html::el('div')->setClass('thumbnail text-center')->setHtml($icon . $caption);
 		
-		$caption = $this->getCaption($item);
-		
-		$html = Html::el('div')->setClass('thumbnail text-center')->setHtml($icon . $caption);
-		
-		return $element->data('name', $item->getName())->setHtml($html);
+            $return = $element->data('name', $item->getName())->setHtml($html);
+        } else {
+            $return = Html::el();
+        }
+        
+        return $return;
 	}
 	
 	private function getCaption($item)
