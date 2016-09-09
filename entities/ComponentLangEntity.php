@@ -9,7 +9,7 @@ use Wame\Core\Entities\Columns;
  * @ORM\Table(name="wame_component_lang")
  * @ORM\Entity
  */
-class ComponentLangEntity extends \Wame\Core\Entities\BaseEntity 
+class ComponentLangEntity extends \Wame\Core\Entities\BaseLangEntity 
 {
 	use Columns\Identifier;
 	use Columns\Lang;
@@ -23,5 +23,11 @@ class ComponentLangEntity extends \Wame\Core\Entities\BaseEntity
      * @ORM\JoinColumn(name="component_id", referencedColumnName="id", nullable=false)
      */
 	protected $component;
+
+    
+    public function setEntity($entity) 
+    {
+        $this->component = $entity; 
+    }
 
 }
