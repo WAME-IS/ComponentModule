@@ -9,7 +9,6 @@ use Wame\Core\Forms\FormFactory;
 use Wame\ComponentModule\Entities\ComponentEntity;
 use Wame\ComponentModule\Entities\ComponentLangEntity;
 use Wame\ComponentModule\Repositories\ComponentRepository;
-use Wame\UserModule\Entities\UserEntity;
 use Wame\UserModule\Repositories\UserRepository;
 use Wame\ComponentModule\Paremeters\ContainerAttributes;
 
@@ -21,9 +20,6 @@ class ComponentForm extends FormFactory
 
 	/** @var User */
 	private $user;
-
-	/** @var UserEntity */
-	private $userEntity;
 
 	/** @var UserRepository */
 	private $userRepository;
@@ -76,8 +72,6 @@ class ComponentForm extends FormFactory
 	{
 		$presenter = $form->getPresenter();
 
-		$this->userEntity = $this->userRepository->get(['id' => $this->user->id]);
-
 		try {
 			if ($this->id) {
 				$componentEntity = $this->update($values);
@@ -123,7 +117,7 @@ class ComponentForm extends FormFactory
 		$componentEntity->setName($this->getComponentName($values));
 		$componentEntity->setParameters($this->getParams($values));
 		$componentEntity->setCreateDate(\Wame\Utils\Date::toDateTime('now'));
-		$componentEntity->setCreateUser($this->userEntity);
+		$componentEntity->setCreateUser($this->user->getEntity());
 		$componentEntity->setStatus(ComponentRepository::STATUS_ENABLED);
 		
 		$componentLangEntity = new ComponentLangEntity();
@@ -132,7 +126,7 @@ class ComponentForm extends FormFactory
 		$componentLangEntity->setTitle($values['title']);
 		$componentLangEntity->setDescription($values['description']);
 		$componentLangEntity->setEditDate(\Wame\Utils\Date::toDateTime('now'));
-		$componentLangEntity->setEditUser($this->userEntity);
+		$componentLangEntity->setEditUser($this->user->getEntity());
 		
 		$componentEntity->addLang($this->lang, $componentLangEntity);
 		
@@ -156,7 +150,7 @@ class ComponentForm extends FormFactory
 		$componentLangEntity->setTitle($values['title']);
 		$componentLangEntity->setDescription($values['description']);
 		$componentLangEntity->setEditDate(\Wame\Utils\Date::toDateTime('now'));
-		$componentLangEntity->setEditUser($this->userEntity);
+		$componentLangEntity->setEditUser($this->user->getEntity());
 		
 		return $this->componentRepository->update($componentEntity);
 	}

@@ -10,7 +10,6 @@ use Wame\ComponentModule\Entities\PositionEntity;
 use Wame\ComponentModule\Entities\PositionLangEntity;
 use Wame\ComponentModule\Repositories\PositionRepository;
 use Wame\UserModule\Repositories\UserRepository;
-use Wame\UserModule\Entities\UserEntity;
 use Wame\ComponentModule\Paremeters\ContainerAttributes;
 
 
@@ -21,9 +20,6 @@ class PositionForm extends FormFactory
 	
 	/** @var User */
 	private $user;
-	
-	/** @var UserEntity */
-	private $userEntity;
 	
 	/** @var UserRepository */
 	private $userRepository;
@@ -73,8 +69,6 @@ class PositionForm extends FormFactory
 	{
 		$presenter = $form->getPresenter();
 
-		$this->userEntity = $this->userRepository->get(['id' => $this->user->id]);
-
 		try {
 			if ($this->id) {
 				$positionEntity = $this->update($values);
@@ -115,7 +109,7 @@ class PositionForm extends FormFactory
 		$positionEntity->setName($this->getPositionName($values));
 		$positionEntity->setParameters($this->getParams($values));
 		$positionEntity->setCreateDate(\Wame\Utils\Date::toDateTime('now'));
-		$positionEntity->setCreateUser($this->userEntity);
+		$positionEntity->setCreateUser($this->user->getEntity());
 		$positionEntity->setStatus(PositionRepository::STATUS_ENABLED);
 
 		$positionLangEntity = new PositionLangEntity();
@@ -124,7 +118,7 @@ class PositionForm extends FormFactory
 		$positionLangEntity->setLang($this->lang);
 		$positionLangEntity->setDescription($values['description']);
 		$positionLangEntity->setEditDate(\Wame\Utils\Date::toDateTime('now'));
-		$positionLangEntity->setEditUser($this->userEntity);
+		$positionLangEntity->setEditUser($this->user->getEntity());
 
 		$positionEntity->addLang($this->lang, $positionLangEntity);
 		
@@ -147,7 +141,7 @@ class PositionForm extends FormFactory
 		$positionLangEntity->setTitle($values['title']);
 		$positionLangEntity->setDescription($values['description']);
 		$positionLangEntity->setEditDate(\Wame\Utils\Date::toDateTime('now'));
-		$positionLangEntity->setEditUser($this->userEntity);
+		$positionLangEntity->setEditUser($this->user->getEntity());
 		
 		return $this->positionRepository->update($this->positionEntity);
 	}

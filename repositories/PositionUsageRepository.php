@@ -2,21 +2,17 @@
 
 namespace Wame\ComponentModule\Repositories;
 
-use h4kuna\Gettext\GettextSetup;
-use Kdyby\Doctrine\EntityManager;
-use Nette\DI\Container;
-use Nette\Security\User;
 use Wame\ComponentModule\Entities\PositionUsageEntity;
 use Wame\Core\Repositories\BaseRepository;
 
 class PositionUsageRepository extends BaseRepository
 {
-
-    public function __construct(Container $container, EntityManager $entityManager, GettextSetup $translator, User $user, $entityName = null)
+    public function __construct()
     {
-        parent::__construct($container, $entityManager, $translator, $user, PositionUsageEntity::class);
+        parent::__construct(PositionUsageEntity::class);
     }
 
+    
     /**
      * Add position usage
      * 
@@ -29,4 +25,5 @@ class PositionUsageRepository extends BaseRepository
         $this->entityManager->flush($positionUsageEntity);
         return $positionUsageEntity;
     }
+    
 }

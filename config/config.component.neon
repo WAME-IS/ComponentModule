@@ -31,10 +31,21 @@ services:
     - Wame\ComponentModule\Components\IComponentPositionListControlFactory
 
     # Repositories
-    - Wame\ComponentModule\Repositories\ComponentRepository
-    - Wame\ComponentModule\Repositories\ComponentInPositionRepository
-    - Wame\ComponentModule\Repositories\PositionRepository
-    - Wame\ComponentModule\Repositories\PositionUsageRepository
+    ComponentRepository:
+        class: Wame\ComponentModule\Repositories\ComponentRepository
+        inject: yes
+
+    ComponentInPositionRepository:
+        class: Wame\ComponentModule\Repositories\ComponentInPositionRepository
+        inject: yes
+
+    PositionRepository:
+        class: Wame\ComponentModule\Repositories\PositionRepository
+        inject: yes
+
+    PositionUsageRepository:
+        class: Wame\ComponentModule\Repositories\PositionUsageRepository
+        inject: yes
 
     # Registers
     ComponentRegister:

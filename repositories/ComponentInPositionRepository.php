@@ -2,25 +2,22 @@
 
 namespace Wame\ComponentModule\Repositories;
 
+use Wame\Core\Repositories\BaseRepository;
 use Wame\ComponentModule\Entities\ComponentEntity;
 use Wame\ComponentModule\Entities\ComponentInPositionEntity;
 
-class ComponentInPositionRepository extends \Wame\Core\Repositories\BaseRepository
+class ComponentInPositionRepository extends BaseRepository
 {
 	const STATUS_REMOVE = 0;
 	const STATUS_ACTIVE = 1;
     
+    
     use \Wame\Core\Repositories\Traits\SortableRepositoryTrait;
 	
     
-	public function __construct(
-        \Nette\DI\Container $container, 
-        \Kdyby\Doctrine\EntityManager $entityManager, 
-        \h4kuna\Gettext\GettextSetup $translator, 
-        \Nette\Security\User $user, 
-        $entityName = null
-    ) {
-		parent::__construct($container, $entityManager, $translator, $user, ComponentInPositionEntity::class);
+	public function __construct()
+    {
+		parent::__construct(ComponentInPositionEntity::class);
 	}
     
 	/**

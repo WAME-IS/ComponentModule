@@ -2,26 +2,23 @@
 
 namespace Wame\ComponentModule\Repositories;
 
-use h4kuna\Gettext\GettextSetup;
-use Kdyby\Doctrine\EntityManager;
-use Nette\DI\Container;
-use Nette\Security\User;
 use Wame\ComponentModule\Entities\ComponentEntity;
+use Wame\ComponentModule\Entities\ComponentLangEntity;
 use Wame\Core\Exception\RepositoryException;
 use Wame\LanguageModule\Repositories\TranslatableRepository;
 
 class ComponentRepository extends TranslatableRepository
 {
-
     const STATUS_REMOVE = 0;
     const STATUS_ENABLED = 1;
     const STATUS_DISABLED = 2;
     const HIDE_IN_LIST = 0;
     const SHOW_IN_LIST = 1;
 
-    public function __construct(Container $container, EntityManager $entityManager, GettextSetup $translator, User $user, $entityName = null)
+    
+    public function __construct()
     {
-        parent::__construct($container, $entityManager, $translator, $user, ComponentEntity::class);
+        parent::__construct(ComponentEntity::class, ComponentLangEntity::class);
     }
 
     /**

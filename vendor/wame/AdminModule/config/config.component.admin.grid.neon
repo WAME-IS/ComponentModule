@@ -26,7 +26,7 @@ services:
             - add(Wame\ComponentModule\Vendor\Wame\AdminModule\Grids\Columns\ComponentInPosition\Type())
             - add(Wame\ComponentModule\Vendor\Wame\AdminModule\Grids\Columns\ComponentInPosition\TitleLink())
             - add(Wame\ComponentModule\Vendor\Wame\AdminModule\Grids\Columns\ComponentName())
-            - add(Wame\ComponentModule\Vendor\Wame\AdminModule\Grids\Columns\ComponentStatus())
+            - add(Wame\ComponentModule\Vendor\Wame\AdminModule\Grids\Columns\ComponentInPosition\Status())
             - add(Wame\ComponentModule\Vendor\Wame\AdminModule\Grids\Columns\ComponentInPosition\Delete())
 
     PositionGrid:

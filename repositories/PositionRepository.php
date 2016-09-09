@@ -2,13 +2,10 @@
 
 namespace Wame\ComponentModule\Repositories;
 
-use h4kuna\Gettext\GettextSetup;
-use Kdyby\Doctrine\EntityManager;
-use Nette\DI\Container;
-use Nette\Security\User;
 use Wame\Core\Exception\RepositoryException;
 use Wame\LanguageModule\Repositories\TranslatableRepository;
 use Wame\ComponentModule\Entities\PositionEntity;
+use Wame\ComponentModule\Entities\PositionLangEntity;
 
 class PositionRepository extends TranslatableRepository
 {
@@ -17,8 +14,9 @@ class PositionRepository extends TranslatableRepository
 	const STATUS_DISABLED = 2;
 	
 	
-	public function __construct(Container $container, EntityManager $entityManager, GettextSetup $translator, User $user, $entityName = null) {
-		parent::__construct($container, $entityManager, $translator, $user, PositionEntity::class);
+	public function __construct()
+    {
+		parent::__construct(PositionEntity::class, PositionLangEntity::class);
 	}
 	
 	
@@ -143,6 +141,5 @@ class PositionRepository extends TranslatableRepository
 			throw new RepositoryException(_('Position with this name already exists.'));
 		}
 	}
-	
 	
 }
