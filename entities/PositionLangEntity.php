@@ -4,14 +4,14 @@ namespace Wame\ComponentModule\Entities;
 
 use Doctrine\ORM\Mapping as ORM;
 use Wame\Core\Entities\Columns;
+use Wame\Core\Entities\BaseLangEntity;
 
 /**
  * @ORM\Table(name="wame_position_lang")
  * @ORM\Entity
  */
-class PositionLangEntity extends \Wame\Core\Entities\BaseEntity
+class PositionLangEntity extends BaseLangEntity
 {
-
     use Columns\Identifier;
     use Columns\Lang;
     use Columns\Title;
@@ -19,11 +19,13 @@ class PositionLangEntity extends \Wame\Core\Entities\BaseEntity
     use Columns\EditDate;
     use Columns\EditUser;
 
+    
     /**
      * @ORM\ManyToOne(targetEntity="PositionEntity", inversedBy="langs")
      * @ORM\JoinColumn(name="position_id", referencedColumnName="id", nullable=false)
      */
     protected $position;
+    
 
     public function setPosition($position)
     {
@@ -35,4 +37,12 @@ class PositionLangEntity extends \Wame\Core\Entities\BaseEntity
     {
         return $this->position;
     }
+    
+    
+    /** {@inheritDoc} */
+    public function setEntity($entity)
+    {
+        $this->position = $entity;
+    }
+    
 }
