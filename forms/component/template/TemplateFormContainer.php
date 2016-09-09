@@ -20,7 +20,11 @@ class TemplateFormContainer extends BaseFormContainer
 	{
 		$form = $this->getForm();
 		
-		$componentEntity = $object->componentEntity;
+		if (isset($object->componentEntity)) {
+            $componentEntity = $object->componentEntity;
+        } elseif (isset($object->componentInPositionEntity)) {
+            $componentEntity = $object->componentInPositionEntity->getComponent();
+        }
 		
 		if ($componentEntity->getParameter('template')) {
 			$form['template']->setDefaultValue($componentEntity->getParameter('template'));

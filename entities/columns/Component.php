@@ -6,7 +6,7 @@ trait Component
 {
 	/**
      * @ORM\ManyToOne(targetEntity="\Wame\ComponentModule\Entities\ComponentEntity", inversedBy="id")
-     * @ORM\JoinColumn(name="component_id", referencedColumnName="id", nullable=false)
+     * @ORM\JoinColumn(name="component_id", referencedColumnName="id", nullable=true)
      */
     protected $component;
 

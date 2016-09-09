@@ -108,7 +108,7 @@ class PositionControl extends ListControl
 
         $this->listComponents = [];
 
-        $criteria = Criteria::create()->orderBy(["sort" => Criteria::DESC]);
+        $criteria = Criteria::create()->orderBy(["sort" => Criteria::ASC]);
         $componentsInPosition = $this->position->getComponents()->matching($criteria);
 
         foreach ($componentsInPosition as $componentInPosition) {

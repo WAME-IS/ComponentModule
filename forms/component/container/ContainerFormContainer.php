@@ -47,7 +47,11 @@ class ContainerFormContainer extends BaseFormContainer
 	{
 		$form = $this->getForm();
 		
-		$componentEntity = $object->componentEntity;
+        if (isset($object->componentEntity)) {
+            $componentEntity = $object->componentEntity;
+        } elseif (isset($object->componentInPositionEntity)) {
+            $componentEntity = $object->componentInPositionEntity->getComponent();
+        }
 
 		if ($componentEntity->getParameter('container')) {
 			$form['container']->setDefaults(ContainerAttributes::fromDatabase($componentEntity->getParameter('container')));
