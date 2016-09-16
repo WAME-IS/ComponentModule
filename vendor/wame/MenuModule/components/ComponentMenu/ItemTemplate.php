@@ -19,7 +19,7 @@ class ItemTemplate extends \Nette\Object
 	}
 
 
-	public function createItem($element, \Wame\ComponentModule\Registers\IComponent $item) 
+	public function createItem($element, $item) 
 	{
         if ($item->getLinkCreate() != null) {
             $icon = Html::el('div')->addClass('caption')->setHtml(Html::el('span')->addClass($item->getIcon() . ' fa-4x text-primary'));
