@@ -49,7 +49,6 @@ class PositionPresenter extends BasePresenter
     /** @var PositionEntity[] */
     private $positions;
 	
-	
     /** actions ***************************************************************/
     
     public function actionDefault()
