@@ -21,6 +21,7 @@ use Wame\ComponentModule\Vendor\Wame\AdminModule\Grids\ComponentGrid;
 use Wame\ComponentModule\Vendor\Wame\AdminModule\Grids\CreateComponentGrid;
 use Wame\MenuModule\Components\MenuControl;
 
+
 class ComponentPresenter extends BasePresenter
 {
 	/** @var array */
@@ -241,7 +242,7 @@ class ComponentPresenter extends BasePresenter
 		$control->setContainerPrototype(Html::el('div')->setClass('com-componentMenu'));
 		$control->setListPrototype(Html::el('div')->setClass('row'));
 		$control->setItemPrototype(Html::el('div')->setClass('col-xs-6 col-sm-4 col-lg-3'));
-		$control->setItemTemplate($this->itemTemplate);
+//		$control->setItemTemplate($this->itemTemplate);
         
 		return $control;
 	}  
