@@ -14,6 +14,7 @@ class ComponentInPositionEntity extends BaseEntity
 {
 	use Columns\Identifier;
 	use Columns\Parameters;
+	use Columns\Sort;
 	
 
 	/**
@@ -27,11 +28,6 @@ class ComponentInPositionEntity extends BaseEntity
      * @ORM\JoinColumn(name="position_id", referencedColumnName="id", nullable=false)
      */
 	protected $position;
-
-	/**
-	 * @ORM\Column(name="sort", type="integer", nullable=false)
-	 */
-	protected $sort;
 	
 	
 	/** get ************************************************************/
@@ -49,11 +45,6 @@ class ComponentInPositionEntity extends BaseEntity
 	public function getPosition()
 	{
 		return $this->position;
-	}
-	
-	public function getSort()
-	{
-		return $this->sort;
 	}
     
 	public function getComponentType()
@@ -79,13 +70,6 @@ class ComponentInPositionEntity extends BaseEntity
 	public function setPosition($position)
 	{
 		$this->position = $position;
-		
-		return $this;
-	}
-
-	public function setSort($sort)
-	{
-		$this->sort = $sort;
 		
 		return $this;
 	}
