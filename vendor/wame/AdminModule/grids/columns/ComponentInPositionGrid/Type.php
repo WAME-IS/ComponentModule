@@ -23,9 +23,11 @@ class Type extends BaseGridItem
 	{
 		$grid->addColumnText('type', _('Type'))
 				->setRenderer(function($item) {
-                  return Html::el('span')
-                          ->setClass($this->componentRegister[$item->component->getType()]->getIcon())
-                          ->setTitle($this->componentRegister[$item->component->getType()]->getTitle()); //, '<span class="' .  . '" title="'. $this->componentRegister[$item->getType()]->getTitle() .'"></span>';
+                  return Html::el('i')
+                            ->addClass('material-icons tooltipped')
+                            ->addData('position', 'right')
+                            ->addData('tooltip', $this->componentRegister[$item->component->getType()]->getTitle())
+                            ->setText($this->componentRegister[$item->component->getType()]->getIcon());
 				});
 		
 		return $grid;

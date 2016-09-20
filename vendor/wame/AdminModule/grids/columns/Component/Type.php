@@ -24,13 +24,17 @@ class Type extends BaseGridItem
 		$grid->addColumnText('type', _('Type'))
 				->setRenderer(function($item) {
                     if($this->componentRegister[$item->getType()]) {
-                        return Html::el('span')
-                            ->setClass($this->componentRegister[$item->getType()]->getIcon())
-                            ->setTitle($this->componentRegister[$item->getType()]->getTitle()); //, '<span class="' .  . '" title="'. $this->componentRegister[$item->getType()]->getTitle() .'"></span>';
+                        return Html::el('i')
+                            ->addClass('material-icons tooltipped')
+                            ->addData('position', 'right')
+                            ->addData('tooltip', $this->componentRegister[$item->getType()]->getTitle())
+                            ->setText($this->componentRegister[$item->getType()]->getIcon());
                     } else {
-                        return Html::el('span')
-                                ->setClass('fa fa-question')
-                                ->setTitle($item->getType());
+                        return Html::el('i')
+                                ->addClass('material-icons text-danger tooltipped')
+                                ->addData('position', 'right')
+                                ->addData('tooltip', $this->componentRegister[$item->getType()]->getTitle())
+                                ->setText('help_outline');
                     }
 				});
 		
