@@ -5,13 +5,15 @@ services:
     ComponentGrid:
         class: Wame\ComponentModule\Vendor\Wame\AdminModule\Grids\ComponentGrid
         setup:
-            - add(Wame\DataGridControl\Columns\Id())
-            - add(Wame\ComponentModule\Vendor\Wame\AdminModule\Grids\Columns\Component\Type())
-            - add(Wame\ComponentModule\Vendor\Wame\AdminModule\Grids\Columns\Component\TitleLink())
-            - add(Wame\DataGridControl\Columns\Name())
-            - add(Wame\ComponentModule\Vendor\Wame\AdminModule\Grids\Columns\Component\Status())
+            - add(Wame\DataGridControl\Columns\Id(), null, {priority: 90})
+            - add(Wame\ComponentModule\Vendor\Wame\AdminModule\Grids\Columns\Component\Type(), null, {priority: 80})
+            - add(Wame\ComponentModule\Vendor\Wame\AdminModule\Grids\Columns\Component\TitleLink(), null, {priority: 70})
+            - add(Wame\DataGridControl\Columns\Name(), null, {priority: 60})
+            - add(Wame\DataGridControl\Columns\Status(), null, {priority: 50})
             - add(Wame\DataGridControl\Actions\Delete())
             - add(Wame\DataGridControl\ToolbarButtons\Add())
+            - add(Wame\DataGridControl\GroupActions\DeleteSelected())
+            - add(Wame\DataGridControl\GroupActions\ChangeStatusSelected())
 
     CreateComponentGrid:
         class: Wame\ComponentModule\Vendor\Wame\AdminModule\Grids\CreateComponentGrid
@@ -36,4 +38,7 @@ services:
             - add(Wame\DataGridControl\Columns\Name(), null, {priority: 70})
             - add(Wame\DataGridControl\Columns\TitleLinkShow(), null, {priority: 50})
             - add(Wame\DataGridControl\Columns\Description(), null, {priority: 30})
+            - add(Wame\DataGridControl\Columns\Status(), null, {priority: 10})
             - add(Wame\DataGridControl\Actions\Delete())
+            - add(Wame\DataGridControl\GroupActions\DeleteSelected())
+            - add(Wame\DataGridControl\GroupActions\ChangeStatusSelected())

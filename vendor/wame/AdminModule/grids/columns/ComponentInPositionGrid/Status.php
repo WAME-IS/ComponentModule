@@ -28,8 +28,6 @@ class Status extends \Wame\DataGridControl\Columns\Status
     {
         $componentInPositionEntity = $this->grid->getDataModel()->getDataSource()->filterOne(['id' => $id])->getData()[0];
         
-        \Tracy\Debugger::fireLog($componentInPositionEntity->component);
-        
         return $componentInPositionEntity->component;
     }
     
