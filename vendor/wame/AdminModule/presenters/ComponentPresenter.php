@@ -55,7 +55,7 @@ class ComponentPresenter extends BasePresenter
 	public $componentInPositionRepository;
 	
 	/** @var ItemTemplate @inject */
-	public $itemTemplate;
+	public $componentItemTemplate;
     
     /** @var ComponentGrid @inject */
 	public $componentGrid;
@@ -238,11 +238,11 @@ class ComponentPresenter extends BasePresenter
 	{
         $control = $this->IMenuControlFactory->create();
 		$control->addProvider($this->componentRegister);
-
+        
 		$control->setContainerPrototype(Html::el('div')->setClass('com-componentMenu'));
 		$control->setListPrototype(Html::el('div')->setClass('row'));
 		$control->setItemPrototype(Html::el('div')->setClass('col-xs-6 col-sm-4 col-lg-3'));
-//		$control->setItemTemplate($this->itemTemplate);
+		$control->setItemTemplate($this->componentItemTemplate);
         
 		return $control;
 	}  

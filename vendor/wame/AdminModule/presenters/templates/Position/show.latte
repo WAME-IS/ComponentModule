@@ -1,21 +1,20 @@
-{block content}
-	<div class="page-header">
-		<div class="row">
-			<h1 class="col-md-7">
-				<a n:href="Component:, 'id' => null">{$siteTitle}</a>
-				<small>
-                    <span class="fa fa-angle-right"></span>
-                    {$position->title}
-                </small>
-			</h1>
-				
-			<div class="col-md-5 text-right">
-				<a class="{$position->status == 1 ? 'label label-success' : 'label label-danger'}" n:href="ChangeStatus!">{$positionStatusList[$position->status]}</a>
-				<a class="btn btn-sm btn-warning" n:href=":Admin:Position:update, 'id' => $position->id"><span class="fa fa-edit"></span> {_'Edit'}</a>
-				<a class="btn btn-sm btn-danger" n:href=":Admin:Position:delete, 'id' => $position->id"><span class="fa fa-trash-o"></span> {_'Delete'}</a>
-			</div>	
-		</div>
-	</div>
+{block siteTitle}
+    <h1>
+        {$siteTitle} {$position->title}
+        
+        <small>
+            <span class="material-icons">chevron_right</span>
+            {$position->title}
+        </small>
+    </h1>
+{/block}
+
+{block content}          
+    <div class="col-md-5 text-right">
+        <a class="{$position->status == 1 ? 'label label-success' : 'label label-danger'}" n:href="ChangeStatus!">{$positionStatusList[$position->status]}</a>
+        <a class="btn btn-sm btn-warning" n:href=":Admin:Position:update, 'id' => $position->id"><span class="fa fa-edit"></span> {_'Edit'}</a>
+        <a class="btn btn-sm btn-danger" n:href=":Admin:Position:delete, 'id' => $position->id"><span class="fa fa-trash-o"></span> {_'Delete'}</a>
+    </div>
 
 	<div class="row">
 		<div class="col-md-8 col-lg-9">
@@ -25,8 +24,14 @@
 			</a>
 
 			{if count($components) == 0}
-				<div class="lead text-muted">{_'You do not have created any components in this position.'}</div>
-				<a class="btn btn-success" n:href=":Admin:Component:create, 'id' => $id">{_'Add first component'}</a>
+                <div class="empty-block">
+                    <p>{_'You do not have created any components in this position.'}</p>
+                    
+                    <a class="btn btn-success btn-large" n:href=":Admin:Component:create, 'id' => $id">
+                        <i class="material-icons">add_circle_outline</i>
+                        {_'Add first component'}
+                    </a>
+                </div>
 			{else}
                 {control componentInPositionGrid}
 			{/if}
