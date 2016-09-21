@@ -1,38 +1,51 @@
 {if count($componentPositionList) == 0}
-	<div class="alert alert-info">
-		<span class="fa fa-info-circle"></span>
-		{_'This component is not added in any position'}
+	<div class="empty-block">
+        <p>{_'This component is not added in any position.'}</p>
+        
+        <a href="{plink Component:addToPosition}" class="btn btn-success ajax-modal">
+            <span class="material-icons">add_circle_outline</span>
+            {_'Add to position'}
+        </a>
 	</div>
 {else}
-	<h4>{_'This component is use also'}:</h4>
-	
-	<div class="list-group">
-		<div n:foreach="$componentPositionList as $componentPosition" class="list-group-item">
+    <ul class="collection with-header z-depth-3">
+        <li class="collection-header">
             <div class="row">
-                <a href="{plink Component:position, 'id' => $componentPosition->id}" class="col-xs-9">
-                    {var $position = $componentPosition->position}
-
-                    <h4 class="list-group-item-heading">
-                        {$position->langs[$lang]->title}
-                        <small>[{$position->name}]</small>
-                    </h4>
-
-                    <small n:if="$position->langs[$lang]->description" class="list-group-item-text">
-                        {$position->langs[$lang]->description}
-                    </small>
-                </a>
-                    
-                <div class="col-xs-3 text-right">
-                    <a href="{plink Component:removeFromPosition, 'id' => $componentPosition->id}" class="btn btn-danger btn-xs ajax-modal">
-                        <span class="fa fa-trash-o"></span>
+                <div class="col-xs-9 valign-wrapper">
+                    <span class="valign">{_'This component is use also'}:</span>
+                </div>
+                <div class="col-xs-3 border-left text-right">
+                    <a href="{plink Component:addToPosition}" class="btn btn-link tooltipped ajax-modal" data-position="left" data-tooltip="{_'Add to position'}">
+                        <span class="material-icons">add_circle_outline</span>
                     </a>
                 </div>
             </div>
-		</div>
-	</div>
+        </li>
+        
+        <li class="collection-item dismissable" n:foreach="$componentPositionList as $componentPosition">
+            <div class="row">
+                <div class="col-xs-9">
+                    {var $position = $componentPosition->position}
+                    <a href="{plink Component:position, 'id' => $componentPosition->id}">
+                        <span class="title truncate">{$position->title}</span>
+                    </a>
+                    
+                    <small>[{$position->name}]</small>
+                    
+                    {if $position->description}
+                        <br>
+                        <small>
+                            {$position->description}
+                        </small>
+                    {/if}
+                </div>
+                
+                <div class="col-xs-3 text-right">
+                    <a href="{plink Component:removeFromPosition, 'id' => $componentPosition->id}" class="secondary-content btn btn-icon btn-hover-danger tooltipped ajax-modal" data-position="left" data-tooltip="{_'Remove from this position'}">
+                        <i class="material-icons">delete</i>
+                    </a>
+                </div>
+            </div>
+        </li>
+    </ul>
 {/if}
-
-<a class="btn btn-success ajax-modal" href="{plink Component:addToPosition}">
-	<span class="fa fa-plus"></span>
-	{_'Add to position'}
-</a>
