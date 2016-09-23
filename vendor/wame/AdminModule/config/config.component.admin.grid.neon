@@ -11,7 +11,7 @@ services:
             - add(Wame\DataGridControl\Columns\Name(), null, {priority: 60})
             - add(Wame\DataGridControl\Columns\Status(), null, {priority: 50})
             - add(Wame\DataGridControl\Actions\Delete())
-            - add(Wame\DataGridControl\ToolbarButtons\Add())
+            - add(Wame\ComponentModule\Vendor\Wame\AdminModule\Grids\ToolbarButtons\AddComponent())
             - add(Wame\DataGridControl\GroupActions\DeleteSelected())
             - add(Wame\DataGridControl\GroupActions\ChangeStatusSelected())
 
@@ -30,6 +30,7 @@ services:
             - add(Wame\ComponentModule\Vendor\Wame\AdminModule\Grids\Columns\ComponentName())
             - add(Wame\ComponentModule\Vendor\Wame\AdminModule\Grids\Columns\ComponentInPosition\Status())
             - add(Wame\ComponentModule\Vendor\Wame\AdminModule\Grids\Columns\ComponentInPosition\Delete())
+            - add(Wame\ComponentModule\Vendor\Wame\AdminModule\Grids\ToolbarButtons\AddComponent())
 
     PositionGrid:
         class: Wame\ComponentModule\Vendor\Wame\AdminModule\Grids\PositionGrid
@@ -42,3 +43,4 @@ services:
             - add(Wame\DataGridControl\Actions\Delete())
             - add(Wame\DataGridControl\GroupActions\DeleteSelected())
             - add(Wame\DataGridControl\GroupActions\ChangeStatusSelected())
+            - add(Wame\ComponentModule\Vendor\Wame\AdminModule\Grids\ToolbarButtons\AddPosition())

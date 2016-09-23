@@ -10,35 +10,32 @@
 {/block}
 
 {block content}          
-    <div class="col-md-5 text-right">
-        <a class="{$position->status == 1 ? 'label label-success' : 'label label-danger'}" n:href="ChangeStatus!">{$positionStatusList[$position->status]}</a>
-        <a class="btn btn-sm btn-warning" n:href=":Admin:Position:update, 'id' => $position->id"><span class="fa fa-edit"></span> {_'Edit'}</a>
-        <a class="btn btn-sm btn-danger" n:href=":Admin:Position:delete, 'id' => $position->id"><span class="fa fa-trash-o"></span> {_'Delete'}</a>
-    </div>
+<div class="card-panel white no-margin text-right">
+    <a class="{$position->status == 1 ? 'label label-success' : 'label label-danger'}" n:href="ChangeStatus!">{$positionStatusList[$position->status]}</a>
+    <a class="btn btn-sm btn-warning" n:href=":Admin:Position:update, 'id' => $position->id"><span class="fa fa-edit"></span> {_'Edit'}</a>
+    <a class="btn btn-sm btn-danger" n:href=":Admin:Position:delete, 'id' => $position->id"><span class="fa fa-trash-o"></span> {_'Delete'}</a>
+</div>
 
-	<div class="row">
-		<div class="col-md-8 col-lg-9">
-			<a n:if="count($components) > 0" class="btn btn-success pull-right" n:href=":Admin:Component:create, 'id' => $id">
-				<span class="fa fa-plus"></span>
-				{_'Add component'}
-			</a>
-
-			{if count($components) == 0}
+<div class="card-panel no-shadow">
+    <div class="row">
+        <div class="col-md-8 col-lg-9">
+            {if count($components) == 0}
                 <div class="empty-block">
                     <p>{_'You do not have created any components in this position.'}</p>
-                    
+
                     <a class="btn btn-success btn-large" n:href=":Admin:Component:create, 'id' => $id">
                         <i class="material-icons">add_circle_outline</i>
                         {_'Add first component'}
                     </a>
                 </div>
-			{else}
+            {else}
                 {control componentInPositionGrid}
-			{/if}
-		</div>
-		
-		<div class="col-md-4 col-lg-3">
-			{control positionList}
-		</div>
-	</div>
+            {/if}
+        </div>
+
+        <div class="col-md-4 col-lg-3">
+            {control positionList}
+        </div>
+    </div>
+</div>
 	

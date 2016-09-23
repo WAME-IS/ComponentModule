@@ -1,23 +1,15 @@
 {block content}
-	<div class="page-header">
-		<div class="row">
-			<h1 class="col-md-7">{_'Positions'}</h1>
-		</div>
-	</div>
 
-	<div class="row">
-		<div class="col-md-12">
-			<a n:if="count($positions) > 0" class="btn btn-success pull-right" n:href=":Admin:Position:create, 'id' => $id">
-				<span class="fa fa-plus"></span>
-				{_'Add position'}
-			</a>
+{if count($positions) == 0}
+    <div class="empty-block">
+        <p>{_'You do not have created any positions yet.'}</p>
 
-			{if count($positions) == 0}
-				<div class="lead text-muted">{_'You do not have created any positions yet.'}</div>
-				<a class="btn btn-success" n:href=":Admin:Position:create, 'id' => $id">{_'Add first position'}</a>
-			{else}
-                {control positionGrid}
-			{/if}
-		</div>
-	</div>
+        <a class="btn btn-success btn-lg" n:href=":Admin:Position:create, 'id' => $id">
+            <i class="material-icons">add_circle_outline</i>
+            {_'Create first position'}
+        </a>
+    </div>
+{else}
+    {control positionGrid}
+{/if}
 	
