@@ -10,6 +10,7 @@ class AddComponent extends AdminAdd
     public function __construct() 
     {
         $this->setTitle(_('Add component'));
+        $this->setLink(':Admin:Component:create');
     }
 
 }
