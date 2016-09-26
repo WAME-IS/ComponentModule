@@ -28,7 +28,6 @@ class ContainerFormContainer extends BaseFormContainer
         });
         
         $tag = $attributes->addText('tag', _('Tag'))
-                    ->setAttribute('placeholder', 'div')
                     ->setOption('description', _('e.g.: div, span, ul, article, aside, header, footer, main, nav, section...'));
         
         $form->getCurrentGroup()->add($tag);
