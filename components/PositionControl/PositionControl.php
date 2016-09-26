@@ -128,7 +128,7 @@ class PositionControl extends ListControl
                 if ($component instanceof BaseControl) {
                     $component->setComponentInPosition($componentInPosition);
 
-                    //TOOD remove
+                    //TODO remove
                     $component->componentParameters->add(
                         new ArrayParameterSource(['container' => ['class' => sprintf(BaseControl::COMPONENT_ID_CLASS, $type)]]), 'componentInPositionClass', ['priority' => 0]);
                 }
