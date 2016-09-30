@@ -11,9 +11,15 @@
 
 {block content}          
 <div class="card-panel white no-margin text-right">
-    <a class="{$position->status == 1 ? 'label label-success' : 'label label-danger'}" n:href="ChangeStatus!">{$positionStatusList[$position->status]}</a>
-    <a class="btn btn-sm btn-warning" n:href=":Admin:Position:update, 'id' => $position->id"><span class="fa fa-edit"></span> {_'Edit'}</a>
-    <a class="btn btn-sm btn-danger" n:href=":Admin:Position:delete, 'id' => $position->id"><span class="fa fa-trash-o"></span> {_'Delete'}</a>
+    <a class="{$position->status == 1 ? 'label label-success' : 'label label-danger'}" n:href="ChangeStatus!">
+        {$positionStatusList[$position->status]}
+    </a>
+    <a class="btn btn-icon btn-hover-warning tooltipped ajax-modal ajax-modal-fixed" data-position="left" data-tooltip="{_'Edit position'}" n:href=":Admin:Position:update, 'id' => $position->id">
+        <span class="material-icons">edit</span>
+    </a>
+    <a class="btn btn-icon btn-hover-danger tooltipped ajax-modal" data-position="left" data-tooltip="{_'Delete position'}" n:href=":Admin:Position:delete, 'id' => $position->id">
+        <span class="material-icons">delete</span>
+    </a>
 </div>
 
 <div class="card-panel no-shadow">

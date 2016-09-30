@@ -93,6 +93,10 @@ services:
     PositionsSeeker:
         class: Wame\ComponentModule\Commands\Seeker\PositionsSeeker
 
+    # Doctrine filters
+    - Wame\ComponentModule\Doctrine\Filters\ComponentStatusFilter
+    - Wame\ComponentModule\Doctrine\Filters\PositionStatusFilter
+
 doctrine:
     metadata:
         Wame\ComponentModule\Entities: %appDir%/../vendor/wame/ComponentModule/entities

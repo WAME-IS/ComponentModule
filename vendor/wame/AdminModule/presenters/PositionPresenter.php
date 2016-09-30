@@ -2,7 +2,6 @@
 
 namespace App\AdminModule\Presenters;
 
-use Doctrine\Common\Collections\Criteria;
 use Wame\ComponentModule\Entities\PositionEntity;
 use Wame\ComponentModule\Forms\PositionForm;
 use Wame\ComponentModule\Components\PositionListControl;
@@ -13,6 +12,9 @@ use Wame\ComponentModule\Repositories\PositionRepository;
 use Wame\ComponentModule\Registers\ComponentRegister;
 use Wame\ComponentModule\Vendor\Wame\AdminModule\Grids\PositionGrid;
 use Wame\ComponentModule\Vendor\Wame\AdminModule\Grids\ComponentInPositionGrid;
+use Wame\ComponentModule\Doctrine\Filters\ComponentStatusFilter;
+use Wame\ComponentModule\Doctrine\Filters\PositionStatusFilter;
+
 
 class PositionPresenter extends BasePresenter
 {	
@@ -39,6 +41,12 @@ class PositionPresenter extends BasePresenter
     
     /** @var ComponentInPositionGrid @inject */
 	public $componentInPositionGrid;
+    
+    /** @var ComponentStatusFilter @inject */
+	public $componentStatusFilter;
+    
+    /** @var PositionStatusFilter @inject */
+	public $positionStatusFilter;
 	
 	/** @var PositionEntity */
 	private $position;
@@ -53,7 +61,9 @@ class PositionPresenter extends BasePresenter
     
     public function actionDefault()
     {
-        $this->positions = $this->positionRepository->find(['status !=' => PositionRepository::STATUS_REMOVE]);
+        $this->positionStatusFilter->setEnabled(false);
+        
+        $this->positions = $this->positionRepository->createQueryBuilder('a');
     }
     
 	public function actionShow()
@@ -80,13 +90,14 @@ class PositionPresenter extends BasePresenter
 			$this->redirect(':Admin:Component:', ['id' => null]);
 		}
         
-        $criteriaCollection = new \Doctrine\Common\Collections\ArrayCollection($this->position->components->toArray());
+        $this->componentStatusFilter->setEnabled(false);
         
-        $criteria = Criteria::create()
-                    ->where(Criteria::expr()->in('ComponentType', $this->componentRegister->getList()))
-                    ->andWhere(Criteria::expr()->neq('ComponentStatus', ComponentRepository::STATUS_REMOVE));
+        $qb = $this->componentInPositionRepository->createQueryBuilder('a');
+        $qb->join(\Wame\ComponentModule\Entities\ComponentEntity::class, 'c', \Doctrine\ORM\Query\Expr\Join::WITH, 'a.component = c.id');
+        $qb->andWhere($qb->expr()->eq('a.position', $this->id));
+        $qb->andWhere($qb->expr()->neq('c.status', 0));
         
-        $this->components = $criteriaCollection->matching($criteria)->toArray();
+        $this->components = $qb;
 	}
 	
 	
@@ -214,12 +225,10 @@ class PositionPresenter extends BasePresenter
     
 	public function renderShow()
 	{
-		$this->template->siteTitle = _('Components');
+		$this->template->siteTitle = $this->position->getTitle();
 		$this->template->position = $this->position;
 		$this->template->components = $this->components;
 		$this->template->positionStatusList = $this->positionRepository->getStatusList();
-		$this->template->componentStatusList = $this->componentRepository->getStatusList();
-		$this->template->componentRegister = $this->componentRegister;
 	}
 	
 	
@@ -282,8 +291,7 @@ class PositionPresenter extends BasePresenter
      */
     protected function createComponentPositionGrid()
 	{
-        $qb = $this->positionRepository->createQueryBuilder('a');
-		$this->positionGrid->setDataSource($qb);
+		$this->positionGrid->setDataSource($this->positions);
 		$this->positionGrid->setSortable();
         
 		return $this->positionGrid;
@@ -296,15 +304,9 @@ class PositionPresenter extends BasePresenter
      */
     protected function createComponentComponentInPositionGrid()
 	{
-        $qb = $this->componentInPositionRepository->createQueryBuilder('a');
-        $qb->join(\Wame\ComponentModule\Entities\ComponentEntity::class, 'c', \Doctrine\ORM\Query\Expr\Join::WITH, 'a.component = c.id');
-        $qb->andWhere($qb->expr()->eq('a.position', $this->id));
-        $qb->andWhere($qb->expr()->neq('c.status', 0));
-        $qb->orderBy('a.sort', 'DESC');
-        
-		$this->componentInPositionGrid->setDataSource($qb);
+		$this->componentInPositionGrid->setDataSource($this->components);
 		$this->componentInPositionGrid->setSortable();
-//        $this->componentInPositionGrid->setDefaultSort(['sort' => 'DESC']);
+        $this->componentInPositionGrid->setDefaultSort(['sort' => 'ASC']);
         
 		return $this->componentInPositionGrid;
 	}

@@ -86,13 +86,15 @@ class PositionControl extends ListControl
         $this->positionName = $positionName;
         $this->position = $positionEntity;
 
-        $this->getListComponents();
+        if ($this->position->getStatus() == PositionRepository::STATUS_ENABLED) {
+            $this->getListComponents();
 
-        $this->componentParameters->add(
-            new ArrayParameterSource($this->position->getParameters()), 'position', ['priority' => 20]);
-        $this->componentParameters->remove('componentDefaultClass');
-        $this->componentParameters->add(
-            new ArrayParameterSource(['container' => ['class' => sprintf(self::POSITION_ID_CLASS, $this->positionName)]]), 'positionDefaultClass', ['priority' => 1]);
+            $this->componentParameters->add(
+                new ArrayParameterSource($this->position->getParameters()), 'position', ['priority' => 20]);
+            $this->componentParameters->remove('componentDefaultClass');
+            $this->componentParameters->add(
+                new ArrayParameterSource(['container' => ['class' => sprintf(self::POSITION_ID_CLASS, $this->positionName)]]), 'positionDefaultClass', ['priority' => 1]);
+        }
     }
 
     /**
@@ -113,9 +115,9 @@ class PositionControl extends ListControl
 
         foreach ($componentsInPosition as $componentInPosition) {
 
-            if ($componentInPosition->component->status != ComponentRepository::STATUS_ENABLED) {
-                continue;
-            }
+//            if ($componentInPosition->component->status != ComponentRepository::STATUS_ENABLED) {
+//                continue;
+//            }
 
             $type = $componentInPosition->component->type;
 

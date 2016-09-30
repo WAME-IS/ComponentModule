@@ -3,8 +3,6 @@
 namespace App\AdminModule\Presenters;
 
 use Nette\Utils\Html;
-use Doctrine\Common\Collections\Criteria;
-use Wame\ComponentModule\Registers\ComponentRegister;
 use Wame\ComponentModule\Entities\ComponentEntity;
 use Wame\ComponentModule\Repositories\ComponentRepository;
 use Wame\ComponentModule\Components\PositionListControl;
@@ -20,6 +18,7 @@ use Wame\ComponentModule\Vendor\Wame\MenuModule\Components\ComponentMenu\ItemTem
 use Wame\ComponentModule\Vendor\Wame\AdminModule\Grids\ComponentGrid;
 use Wame\ComponentModule\Vendor\Wame\AdminModule\Grids\CreateComponentGrid;
 use Wame\MenuModule\Components\MenuControl;
+use Wame\ComponentModule\Doctrine\Filters\ComponentStatusFilter;
 
 
 class ComponentPresenter extends BasePresenter
@@ -32,9 +31,6 @@ class ComponentPresenter extends BasePresenter
 	
 	/** @var ComponentInPositionEntity */
 	private $componentInPosition;
-
-	/** @var ComponentRegister @inject */
-	public $componentRegister;
 	
 	/** @var ComponentRepository @inject */
 	public $componentRepository;
@@ -62,6 +58,9 @@ class ComponentPresenter extends BasePresenter
     
     /** @var CreateComponentGrid @inject */
 	public $createComponentGrid;
+    
+    /** @var ComponentStatusFilter @inject */
+	public $componentStatusFilter;
 	
 	
     /** actions ***************************************************************/
@@ -72,15 +71,13 @@ class ComponentPresenter extends BasePresenter
 			$this->flashMessage(_('To enter this section you do not have enough privileges.'), 'danger');
 			$this->redirect(':Admin:Dashboard:');
 		}
-		
-		$this->components = $this->componentRepository->find(['status !=' => ComponentRepository::STATUS_REMOVE, 'inList' => ComponentRepository::SHOW_IN_LIST]);
+
+        $this->componentStatusFilter->setEnabled(false);
+
+        $qb = $this->componentRepository->createQueryBuilder('a');
+        $qb->andWhere($qb->expr()->eq('a.inList', ComponentRepository::SHOW_IN_LIST));
         
-        $criteriaCollection = new \Doctrine\Common\Collections\ArrayCollection($this->components);
-        
-        $criteria = Criteria::create()
-                ->where(Criteria::expr()->in('type', $this->componentRegister->getList()));
-        
-        $this->components = $criteriaCollection->matching($criteria)->toArray();
+        $this->components = $qb;	
     }
 	
 	
@@ -147,7 +144,6 @@ class ComponentPresenter extends BasePresenter
 	{
 		$this->template->siteTitle = _('Components');
 		$this->template->components = $this->components;
-		$this->template->componentRegister = $this->componentRegister;
 	}
 	
 	
@@ -303,9 +299,7 @@ class ComponentPresenter extends BasePresenter
      */
     protected function createComponentComponentGrid()
 	{
-        $qb = $this->componentRepository->createQueryBuilder('a');
-        $qb->andWhere($qb->expr()->eq('a.inList', ComponentRepository::SHOW_IN_LIST));
-		$this->componentGrid->setDataSource($qb);
+		$this->componentGrid->setDataSource($this->components);
 		
 		return $this->componentGrid;
 	}

@@ -24,11 +24,12 @@ services:
     ComponentInPositionGrid:
         class: Wame\ComponentModule\Vendor\Wame\AdminModule\Grids\ComponentInPositionGrid
         setup:
-            - add(Wame\ComponentModule\Vendor\Wame\AdminModule\Grids\Columns\ComponentId())
-            - add(Wame\ComponentModule\Vendor\Wame\AdminModule\Grids\Columns\ComponentInPosition\Type())
-            - add(Wame\ComponentModule\Vendor\Wame\AdminModule\Grids\Columns\ComponentInPosition\TitleLink())
-            - add(Wame\ComponentModule\Vendor\Wame\AdminModule\Grids\Columns\ComponentName())
-            - add(Wame\ComponentModule\Vendor\Wame\AdminModule\Grids\Columns\ComponentInPosition\Status())
+            - add(Wame\ComponentModule\Vendor\Wame\AdminModule\Grids\Columns\ComponentId(), null, {priority: 100})
+            - add(Wame\ComponentModule\Vendor\Wame\AdminModule\Grids\Columns\ComponentInPosition\Sort(), null, {priority: 50})
+            - add(Wame\ComponentModule\Vendor\Wame\AdminModule\Grids\Columns\ComponentInPosition\Type(), null, {priority: 90})
+            - add(Wame\ComponentModule\Vendor\Wame\AdminModule\Grids\Columns\ComponentInPosition\TitleLink(), null, {priority: 80})
+            - add(Wame\ComponentModule\Vendor\Wame\AdminModule\Grids\Columns\ComponentName(), null, {priority: 70})
+            - add(Wame\ComponentModule\Vendor\Wame\AdminModule\Grids\Columns\ComponentInPosition\Status(), null, {priority: 60})
             - add(Wame\ComponentModule\Vendor\Wame\AdminModule\Grids\Columns\ComponentInPosition\Delete())
             - add(Wame\ComponentModule\Vendor\Wame\AdminModule\Grids\ToolbarButtons\AddComponent())
 
