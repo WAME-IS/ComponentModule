@@ -5,6 +5,7 @@ namespace App\AdminModule\Presenters;
 use Nette\Utils\Html;
 use Wame\ComponentModule\Entities\ComponentEntity;
 use Wame\ComponentModule\Repositories\ComponentRepository;
+use Wame\ComponentModule\Registers\ComponentRegister;
 use Wame\ComponentModule\Components\PositionListControl;
 use Wame\ComponentModule\Components\IPositionListControlFactory;
 use Wame\ComponentModule\Components\ComponentPositionListControl;
@@ -34,6 +35,9 @@ class ComponentPresenter extends BasePresenter
 	
 	/** @var ComponentRepository @inject */
 	public $componentRepository;
+	
+	/** @var ComponentRegister @inject */
+	public $componentRegister;
 	
 	/** @var IPositionListControlFactory @inject */
 	public $IPositionListControlFactory;
