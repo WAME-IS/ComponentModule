@@ -1,15 +1,15 @@
 {block content}
 
-{if count($positions) == 0}
+{if $count == 0}
     <div class="empty-block">
         <p>{_'You do not have created any positions yet.'}</p>
 
-        <a class="btn btn-success btn-lg" n:href=":Admin:Position:create, 'id' => $id">
+        <a class="btn btn-success btn-lg ajax-modal" n:href=":Admin:Position:create, 'id' => $id">
             <i class="material-icons">add_circle_outline</i>
             {_'Create first position'}
         </a>
     </div>
 {else}
-    {control positionGrid}
+    {control grid}
 {/if}
 	

@@ -1,9 +1,6 @@
 {block content}
-	<div class="page-header">
-		<h1>{$siteTitle}</h1>
-	</div>
-	
-	<p>{_'Do you really want to delete this position?'}</p>
-	
-	<a class="btn btn-danger" n:href="Delete!">{_'Delete'}</a>
-	<a class="btn btn-default" n:href=":Admin:Component:, 'id' => null">{_'Cancel'}</a>
+
+<p>{_'Do you really want to delete %s position?', $subTitle}</p>
+
+<a class="btn btn-danger" n:href="Delete!" data-disabled="click">{_'Delete'}</a>
+<a class="btn btn-default" n:href=":Admin:Position:, 'id' => null" data-dismiss="modal">{_'Cancel'}</a>

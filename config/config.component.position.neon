@@ -1,0 +1,22 @@
+services:
+    # Factories
+    - Wame\ComponentModule\Components\IComponentPositionListControlFactory
+
+
+    # Repositories
+    ComponentInPositionRepository:
+        class: Wame\ComponentModule\Repositories\ComponentInPositionRepository
+        inject: yes
+
+
+    # Forms
+    ComponentPositionForm:
+        class: Wame\ComponentModule\Forms\ComponentPositionForm
+        setup:
+            - addFormContainer(Wame\ComponentModule\Forms\ComponentPosition\TemplateFormContainer(), 'TemplateFormContainer', 100)
+            - addFormContainer(Wame\ComponentModule\Forms\ComponentPosition\ContainerFormContainer(), 'ContainerFormContainer', 75)
+            - addFormContainer(Wame\DynamicObject\Forms\FormGroupContainer(), 'SubmitFormGroupContainer')
+            - addFormContainer(Wame\DynamicObject\Forms\SubmitFormContainer(), 'SubmitFormContainer')
+
+    ComponentAddToPositionForm:
+        class: Wame\ComponentModule\Forms\ComponentAddToPositionForm

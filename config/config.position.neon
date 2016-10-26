@@ -1,0 +1,51 @@
+nette:
+    latte:
+        macros:
+            - Wame\ComponentModule\Macros\PositionMacros::install
+
+
+services:
+    PermissionObject:
+        setup:
+            - addResource('position')
+            - addResourceAction('position', 'default')
+            - allow('admin', 'position', 'default')
+            - addResourceAction('position', 'show')
+            - allow('admin', 'position', 'show')
+            - addResourceAction('position', 'create')
+            - allow('admin', 'position', 'create')
+            - addResourceAction('position', 'edit')
+            - allow('admin', 'position', 'edit')
+            - addResourceAction('position', 'delete')
+            - allow('admin', 'position', 'delete')
+            - addResourceAction('position', 'changeStatus')
+            - allow('admin', 'position', 'changeStatus')
+
+
+    # Factories
+    - Wame\ComponentModule\Components\PositionControlLoader
+    - Wame\ComponentModule\Components\IPositionControlFactory
+    - Wame\ComponentModule\Components\IPositionListControlFactory
+
+
+    # Repositories
+    PositionRepository:
+        class: Wame\ComponentModule\Repositories\PositionRepository
+        inject: yes
+
+    PositionUsageRepository:
+        class: Wame\ComponentModule\Repositories\PositionUsageRepository
+        inject: yes
+
+
+    # Commands
+    UpdatePositionsCommand:
+        class: Wame\ComponentModule\Commands\UpdatePositionsCommand
+        tags: [kdyby.console.command]
+
+    PositionsSeeker:
+        class: Wame\ComponentModule\Commands\Seeker\PositionsSeeker
+
+
+    # Doctrine filters
+    - Wame\ComponentModule\Doctrine\Filters\PositionStatusFilter

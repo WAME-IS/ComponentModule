@@ -1,22 +1,26 @@
-{block siteTitle}
-    <h1>
-        {$siteTitle} {$position->title}
-        
-        <small>
-            <span class="material-icons">chevron_right</span>
-            {$position->title}
-        </small>
-    </h1>
-{/block}
-
 {block content}          
+
 <div class="card-panel white no-margin text-right">
-    <a class="{$position->status == 1 ? 'label label-success' : 'label label-danger'}" n:href="ChangeStatus!">
-        {$positionStatusList[$position->status]}
-    </a>
+    <span n:snippet="positionStatus">
+        {if $position->status == 1}
+            <a class="btn btn-success btn-xs ajax" n:href="ChangeStatus!">
+                <i class="material-icons">check</i>
+                {_'Enabled'}
+            </a>
+        {else}
+            <a class="btn btn-danger btn-xs ajax" n:href="ChangeStatus!">
+                <i class="material-icons">close</i>
+                {_'Disabled'}
+            </a>
+        {/if}
+    </span>
+    
+    &nbsp;
+    
     <a class="btn btn-icon btn-hover-warning tooltipped ajax-modal ajax-modal-fixed" data-position="left" data-tooltip="{_'Edit position'}" n:href=":Admin:Position:update, 'id' => $position->id">
         <span class="material-icons">edit</span>
     </a>
+        
     <a class="btn btn-icon btn-hover-danger tooltipped ajax-modal" data-position="left" data-tooltip="{_'Delete position'}" n:href=":Admin:Position:delete, 'id' => $position->id">
         <span class="material-icons">delete</span>
     </a>

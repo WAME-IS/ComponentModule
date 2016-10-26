@@ -1,0 +1,25 @@
+{*foreach $_form['ContainerContainer']->controls as $control}
+    <div class="form-group">
+        {$control->label}
+        {$control->control}
+    </div>
+{/foreach*}
+
+{var $tag = $_form['ContainerContainer']['tag']}
+<div class="form-group">
+    {$tag->label}
+    <input class="form-control" n:name="$tag">
+    
+    {if isset($tag->options['description'])}
+        <span>{$tag->options['description']}</span>
+    {/if}
+</div>
+
+{var $container = $_form['ContainerContainer']['container']}
+
+{foreach $container->components as $key => $input}
+    <div class="form-group">
+        {input ContainerContainer-container-$key}
+        {label ContainerContainer-container-$key /}
+    </div>
+{/foreach}

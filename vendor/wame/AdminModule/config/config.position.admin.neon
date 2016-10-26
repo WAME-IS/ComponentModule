@@ -1,0 +1,43 @@
+services:
+    # Form containers
+    - Wame\ComponentModule\Vendor\Wame\AdminModule\Forms\Containers\IContainerContainerFactory
+
+
+    # Forms
+    Admin.Form.Position:
+        class: Wame\DynamicObject\Forms\LangEntityFormBuilder
+        setup:
+            - setRepository(@PositionRepository)
+            - add(@Wame\DynamicObject\Forms\Containers\ITitleContainerFactory, 'TitleContainer', {priority: 100})
+            - add(@Wame\DynamicObject\Forms\Containers\IDescriptionContainerFactory, 'DescriptionContainer', {priority: 90})
+            - add(@Wame\DynamicObject\Forms\Containers\INameContainerFactory, 'NameContainer', {priority: 70})
+            - add(@Wame\ComponentModule\Vendor\Wame\AdminModule\Forms\Containers\IContainerContainerFactory, 'ContainerContainer', {priority: 50})
+            - add(@Wame\DynamicObject\Forms\Containers\ISubmitContainerFactory, 'SubmitContainer', {priority: 10})
+
+
+    # Todo - stary formular
+    PositionForm:
+        class: Wame\ComponentModule\Forms\PositionForm
+        setup:
+            - addFormContainer(Wame\ComponentModule\Forms\Position\BasicFormContainer(), 'BasicFormContainer', 100)
+            - addFormContainer(Wame\ComponentModule\Forms\Position\NameFormContainer(), 'NameFormContainer', 75)
+            - addFormContainer(Wame\ComponentModule\Forms\Position\ContainerFormContainer(), 'ContainerFormContainer', 50)
+            - addFormContainer(Wame\DynamicObject\Forms\FormGroupContainer(), 'SubmitFormGroupContainer')
+            - addFormContainer(Wame\DynamicObject\Forms\SubmitFormContainer(), 'SubmitFormContainer')
+
+
+    # Grids
+    Admin.Grid.Position:
+        class: Wame\ComponentModule\Vendor\Wame\AdminModule\Grids\PositionGrid
+        setup:
+            - add(Wame\DataGridControl\Columns\Id(), null, {priority: 90})
+            - add(Wame\DataGridControl\Columns\Name(), null, {priority: 70})
+            - add(Wame\DataGridControl\Columns\TitleLinkShow(), null, {priority: 50})
+            - add(Wame\DataGridControl\Columns\Description(), null, {priority: 30})
+            - add(Wame\DataGridControl\Columns\Status(), null, {priority: 10})
+            - add(Wame\DataGridControl\Actions\Show(), null, {priority: 3})
+            - add(Wame\DataGridControl\Actions\Edit(), null, {priority: 2})
+            - add(Wame\DataGridControl\Actions\Delete(), null, {priority: 1})
+            - add(Wame\DataGridControl\GroupActions\DeleteSelected())
+            - add(Wame\DataGridControl\GroupActions\ChangeStatusSelected())
+            - add(Wame\ComponentModule\Vendor\Wame\AdminModule\Grids\ToolbarButtons\AddPosition())
