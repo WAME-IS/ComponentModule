@@ -242,9 +242,9 @@ class PositionPresenter extends AdminFormPresenter
 	}
 
 
-	public function renderUpdate()
+	public function renderEdit()
 	{
-		$this->template->siteTitle = _('Update position');
+		$this->template->siteTitle = _('Edit position');
 		$this->template->subTitle = $this->entity->getTitle();
 	}
 
