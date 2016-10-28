@@ -3,6 +3,7 @@ services:
     ComponentInPositionGrid:
         class: Wame\ComponentModule\Vendor\Wame\AdminModule\Grids\ComponentInPositionGrid
         setup:
+            - setDefaultSort({'id': 'DESC'})
             - add(Wame\ComponentModule\Vendor\Wame\AdminModule\Grids\Columns\ComponentId(), null, {priority: 100})
             - add(Wame\ComponentModule\Vendor\Wame\AdminModule\Grids\Columns\ComponentInPosition\Sort(), null, {priority: 50})
             - add(Wame\ComponentModule\Vendor\Wame\AdminModule\Grids\Columns\ComponentInPosition\Type(), null, {priority: 90})
