@@ -41,3 +41,9 @@ services:
             - add(Wame\DataGridControl\GroupActions\DeleteSelected())
             - add(Wame\DataGridControl\GroupActions\ChangeStatusSelected())
             - add(Wame\ComponentModule\Vendor\Wame\AdminModule\Grids\ToolbarButtons\AddPosition())
+
+
+    # Commands
+    PositionAdminCommand:
+        class: Wame\ComponentModule\Vendor\Wame\AdminModule\Commands\PositionAdminCommand
+        tags: [kdyby.console.command]
