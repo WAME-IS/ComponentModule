@@ -1,4 +1,19 @@
 services:
+    # Form containers
+    - Wame\ComponentModule\Vendor\Wame\AdminModule\Forms\Containers\ComponentPosition\IPositionContainerFactory
+    - Wame\ComponentModule\Vendor\Wame\AdminModule\Forms\Containers\ComponentPosition\IComponentContainerFactory
+
+
+    # Forms
+    Admin.Form.ComponentPosition:
+        class: Wame\DynamicObject\Forms\EntityFormBuilder
+        setup:
+            - setRepository(@ComponentInPositionRepository)
+            - add(@Wame\ComponentModule\Vendor\Wame\AdminModule\Forms\Containers\ComponentPosition\IPositionContainerFactory, 'PositionContainer', {priority: 50})
+            - add(@Wame\ComponentModule\Vendor\Wame\AdminModule\Forms\Containers\ComponentPosition\IComponentContainerFactory, 'ComponentContainer')
+            - add(@Wame\DynamicObject\Forms\Containers\ISubmitContainerFactory, 'SubmitContainer', {priority: 10})
+   
+
     # Grids
     ComponentInPositionGrid:
         class: Wame\ComponentModule\Vendor\Wame\AdminModule\Grids\ComponentInPositionGrid
