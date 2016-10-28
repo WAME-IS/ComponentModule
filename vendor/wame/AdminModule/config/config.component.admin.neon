@@ -7,6 +7,7 @@ services:
     ComponentGrid:
         class: Wame\ComponentModule\Vendor\Wame\AdminModule\Grids\ComponentGrid
         setup:
+            - setDefaultSort({'id': 'DESC'})
             - add(Wame\DataGridControl\Columns\Id(), null, {priority: 90})
             - add(Wame\ComponentModule\Vendor\Wame\AdminModule\Grids\Columns\Component\Type(), null, {priority: 80})
             - add(Wame\ComponentModule\Vendor\Wame\AdminModule\Grids\Columns\Component\TitleLink(), null, {priority: 70})
