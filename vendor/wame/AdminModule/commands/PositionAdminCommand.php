@@ -35,8 +35,8 @@ class PositionAdminCommand extends Command
 
     protected function configure()
     {
-        $this->setName('position:admin:create')
-                ->setDescription('Create admin positions if not exists');
+        $this->setName('position:admin:update')
+                ->setDescription('Update adminModule @layout positions');
     }
 
 
@@ -76,11 +76,13 @@ class PositionAdminCommand extends Command
 
             if ($countPositions < $countPositionList) {
                 $this->output->writeLn(sprintf('Find %s of %s', $countPositions, $countPositionList));
-
-                $this->createPositions($positionList, $positions);
             } else {
-                $this->output->writeLn('All admin positions are created, not added any new');
+                $this->output->writeLn('All admin positions are created');
             }
+
+            $this->createOrUpdatePositions($positionList, $positions);
+
+            $this->output->writeLn('Update admin position parameters');
 
             $this->output->writeLn('<info>END</info> create admin positions');
 
@@ -100,7 +102,7 @@ class PositionAdminCommand extends Command
     }
 
 
-    private function createPositions($positionList, $positions)
+    private function createOrUpdatePositions($positionList, $positions)
     {
         foreach ($positionList as $name => $parameters) {
             if (!isset($positions[$name])) {
@@ -109,12 +111,14 @@ class PositionAdminCommand extends Command
                                     ->setParameters($parameters)
                                     ->setStatus(PositionRepository::STATUS_ENABLED);
 
+                $lang = $this->positionRepository->lang;
+
                 $positionLangEntity = (new PositionLangEntity())
                                         ->setPosition($positionEntity)
                                         ->setTitle($name)
-                                        ->setLang($this->positionRepository->lang);
+                                        ->setLang($lang);
 
-                $positionEntity->addLang($this->positionRepository->lang, $positionLangEntity);
+                $positionEntity->addLang($lang, $positionLangEntity);
 
                 $this->positionRepository->create($positionEntity);
 
