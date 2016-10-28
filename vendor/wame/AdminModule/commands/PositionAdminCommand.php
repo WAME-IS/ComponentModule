@@ -6,6 +6,7 @@ use Nette\Mail\SmtpException;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
+use Kdyby\Doctrine\EntityManager;
 use Wame\ComponentModule\Entities\PositionEntity;
 use Wame\ComponentModule\Entities\PositionLangEntity;
 use Wame\ComponentModule\Repositories\PositionRepository;
@@ -13,12 +14,21 @@ use Wame\ComponentModule\Repositories\PositionRepository;
 
 class PositionAdminCommand extends Command
 {
+    /** @var EntityManager */
+    private $entityManager;
+
     /** @var PositionRepository */
     private $positionRepository;
 
+    /** @var OutputInterface */
+    private $output;
 
-    public function injectServices(PositionRepository $positionRepository)
-    {
+
+    public function injectServices(
+        EntityManager $entityManager,
+        PositionRepository $positionRepository
+    ) {
+        $this->entityManager = $entityManager;
         $this->positionRepository = $positionRepository;
     }
 
@@ -33,10 +43,20 @@ class PositionAdminCommand extends Command
     private function getPositionList()
     {
         return [
-            'adminBeforeContent',
-            'adminAfterContent',
-            'adminHeaderLeft',
-            'adminHeaderRight'
+            'adminBeforeContent' => [],
+            'adminAfterContent' => [],
+            'adminHeaderLeft' => [
+                'container' => [
+                    'tag' => 'ul',
+                    'class' => 'left hide-on-med-and-down'
+                ]
+            ],
+            'adminHeaderRight' => [
+                'container' => [
+                    'tag' => 'ul',
+                    'class' => 'right hide-on-med-and-down'
+                ]
+            ]
         ];
     }
 
@@ -44,9 +64,10 @@ class PositionAdminCommand extends Command
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         try {
+            $this->output = $output;
             $positionList = $this->getPositionList();
 
-            $output->writeLn('<info>START</info> Find admin positions in database');
+            $this->output->writeLn('<info>START</info> Find admin positions in database');
 
             $positions = $this->findPositions($positionList);
 
@@ -54,14 +75,14 @@ class PositionAdminCommand extends Command
             $countPositionList = count($positionList);
 
             if ($countPositions < $countPositionList) {
-                $output->writeLn(sprintf('Find %s of %s', $countPositions, $countPositionList));
+                $this->output->writeLn(sprintf('Find %s of %s', $countPositions, $countPositionList));
 
-                $this->createPositions($output, $positionList, $positions);
+                $this->createPositions($positionList, $positions);
             } else {
-                $output->writeLn('All admin positions are created, not added any new');
+                $this->output->writeLn('All admin positions are created, not added any new');
             }
 
-            $output->writeLn('<info>END</info> create admin positions');
+            $this->output->writeLn('<info>END</info> create admin positions');
 
             return 0; // zero return code means everything is ok
         }
@@ -75,36 +96,38 @@ class PositionAdminCommand extends Command
 
     private function findPositions($positionList)
     {
-        return $this->positionRepository->findPairs(['name IN' => $positionList], 'name', 'name');
+        return $this->positionRepository->findAssoc(['name IN' => array_keys($positionList)], 'name');
     }
 
 
-    private function createPositions($output, $positionList, $positions)
+    private function createPositions($positionList, $positions)
     {
-        foreach ($positionList as $position) {
-            if (!isset($positions[$position])) {
+        foreach ($positionList as $name => $parameters) {
+            if (!isset($positions[$name])) {
                 $positionEntity = (new PositionEntity())
-                                    ->setName($position)
-                                    ->setStatus(PositionRepository::STATUS_ENABLED)
-                                    ->setCreateDate(new \DateTime());
+                                    ->setName($name)
+                                    ->setParameters($parameters)
+                                    ->setStatus(PositionRepository::STATUS_ENABLED);
 
                 $positionLangEntity = (new PositionLangEntity())
                                         ->setPosition($positionEntity)
-                                        ->setTitle($position)
-                                        ->setEditDate(new \DateTime())
+                                        ->setTitle($name)
                                         ->setLang($this->positionRepository->lang);
 
                 $positionEntity->addLang($this->positionRepository->lang, $positionLangEntity);
 
                 $this->positionRepository->create($positionEntity);
 
-                $output->writeLn(sprintf('CREATE <info>%s</info> position', $position));
+                $this->output->writeLn(sprintf('CREATE <info>%s</info> position', $name));
+            } else {
+                $positionEntity = $positions[$name];
+                $positionEntity->setParameters($parameters);
+
+                $this->positionRepository->update($positionEntity);
             }
         }
 
-        $this->positionRepository->entityManager->flush();
-
-        return $output;
+        $this->entityManager->flush();
     }
 
 }
