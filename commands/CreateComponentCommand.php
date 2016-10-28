@@ -156,6 +156,8 @@ abstract class CreateComponentCommand extends Command
 
         $this->output->writeLn('CREATE component');
 
+        $this->componentRepository->create($componentEntity);
+
         return $componentEntity;
     }
 
