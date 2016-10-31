@@ -26,7 +26,7 @@
             <div class="row">
                 <div class="col-xs-9">
                     {var $position = $componentPosition->position}
-                    <a href="{plink Component:position, 'id' => $componentPosition->id}">
+                    <a href="{plink ComponentPosition:edit, 'id' => $componentPosition->id}">
                         <span class="title truncate">{$position->title}</span>
                     </a>
                     
@@ -41,7 +41,7 @@
                 </div>
                 
                 <div class="col-xs-3 text-right">
-                    <a href="{plink Component:removeFromPosition, 'id' => $componentPosition->id}" class="secondary-content btn btn-icon btn-hover-danger tooltipped ajax-modal" data-position="left" data-tooltip="{_'Remove from this position'}">
+                    <a href="{plink ComponentPosition:delete, 'id' => $componentPosition->id}" class="secondary-content btn btn-icon btn-hover-danger tooltipped ajax-modal" data-position="left" data-tooltip="{_'Remove from this position'}">
                         <i class="material-icons">delete</i>
                     </a>
                 </div>

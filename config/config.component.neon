@@ -2,12 +2,12 @@ services:
     PermissionObject:
         setup:
             - addResource('component')
-            - addResourceAction('component', 'view')
-            - allow('admin', 'component', 'view')
+            - addResourceAction('component', 'default')
+            - allow('admin', 'component', 'default')
             - addResourceAction('component', 'create')
             - allow('admin', 'component', 'create')
-            - addResourceAction('component', 'update')
-            - allow('admin', 'component', 'update')
+            - addResourceAction('component', 'edit')
+            - allow('admin', 'component', 'edit')
             - addResourceAction('component', 'delete')
             - allow('admin', 'component', 'delete')
 

@@ -1,4 +1,15 @@
 services:
+    PermissionObject:
+        setup:
+            - addResource('admin.componentPosition')
+            - addResourceAction('admin.componentPosition', 'create')
+            - allow('admin', 'admin.componentPosition', 'create')
+            - addResourceAction('admin.componentPosition', 'edit')
+            - allow('admin', 'admin.componentPosition', 'edit')
+            - addResourceAction('admin.componentPosition', 'delete')
+            - allow('admin', 'admin.componentPosition', 'delete')
+
+
     # Form containers
     - Wame\ComponentModule\Vendor\Wame\AdminModule\Forms\Containers\ComponentPosition\IPositionContainerFactory
     - Wame\ComponentModule\Vendor\Wame\AdminModule\Forms\Containers\ComponentPosition\IComponentContainerFactory
@@ -12,6 +23,15 @@ services:
             - add(@Wame\ComponentModule\Vendor\Wame\AdminModule\Forms\Containers\ComponentPosition\IPositionContainerFactory, 'PositionContainer', {priority: 50})
             - add(@Wame\ComponentModule\Vendor\Wame\AdminModule\Forms\Containers\ComponentPosition\IComponentContainerFactory, 'ComponentContainer')
             - add(@Wame\DynamicObject\Forms\Containers\ISubmitContainerFactory, 'SubmitContainer', {priority: 10})
+
+    # Todo - starý formulár
+    Admin.Form.ComponentPosition.Edit:
+        class: Wame\ComponentModule\Forms\ComponentPositionForm
+        setup:
+            - addFormContainer(Wame\ComponentModule\Forms\ComponentPosition\TemplateFormContainer(), 'TemplateFormContainer', 100)
+            - addFormContainer(Wame\ComponentModule\Forms\ComponentPosition\ContainerFormContainer(), 'ContainerFormContainer', 75)
+            - addFormContainer(Wame\DynamicObject\Forms\FormGroupContainer(), 'SubmitFormGroupContainer')
+            - addFormContainer(Wame\DynamicObject\Forms\SubmitFormContainer(), 'SubmitFormContainer')
    
 
     # Grids

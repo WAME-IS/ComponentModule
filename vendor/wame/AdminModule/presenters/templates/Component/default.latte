@@ -3,7 +3,7 @@
 <div class="card-panel no-shadow">
     <div class="row">
         <div class="col-md-8 col-lg-9">
-            {if count($components) == 0}
+            {if $count == 0}
                 <div class="empty-block">
                     <p>{_'You do not have created any components.'}</p>
                     <a class="btn btn-success btn-lg" n:href=":Admin:Component:create, 'id' => null">

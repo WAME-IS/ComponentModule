@@ -1,0 +1,20 @@
+{block content}
+
+<div class="card-panel white no-margin">
+    <div class="row">
+        <div class="col-sm-9 valign-wrapper">
+            <span class="text-info valign">
+                <i class="material-icons">info_outline</i>
+                {_'This data overload the settings of the main component.'}
+            </span>
+        </div>
+            
+        <div class="col-sm-3 text-right">
+            <a class="btn btn-icon btn-hover-danger tooltipped ajax-modal" n:href="ComponentPosition:delete" data-position="left" data-tooltip="{_'Remove from this position'}">
+                <i class="material-icons">delete</i>
+            </a>
+        </div>
+    </div>
+</div>
+
+{control componentPositionEditForm}

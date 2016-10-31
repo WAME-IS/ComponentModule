@@ -3,6 +3,7 @@
 namespace App\AdminModule\Presenters;
 
 use Nette\Utils\Html;
+use Wame\DynamicObject\Vendor\Wame\AdminModule\Presenters\AdminFormPresenter;
 use Wame\ComponentModule\Entities\ComponentEntity;
 use Wame\ComponentModule\Repositories\ComponentRepository;
 use Wame\ComponentModule\Registers\ComponentRegister;
@@ -10,11 +11,6 @@ use Wame\ComponentModule\Components\PositionListControl;
 use Wame\ComponentModule\Components\IPositionListControlFactory;
 use Wame\ComponentModule\Components\ComponentPositionListControl;
 use Wame\ComponentModule\Components\IComponentPositionListControlFactory;
-use Wame\ComponentModule\Repositories\PositionRepository;
-use Wame\ComponentModule\Forms\ComponentPositionForm;
-use Wame\ComponentModule\Forms\ComponentAddToPositionForm;
-use Wame\ComponentModule\Entities\ComponentInPositionEntity;
-use Wame\ComponentModule\Repositories\ComponentInPositionRepository;
 use Wame\ComponentModule\Vendor\Wame\MenuModule\Components\ComponentMenu\ItemTemplate;
 use Wame\ComponentModule\Vendor\Wame\AdminModule\Grids\ComponentGrid;
 use Wame\ComponentModule\Vendor\Wame\AdminModule\Grids\CreateComponentGrid;
@@ -22,19 +18,16 @@ use Wame\MenuModule\Components\MenuControl;
 use Wame\ComponentModule\Doctrine\Filters\ComponentStatusFilter;
 
 
-class ComponentPresenter extends BasePresenter
+class ComponentPresenter extends AdminFormPresenter
 {
 	/** @var array */
 	public $components = [];
 
 	/** @var ComponentEntity */
-	public $component;
-
-	/** @var ComponentInPositionEntity */
-	private $componentInPosition;
+	public $entity;
 
 	/** @var ComponentRepository @inject */
-	public $componentRepository;
+	public $repository;
 
 	/** @var ComponentRegister @inject */
 	public $componentRegister;
@@ -44,15 +37,6 @@ class ComponentPresenter extends BasePresenter
 
 	/** @var IComponentPositionListControlFactory @inject */
 	public $IComponentPositionListControlFactory;
-
-	/** @var ComponentPositionForm @inject */
-	public $componentPositionForm;
-
-	/** @var ComponentAddToPositionForm @inject */
-	public $componentAddToPositionForm;
-
-	/** @var ComponentInPositionRepository @inject */
-	public $componentInPositionRepository;
 
 	/** @var ItemTemplate @inject */
 	public $componentItemTemplate;
@@ -71,74 +55,61 @@ class ComponentPresenter extends BasePresenter
 
 	public function actionDefault()
 	{
-		if (!$this->user->isAllowed('component', 'view')) {
+		if (!$this->user->isAllowed('component', 'default')) {
 			$this->flashMessage(_('To enter this section you do not have enough privileges.'), 'danger');
 			$this->redirect(':Admin:Dashboard:');
 		}
 
         $this->componentStatusFilter->setEnabled(false);
 
-        $qb = $this->componentRepository->createQueryBuilder('a');
+        $qb = $this->repository->createQueryBuilder('a');
         $qb->andWhere($qb->expr()->eq('a.inList', ComponentRepository::SHOW_IN_LIST));
 
         $this->components = $qb;
     }
 
 
-	public function actionPosition()
+	public function actionDelete()
 	{
-		if (!$this->user->isAllowed('position', 'edit')) {
+		if (!$this->user->isAllowed('component', 'delete')) {
 			$this->flashMessage(_('To enter this section you do not have enough privileges.'), 'danger');
-			$this->redirect(':Admin:Dashboard:', ['id' => null]);
+			$this->redirect(':Admin:Dashboard:');
 		}
 
-		if (!$this->id) {
-			$this->flashMessage(_('Missing identifier.'), 'danger');
-			$this->redirect(':Admin:Component:');
-		}
+        if (!$this->id) {
+            $this->flashMessage(_('Missing identifier.'));
+            $this->redirect(':Admin:Component:', ['id' => null]);
+        }
 
-		$this->componentInPosition = $this->componentInPositionRepository->get(['id' => $this->id]);
+        $this->componentStatusFilter->setEnabled(false);
 
-		if (!$this->componentInPosition) {
-			$this->flashMessage(_('This component in position does not exist.'), 'danger');
-			$this->redirect(':Admin:Component:', ['id' => null]);
-		}
+        $this->entity = $this->repository->get(['id' => $this->id]);
 
-		if ($this->componentInPosition->position->status == PositionRepository::STATUS_REMOVE) {
-			$this->flashMessage(_('This position is removed.'), 'danger');
-			$this->redirect(':Admin:Component:', ['id' => null]);
-		}
+        if (!$this->entity) {
+            $this->flashMessage(_('Component does not exists.'));
+            $this->redirect(':Admin:Component:', ['id' => null]);
+        }
 
-		if ($this->componentInPosition->component->status == ComponentRepository::STATUS_REMOVE) {
-			$this->flashMessage(_('This component is removed.'), 'danger');
-			$this->redirect(':Admin:Component:', ['id' => null]);
-		}
-	}
+        if ($this->entity->getStatus() == ComponentRepository::STATUS_DELETED) {
+            $this->flashMessage(_('Component is already deleted.'));
+            $this->redirect(':Admin:Component:', ['id' => null]);
+        }
+    }
 
 
-	public function actionAddToPosition()
+	/** handles ***************************************************************/
+
+	public function handleDelete()
 	{
-		if (!$this->user->isAllowed('position', 'create')) {
-			$this->flashMessage(_('To enter this section you do not have enough privileges.'), 'danger');
-			$this->redirect(':Admin:Dashboard:', ['id' => null]);
+		if (!$this->user->isAllowed('component', 'delete')) {
+			$this->flashMessage(_('For this action you do not have enough privileges.'), 'danger');
+			$this->redirect('Admin:Dashboard:');
 		}
 
-		if (!$this->id) {
-			$this->flashMessage(_('Missing identifier.'), 'danger');
-			$this->redirect(':Admin:Component:');
-		}
+		$this->repository->delete(['id' => $this->id]);
 
-		$this->component = $this->componentRepository->get(['id' => $this->id]);
-
-		if (!$this->component) {
-			$this->flashMessage(_('This component does not exist.'), 'danger');
-			$this->redirect(':Admin:Component:', ['id' => null]);
-		}
-
-		if ($this->component->status == ComponentRepository::STATUS_REMOVE) {
-			$this->flashMessage(_('This component is removed.'), 'danger');
-			$this->redirect(':Admin:Component:', ['id' => null]);
-		}
+		$this->flashMessage(_('Component has been successfully deleted.'), 'success');
+		$this->redirect(':Admin:Component:', ['id' => null]);
 	}
 
 
@@ -147,7 +118,7 @@ class ComponentPresenter extends BasePresenter
 	public function renderDefault()
 	{
 		$this->template->siteTitle = _('Components');
-		$this->template->components = $this->components;
+		$this->template->count = count($this->components);
 	}
 
 
@@ -159,71 +130,8 @@ class ComponentPresenter extends BasePresenter
 
 	public function renderDelete()
 	{
-		$this->template->siteTitle = _('Deleting component');
-	}
-
-
-	public function renderPosition()
-	{
-		$this->template->siteTitle = _('Edit component in position');
-		$this->template->componentTitle = $this->componentInPosition->component->langs[$this->lang]->title;
-		$this->template->positionTitle = $this->componentInPosition->position->langs[$this->lang]->title;
-	}
-
-
-	public function renderAddToPosition()
-	{
-		$this->template->siteTitle = _('Component add to position');
-		$this->template->componentTitle = $this->component->langs[$this->lang]->title;
-	}
-
-
-	public function renderRemoveFromPosition()
-	{
-		$componentInPosition = $this->componentInPositionRepository->get(['id' => $this->id]);
-
-		$this->template->siteTitle = _('Remove component in position');
-		$this->template->cancelLink = $this->componentRegister->getByName($componentInPosition->component->type)->getLinkDetail($componentInPosition->component);
-	}
-
-
-	/** handles ***************************************************************/
-
-	/**
-	 * Delete component
-	 */
-	public function handleDelete()
-	{
-		if (!$this->user->isAllowed('component', 'delete')) {
-			$this->flashMessage(_('For this action you do not have enough privileges.'), 'danger');
-			$this->redirect('Admin:Dashboard:');
-		}
-
-		$this->componentRepository->delete(['id' => $this->id]);
-
-		$this->flashMessage(_('Component has been successfully deleted.'), 'success');
-		$this->redirect(':Admin:Component:', ['id' => null]);
-	}
-
-
-	/**
-	 * Remove component from position
-	 */
-	public function handleRemoveFromPosition()
-	{
-		if (!$this->user->isAllowed('component', 'delete')) {
-			$this->flashMessage(_('For this action you do not have enough privileges.'), 'danger');
-			$this->redirect('Admin:Dashboard:');
-		}
-
-		$componentInPosition = $this->componentInPositionRepository->get(['id' => $this->id]);
-
-		$this->componentInPositionRepository->remove(['id' => $this->id]);
-
-		$this->flashMessage(_('Component in position has been successfully removed.'), 'success');
-
-		$linkDetail = $this->componentRegister[$componentInPosition->component->type]->getLinkDetail($componentInPosition->component);
-		$this->redirectUrl($linkDetail);
+		$this->template->siteTitle = _('Delete component');
+		$this->template->subTitle = $this->entity->getTitle();
 	}
 
 
@@ -247,6 +155,7 @@ class ComponentPresenter extends BasePresenter
 		return $control;
 	}
 
+
 	/**
 	 * Position list component
 	 *
@@ -258,6 +167,7 @@ class ComponentPresenter extends BasePresenter
 
 		return $control;
 	}
+
 
 	/**
 	 * Component position list component
@@ -271,29 +181,6 @@ class ComponentPresenter extends BasePresenter
 		return $control;
 	}
 
-	/**
-	 * Component position form component
-	 *
-	 * @return ComponentPositionForm
-	 */
-	protected function createComponentComponentPositionForm()
-	{
-		$form = $this->componentPositionForm->setId($this->id)->build();
-
-		return $form;
-	}
-
-	/**
-	 * Component add to position form component
-	 *
-	 * @return ComponentAddToPositionForm
-	 */
-	protected function createComponentComponentAddToPositionForm()
-	{
-		$form = $this->componentAddToPositionForm->setId($this->id)->build();
-
-		return $form;
-	}
 
     /**
      * Component grid component
@@ -308,6 +195,7 @@ class ComponentPresenter extends BasePresenter
 		return $this->componentGrid;
 	}
 
+
     /**
      * Component component grid
      *
@@ -316,7 +204,7 @@ class ComponentPresenter extends BasePresenter
      */
     protected function createComponentCreateComponentGrid()
 	{
-//        $qb = $this->componentRepository->createQueryBuilder('a');
+//        $qb = $this->repository->createQueryBuilder('a');
 		$this->createComponentGrid->setDataSource($this->getComponentsArray());
 
 		return $this->createComponentGrid;
@@ -345,5 +233,11 @@ class ComponentPresenter extends BasePresenter
 
         return $components;
     }
+
+
+    /** abstract methods ******************************************************/
+
+    /** {@inheritdoc} */
+    protected function getFormBuilderServiceAlias() { }
 
 }

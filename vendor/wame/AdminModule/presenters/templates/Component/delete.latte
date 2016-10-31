@@ -1,6 +1,6 @@
 {block content}
 
-<p>{_'Do you really want to delete this component?'}</p>
+<p>{_'Do you really want to delete %s component?', $subTitle}</p>
 
-<a class="btn btn-danger" n:href="Delete!">{_'Delete'}</a>
-<a class="btn btn-default" n:href=":Admin:Component:, 'id' => null">{_'Cancel'}</a>
+<a class="btn btn-danger" n:href="Delete!" data-disabled="click">{_'Delete'}</a>
+<a class="btn btn-default" n:href=":Admin:Component:, 'id' => null" data-dismiss="modal">{_'Cancel'}</a>
