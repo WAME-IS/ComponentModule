@@ -28,33 +28,23 @@
                     <h2 class="component-title">
                         {$info->getTitle()}
                     
-                        <a class="btn btn-link pull-right" href="{$info->getLinkCreate()}">
+                        <a class="btn btn-link pull-right" href="{$createLink}">
                             <i class="material-icons">add_circle_outline</i>
                             {_'Create component'}
                         </a>
                     </h2>
-                    
-                    {*<div class="row">
-                        <div class="col-xs-8">
-                            <h2 class="component-title">{$info->getTitle()}</h2>
-                        </div>
-
-                        <div class="col-xs-4 text-right">
-                            
-                        </div>
-                    </div>*}
 
                     <div n:if="$info->getDescription()" class="component-description">{$info->getDescription()}</div>
                     
-                    <div class="row">
+                    <div class="row component-images">
                         <div class="col-xs-4">
-                            <img class="img-responsive materialboxed" src="http://loremflickr.com/g/800/600/{$info->getTitle()|replace:' ', ','}?random=1">
+                            <img class="materialboxed" src="http://loremflickr.com/g/800/600/{$info->getTitle()|replace:' ', ','}?random=1">
                         </div>
                         <div class="col-xs-4">
-                            <img class="img-responsive materialboxed" src="http://loremflickr.com/g/800/600/{$info->getTitle()|replace:' ', ','}?random=2">
+                            <img class="materialboxed" src="http://loremflickr.com/g/800/600/{$info->getTitle()|replace:' ', ','}?random=2">
                         </div>
                         <div class="col-xs-4">
-                            <img class="img-responsive materialboxed" src="http://loremflickr.com/g/800/600/{$info->getTitle()|replace:' ', ','}?random=3">
+                            <img class="materialboxed" src="http://loremflickr.com/g/800/600/{$info->getTitle()|replace:' ', ','}?random=3">
                         </div>
                     </div>
                 </div>

@@ -2,6 +2,7 @@
 
 namespace Wame\ComponentModule\Components;
 
+use Nette\Http\Url;
 use Wame\Core\Components\BaseControl;
 use Wame\ComponentModule\Registers\ComponentRegister;
 
@@ -32,6 +33,7 @@ class AddComponentControl extends BaseControl
 	public function render()
 	{
         $component = $this->getParameter('c');
+        $position = $this->getPresenter()->getParameter('id');
 
         if ($component && isset($this->componentRegister[$component])) {
             $component = $this->componentRegister[$component];
@@ -39,7 +41,15 @@ class AddComponentControl extends BaseControl
 
 		$this->template->componentList = $this->componentRegister;
 		$this->template->info = $component;
+
+        if ($component) {
+            $url = new Url($component->getLinkCreate());
+            $url->appendQuery(['p' => $position]);
+
+            $this->template->createLink = $url;
+        }
 	}
+
 
     public function handleRedraw()
     {
