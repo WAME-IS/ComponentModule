@@ -23,3 +23,10 @@ services:
         setup:
             - add(Wame\DataGridControl\Columns\Name())
             - add(Wame\DataGridControl\Columns\Description())
+
+
+webloader:
+    js:
+        admin:
+            files:
+                - %appDir%/../vendor/wame/ComponentModule/assets/main.js

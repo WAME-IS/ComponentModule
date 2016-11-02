@@ -12,7 +12,7 @@ class ComponentRegister extends PriorityRegister implements IMenuProvider
     {
         parent::__construct(IComponent::class);
     }
-    
+
     protected function getDefaultName($service)
     {
         return \Wame\Utils\Strings::getClassName(get_class($service));
@@ -20,23 +20,25 @@ class ComponentRegister extends PriorityRegister implements IMenuProvider
 
     /**
      * Get items from services
-     * 
+     *
      * @return array
      */
     public function getItems()
     {//TODO remove, with IMenuProvider
         return $this->getAll();
     }
-    
+
     public function getList()
     {
-        $arr = [];
-        
+        $return = [];
+
         foreach($this->array as $item) {
-            $arr[] = $item['name'];
+            $return[$item['name']] = $item['service'];
         }
-        
-        return $arr;
+
+        ksort($return);
+
+        return $return;
     }
-    
+
 }

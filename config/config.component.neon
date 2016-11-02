@@ -12,6 +12,10 @@ services:
             - allow('admin', 'component', 'delete')
 
 
+    # Components
+    - Wame\ComponentModule\Components\IAddComponentControlFactory
+
+
     # Repositories
     ComponentRepository:
         class: Wame\ComponentModule\Repositories\ComponentRepository

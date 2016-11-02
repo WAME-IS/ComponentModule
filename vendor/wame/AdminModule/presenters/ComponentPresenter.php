@@ -16,6 +16,7 @@ use Wame\ComponentModule\Vendor\Wame\AdminModule\Grids\ComponentGrid;
 use Wame\ComponentModule\Vendor\Wame\AdminModule\Grids\CreateComponentGrid;
 use Wame\MenuModule\Components\MenuControl;
 use Wame\ComponentModule\Doctrine\Filters\ComponentStatusFilter;
+use Wame\ComponentModule\Components\IAddComponentControlFactory;
 
 
 class ComponentPresenter extends AdminFormPresenter
@@ -37,6 +38,9 @@ class ComponentPresenter extends AdminFormPresenter
 
 	/** @var IComponentPositionListControlFactory @inject */
 	public $IComponentPositionListControlFactory;
+
+	/** @var IAddComponentControlFactory @inject */
+	public $IAddComponentControlFactory;
 
 	/** @var ItemTemplate @inject */
 	public $componentItemTemplate;
@@ -144,13 +148,14 @@ class ComponentPresenter extends AdminFormPresenter
 	 */
 	protected function createComponentAddComponent()
 	{
-        $control = $this->IMenuControlFactory->create();
-		$control->addProvider($this->componentRegister);
-
-		$control->setContainerPrototype(Html::el('div')->setClass('com-componentMenu'));
-		$control->setListPrototype(Html::el('div')->setClass('row'));
-		$control->setItemPrototype(Html::el('div')->setClass('col-xs-6 col-sm-4 col-lg-3'));
-		$control->setItemTemplate($this->componentItemTemplate);
+        $control = $this->IAddComponentControlFactory->create();
+//        $control = $this->IMenuControlFactory->create();
+//		$control->addProvider($this->componentRegister);
+//
+//		$control->setContainerPrototype(Html::el('div')->setClass('com-componentMenu'));
+//		$control->setListPrototype(Html::el('div')->setClass('row'));
+//		$control->setItemPrototype(Html::el('div')->setClass('col-xs-6 col-sm-4 col-lg-3'));
+//		$control->setItemTemplate($this->componentItemTemplate);
 
 		return $control;
 	}
