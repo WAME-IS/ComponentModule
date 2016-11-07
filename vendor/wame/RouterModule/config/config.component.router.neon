@@ -1,0 +1,3 @@
+services:
+    # subscribers
+    - {class: Wame\ComponentModule\Vendor\Wame\RouterModule\Subscribers\RouteListener, tags: [kdyby.subscriber]}
