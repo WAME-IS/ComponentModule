@@ -2,7 +2,6 @@
 
 namespace App\AdminModule\Presenters;
 
-use Nette\Utils\Html;
 use Wame\DynamicObject\Vendor\Wame\AdminModule\Presenters\AdminFormPresenter;
 use Wame\ComponentModule\Entities\ComponentEntity;
 use Wame\ComponentModule\Repositories\ComponentRepository;
@@ -149,13 +148,6 @@ class ComponentPresenter extends AdminFormPresenter
 	protected function createComponentAddComponent()
 	{
         $control = $this->IAddComponentControlFactory->create();
-//        $control = $this->IMenuControlFactory->create();
-//		$control->addProvider($this->componentRegister);
-//
-//		$control->setContainerPrototype(Html::el('div')->setClass('com-componentMenu'));
-//		$control->setListPrototype(Html::el('div')->setClass('row'));
-//		$control->setItemPrototype(Html::el('div')->setClass('col-xs-6 col-sm-4 col-lg-3'));
-//		$control->setItemTemplate($this->componentItemTemplate);
 
 		return $control;
 	}
