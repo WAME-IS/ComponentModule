@@ -1,5 +1,5 @@
 $(document).ready(function(){
-    if ($('.cnt-AddComponentControl').langth) {
+    if ($('.cnt-AddComponentControl').length) {
         $('#search-component').keyup(function() {
             var searchText = $(this).val();
 
