@@ -58,6 +58,10 @@ class ComponentPositionPresenter extends AdminFormPresenter
 			$this->flashMessage(_('This component is removed.'), 'danger');
 			$this->redirect(':Admin:Component:', ['id' => null]);
 		}
+
+        // Form redirect
+        $url = $this->componentRegister[$this->component->getType()]->getLinkDetail($this->component);
+        $this->context->getService($this->getFormBuilderServiceAlias())->redirectTo($url, 'url');
 	}
 
 

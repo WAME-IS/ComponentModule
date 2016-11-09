@@ -29,7 +29,7 @@ class PositionContainer extends BaseContainer
         parent::__construct();
 
         $this->positionRepository = $positionRepository;
-        $this->positionList = $positionRepository->findPairs([], 'name', ['name' => 'ASC']);
+        $this->positionList = $positionRepository->findPairs(['inList' => PositionRepository::SHOW_IN_LIST], 'name', ['name' => 'ASC']);
     }
 
 

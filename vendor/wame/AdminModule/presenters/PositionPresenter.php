@@ -301,6 +301,27 @@ class PositionPresenter extends AdminFormPresenter
 	}
 
 
+    /**
+     * Create component grid
+     *
+     * @return DataGridControl
+     */
+    protected function createComponentGrid()
+    {
+        if (!$this->repository && $this->getGridServiceAlias()) {
+            throw new \Exception("Repository or grid service alias not initialized in presenter");
+        }
+
+        $grid = $this->context->getService($this->getGridServiceAlias());
+
+        $qb = $this->repository->createQueryBuilder('a');
+        $qb->andWhere($qb->expr()->eq('a.inList', PositionRepository::SHOW_IN_LIST));
+		$grid->setDataSource($qb);
+
+        return $grid;
+    }
+
+
     /** abstract methods ******************************************************/
 
     /** {@inheritdoc} */
