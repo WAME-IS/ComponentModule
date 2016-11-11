@@ -52,16 +52,16 @@ trait TComponentStatusType
         
         $willRenderer = true;
         
-        if($filterByStatusEntity != null) {
+        if($filterByStatusEntity !== null) {
             $entity = $this->getEntityByStatusType();
 
             switch($filterByStatusEntity)
             {
-                case 0: // entity found
-                    $willRenderer = ($entity != null); break;
-                case 1: // entity not found
-                    $willRenderer = ($entity == null); break;
-                case 2: // never
+                case 1: // entity found
+                    $willRenderer = ($entity !== null); break;
+                case 2: // entity not found
+                    $willRenderer = ($entity === null); break;
+                case 3: // never
                     $willRenderer = false; break;
             }
         }
