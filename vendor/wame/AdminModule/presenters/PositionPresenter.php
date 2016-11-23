@@ -117,6 +117,8 @@ class PositionPresenter extends AdminFormPresenter
 			$this->redirect(':Admin:Component:');
 		}
 
+        $this->positionStatusFilter->setEnabled(false);
+
 		$this->entity = $this->repository->get(['id' => $this->id]);
 
 		if (!$this->entity) {
@@ -143,6 +145,8 @@ class PositionPresenter extends AdminFormPresenter
 			$this->redirect(':Admin:Component:');
 		}
 
+        $this->positionStatusFilter->setEnabled(false);
+
 		$this->entity = $this->repository->get(['id' => $this->id]);
 
 		if (!$this->entity) {
@@ -166,6 +170,8 @@ class PositionPresenter extends AdminFormPresenter
 			$this->redirect(':Admin:Dashboard:');
 		}
 
+        $this->positionStatusFilter->setEnabled(false);
+
 		$this->repository->delete(['id' => $this->id]);
 
 		$this->flashMessage(_('Position has been successfully deleted.'), 'success');
@@ -184,6 +190,8 @@ class PositionPresenter extends AdminFormPresenter
 			$this->redirect(':Admin:Dashboard:');
 		}
 
+        $this->positionStatusFilter->setEnabled(false);
+        
 		$this->repository->changeStatus(['id' => $this->id]);
 
         if ($this->isAjax()) {
