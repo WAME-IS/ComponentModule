@@ -1,0 +1,422 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: ComponentModule.AdminModule\n"
+"Report-Msgid-Bugs-To: \n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: 2016-11-21T15:46:28+01:00\n"
+"PO-Revision-Date: 2016-11-21T15:46:28+01:00\n"
+"Language: en\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Poedit-KeywordsList: gettext;__;ngettext;n__;pgettext;p__;dgettext;d__;dpgettext;dp__;npgettext;np__;dnpgettext;dnp__;noop;noop__;_\n"
+"X-Poedit-Basepath: /Users/MacMini2/Weby/GIT/cms-wame-admin-4.0.0/vendor/wame/ComponentModule/vendor/wame/AdminModule\n"
+"X-Poedit-SearchPath-0: .\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Domain: ComponentModule.AdminModule\n"
+
+#: /Users/MacMini2/Weby/GIT/cms-wame-admin-4.0.0/vendor/wame/ComponentModule/vendor/wame/AdminModule/forms/componentPosition/containers/position/PositionContainer.php:40
+#: /Users/MacMini2/Weby/GIT/cms-wame-admin-4.0.0/vendor/wame/ComponentModule/vendor/wame/AdminModule/presenters/PositionPresenter.php:231
+#: /Users/MacMini2/Weby/GIT/cms-wame-admin-4.0.0/vendor/wame/ComponentModule/temp/latteCompiler/5834290ca9c34.php:20
+#: /Users/MacMini2/Weby/GIT/cms-wame-admin-4.0.0/vendor/wame/ComponentModule/temp/latteCompiler/583429885b553.php:20
+#: /Users/MacMini2/Weby/GIT/cms-wame-admin-4.0.0/vendor/wame/ComponentModule/temp/latteCompiler/583429e56b701.php:20
+#: /Users/MacMini2/Weby/GIT/cms-wame-admin-4.0.0/vendor/wame/ComponentModule/temp/latteCompiler/58342f7c709e1.php:20
+#: /Users/MacMini2/Weby/GIT/cms-wame-admin-4.0.0/vendor/wame/ComponentModule/temp/latteCompiler/583431ebc53f8.php:20
+#: /Users/MacMini2/Weby/GIT/cms-wame-admin-4.0.0/vendor/wame/ComponentModule/temp/latteCompiler/583432469bbac.php:20
+#: /Users/MacMini2/Weby/GIT/cms-wame-admin-4.0.0/vendor/wame/ComponentModule/temp/latteCompiler/5834332a533a4.php:20
+msgid "Position"
+msgstr ""
+
+#: /Users/MacMini2/Weby/GIT/cms-wame-admin-4.0.0/vendor/wame/ComponentModule/vendor/wame/AdminModule/forms/componentPosition/containers/position/PositionContainer.php:41
+msgid "Select position"
+msgstr ""
+
+#: /Users/MacMini2/Weby/GIT/cms-wame-admin-4.0.0/vendor/wame/ComponentModule/vendor/wame/AdminModule/forms/position/containers/container/ContainerFormContainer.php:26
+msgid "Tag"
+msgstr ""
+
+#: /Users/MacMini2/Weby/GIT/cms-wame-admin-4.0.0/vendor/wame/ComponentModule/vendor/wame/AdminModule/forms/position/containers/container/ContainerFormContainer.php:27
+msgid "e.g.: div, span, ul, a, article, aside, header, footer, main, nav, section..."
+msgstr ""
+
+#: /Users/MacMini2/Weby/GIT/cms-wame-admin-4.0.0/vendor/wame/ComponentModule/vendor/wame/AdminModule/forms/position/containers/container/ContainerFormContainer.php:31
+#: /Users/MacMini2/Weby/GIT/cms-wame-admin-4.0.0/vendor/wame/ComponentModule/vendor/wame/AdminModule/grids/columns/ComponentName.php:12
+msgid "Name"
+msgstr ""
+
+#: /Users/MacMini2/Weby/GIT/cms-wame-admin-4.0.0/vendor/wame/ComponentModule/vendor/wame/AdminModule/forms/position/containers/container/ContainerFormContainer.php:33
+msgid "Value"
+msgstr ""
+
+#: /Users/MacMini2/Weby/GIT/cms-wame-admin-4.0.0/vendor/wame/ComponentModule/vendor/wame/AdminModule/forms/position/containers/container/ContainerFormContainer.php:35
+msgid "Remove"
+msgstr ""
+
+#: /Users/MacMini2/Weby/GIT/cms-wame-admin-4.0.0/vendor/wame/ComponentModule/vendor/wame/AdminModule/forms/position/containers/container/ContainerFormContainer.php:41
+msgid "Add attribute"
+msgstr ""
+
+#: /Users/MacMini2/Weby/GIT/cms-wame-admin-4.0.0/vendor/wame/ComponentModule/vendor/wame/AdminModule/forms/position/containers/container/ContainerFormContainer.php:42
+msgid "Attributes for container wrapper position."
+msgstr ""
+
+#: /Users/MacMini2/Weby/GIT/cms-wame-admin-4.0.0/vendor/wame/ComponentModule/vendor/wame/AdminModule/forms/position/groups/container/ContainerGroup.php:21
+msgid "Container"
+msgstr ""
+
+#: /Users/MacMini2/Weby/GIT/cms-wame-admin-4.0.0/vendor/wame/ComponentModule/vendor/wame/AdminModule/grids/columns/Component/Status.php:12
+#: /Users/MacMini2/Weby/GIT/cms-wame-admin-4.0.0/vendor/wame/ComponentModule/vendor/wame/AdminModule/grids/columns/ComponentInPositionGrid/Status.php:12
+#: /Users/MacMini2/Weby/GIT/cms-wame-admin-4.0.0/vendor/wame/ComponentModule/vendor/wame/AdminModule/grids/columns/ComponentStatus.php:12
+msgid "Status"
+msgstr ""
+
+#: /Users/MacMini2/Weby/GIT/cms-wame-admin-4.0.0/vendor/wame/ComponentModule/vendor/wame/AdminModule/grids/columns/Component/Status.php:13
+#: /Users/MacMini2/Weby/GIT/cms-wame-admin-4.0.0/vendor/wame/ComponentModule/vendor/wame/AdminModule/grids/columns/ComponentInPositionGrid/Status.php:13
+#: /Users/MacMini2/Weby/GIT/cms-wame-admin-4.0.0/vendor/wame/ComponentModule/vendor/wame/AdminModule/grids/columns/ComponentStatus.php:13
+#: /Users/MacMini2/Weby/GIT/cms-wame-admin-4.0.0/vendor/wame/ComponentModule/temp/latteCompiler/5834290ce1cbe.php:113
+#: /Users/MacMini2/Weby/GIT/cms-wame-admin-4.0.0/vendor/wame/ComponentModule/temp/latteCompiler/58342988a15f2.php:113
+#: /Users/MacMini2/Weby/GIT/cms-wame-admin-4.0.0/vendor/wame/ComponentModule/temp/latteCompiler/583429e5cf0b4.php:113
+#: /Users/MacMini2/Weby/GIT/cms-wame-admin-4.0.0/vendor/wame/ComponentModule/temp/latteCompiler/58342f7ca7a7a.php:113
+#: /Users/MacMini2/Weby/GIT/cms-wame-admin-4.0.0/vendor/wame/ComponentModule/temp/latteCompiler/583431ec0fc0f.php:113
+#: /Users/MacMini2/Weby/GIT/cms-wame-admin-4.0.0/vendor/wame/ComponentModule/temp/latteCompiler/5834324700759.php:113
+#: /Users/MacMini2/Weby/GIT/cms-wame-admin-4.0.0/vendor/wame/ComponentModule/temp/latteCompiler/5834332a882bb.php:113
+msgid "Enabled"
+msgstr ""
+
+#: /Users/MacMini2/Weby/GIT/cms-wame-admin-4.0.0/vendor/wame/ComponentModule/vendor/wame/AdminModule/grids/columns/Component/Status.php:17
+#: /Users/MacMini2/Weby/GIT/cms-wame-admin-4.0.0/vendor/wame/ComponentModule/vendor/wame/AdminModule/grids/columns/ComponentInPositionGrid/Status.php:17
+#: /Users/MacMini2/Weby/GIT/cms-wame-admin-4.0.0/vendor/wame/ComponentModule/vendor/wame/AdminModule/grids/columns/ComponentStatus.php:17
+#: /Users/MacMini2/Weby/GIT/cms-wame-admin-4.0.0/vendor/wame/ComponentModule/temp/latteCompiler/5834290ce1cbe.php:121
+#: /Users/MacMini2/Weby/GIT/cms-wame-admin-4.0.0/vendor/wame/ComponentModule/temp/latteCompiler/58342988a15f2.php:121
+#: /Users/MacMini2/Weby/GIT/cms-wame-admin-4.0.0/vendor/wame/ComponentModule/temp/latteCompiler/583429e5cf0b4.php:121
+#: /Users/MacMini2/Weby/GIT/cms-wame-admin-4.0.0/vendor/wame/ComponentModule/temp/latteCompiler/58342f7ca7a7a.php:121
+#: /Users/MacMini2/Weby/GIT/cms-wame-admin-4.0.0/vendor/wame/ComponentModule/temp/latteCompiler/583431ec0fc0f.php:121
+#: /Users/MacMini2/Weby/GIT/cms-wame-admin-4.0.0/vendor/wame/ComponentModule/temp/latteCompiler/5834324700759.php:121
+#: /Users/MacMini2/Weby/GIT/cms-wame-admin-4.0.0/vendor/wame/ComponentModule/temp/latteCompiler/5834332a882bb.php:121
+msgid "Disabled"
+msgstr ""
+
+#: /Users/MacMini2/Weby/GIT/cms-wame-admin-4.0.0/vendor/wame/ComponentModule/vendor/wame/AdminModule/grids/columns/Component/TitleLink.php:24
+#: /Users/MacMini2/Weby/GIT/cms-wame-admin-4.0.0/vendor/wame/ComponentModule/vendor/wame/AdminModule/grids/columns/ComponentInPositionGrid/TitleLink.php:24
+msgid "Title"
+msgstr ""
+
+#: /Users/MacMini2/Weby/GIT/cms-wame-admin-4.0.0/vendor/wame/ComponentModule/vendor/wame/AdminModule/grids/columns/Component/Type.php:24
+#: /Users/MacMini2/Weby/GIT/cms-wame-admin-4.0.0/vendor/wame/ComponentModule/vendor/wame/AdminModule/grids/columns/ComponentInPositionGrid/Type.php:24
+msgid "Type"
+msgstr ""
+
+#: /Users/MacMini2/Weby/GIT/cms-wame-admin-4.0.0/vendor/wame/ComponentModule/vendor/wame/AdminModule/grids/columns/ComponentId.php:12
+msgid "ID"
+msgstr ""
+
+#: /Users/MacMini2/Weby/GIT/cms-wame-admin-4.0.0/vendor/wame/ComponentModule/vendor/wame/AdminModule/grids/columns/ComponentInPositionGrid/Delete.php:15
+#: /Users/MacMini2/Weby/GIT/cms-wame-admin-4.0.0/vendor/wame/ComponentModule/temp/latteCompiler/5834290cbdc09.php:42
+#: /Users/MacMini2/Weby/GIT/cms-wame-admin-4.0.0/vendor/wame/ComponentModule/temp/latteCompiler/5834290cc3296.php:42
+#: /Users/MacMini2/Weby/GIT/cms-wame-admin-4.0.0/vendor/wame/ComponentModule/temp/latteCompiler/5834290cd0a54.php:42
+#: /Users/MacMini2/Weby/GIT/cms-wame-admin-4.0.0/vendor/wame/ComponentModule/temp/latteCompiler/58342988743c6.php:42
+#: /Users/MacMini2/Weby/GIT/cms-wame-admin-4.0.0/vendor/wame/ComponentModule/temp/latteCompiler/583429887c174.php:42
+#: /Users/MacMini2/Weby/GIT/cms-wame-admin-4.0.0/vendor/wame/ComponentModule/temp/latteCompiler/583429888d978.php:42
+#: /Users/MacMini2/Weby/GIT/cms-wame-admin-4.0.0/vendor/wame/ComponentModule/temp/latteCompiler/583429e589713.php:42
+#: /Users/MacMini2/Weby/GIT/cms-wame-admin-4.0.0/vendor/wame/ComponentModule/temp/latteCompiler/583429e590a93.php:42
+#: /Users/MacMini2/Weby/GIT/cms-wame-admin-4.0.0/vendor/wame/ComponentModule/temp/latteCompiler/583429e5a6e6f.php:42
+#: /Users/MacMini2/Weby/GIT/cms-wame-admin-4.0.0/vendor/wame/ComponentModule/temp/latteCompiler/58342f7c83dee.php:42
+#: /Users/MacMini2/Weby/GIT/cms-wame-admin-4.0.0/vendor/wame/ComponentModule/temp/latteCompiler/58342f7c894ef.php:42
+#: /Users/MacMini2/Weby/GIT/cms-wame-admin-4.0.0/vendor/wame/ComponentModule/temp/latteCompiler/58342f7c97145.php:42
+#: /Users/MacMini2/Weby/GIT/cms-wame-admin-4.0.0/vendor/wame/ComponentModule/temp/latteCompiler/583431ebdce79.php:42
+#: /Users/MacMini2/Weby/GIT/cms-wame-admin-4.0.0/vendor/wame/ComponentModule/temp/latteCompiler/583431ebe20e3.php:42
+#: /Users/MacMini2/Weby/GIT/cms-wame-admin-4.0.0/vendor/wame/ComponentModule/temp/latteCompiler/583431ebef7df.php:42
+#: /Users/MacMini2/Weby/GIT/cms-wame-admin-4.0.0/vendor/wame/ComponentModule/temp/latteCompiler/58343246b2988.php:42
+#: /Users/MacMini2/Weby/GIT/cms-wame-admin-4.0.0/vendor/wame/ComponentModule/temp/latteCompiler/58343246b7d4a.php:42
+#: /Users/MacMini2/Weby/GIT/cms-wame-admin-4.0.0/vendor/wame/ComponentModule/temp/latteCompiler/58343246caffb.php:42
+#: /Users/MacMini2/Weby/GIT/cms-wame-admin-4.0.0/vendor/wame/ComponentModule/temp/latteCompiler/5834332a66f18.php:42
+#: /Users/MacMini2/Weby/GIT/cms-wame-admin-4.0.0/vendor/wame/ComponentModule/temp/latteCompiler/5834332a6bc24.php:42
+#: /Users/MacMini2/Weby/GIT/cms-wame-admin-4.0.0/vendor/wame/ComponentModule/temp/latteCompiler/5834332a797bf.php:42
+msgid "Delete"
+msgstr ""
+
+#: /Users/MacMini2/Weby/GIT/cms-wame-admin-4.0.0/vendor/wame/ComponentModule/vendor/wame/AdminModule/grids/columns/ComponentInPositionGrid/Sort.php:13
+msgid "Sort"
+msgstr ""
+
+#: /Users/MacMini2/Weby/GIT/cms-wame-admin-4.0.0/vendor/wame/ComponentModule/vendor/wame/AdminModule/grids/toolbarButtons/AddComponent.php:12
+msgid "Add component"
+msgstr ""
+
+#: /Users/MacMini2/Weby/GIT/cms-wame-admin-4.0.0/vendor/wame/ComponentModule/vendor/wame/AdminModule/grids/toolbarButtons/AddPosition.php:12
+msgid "Add position"
+msgstr ""
+
+#: /Users/MacMini2/Weby/GIT/cms-wame-admin-4.0.0/vendor/wame/ComponentModule/vendor/wame/AdminModule/presenters/AbstractComponentPresenter.php:22
+msgid "Create component"
+msgstr ""
+
+#: /Users/MacMini2/Weby/GIT/cms-wame-admin-4.0.0/vendor/wame/ComponentModule/vendor/wame/AdminModule/presenters/AbstractComponentPresenter.php:29
+msgid "Edit component"
+msgstr ""
+
+#: /Users/MacMini2/Weby/GIT/cms-wame-admin-4.0.0/vendor/wame/ComponentModule/vendor/wame/AdminModule/presenters/ComponentPositionPresenter.php:41
+#: /Users/MacMini2/Weby/GIT/cms-wame-admin-4.0.0/vendor/wame/ComponentModule/vendor/wame/AdminModule/presenters/ComponentPositionPresenter.php:71
+#: /Users/MacMini2/Weby/GIT/cms-wame-admin-4.0.0/vendor/wame/ComponentModule/vendor/wame/AdminModule/presenters/ComponentPositionPresenter.php:102
+#: /Users/MacMini2/Weby/GIT/cms-wame-admin-4.0.0/vendor/wame/ComponentModule/vendor/wame/AdminModule/presenters/ComponentPresenter.php:62
+#: /Users/MacMini2/Weby/GIT/cms-wame-admin-4.0.0/vendor/wame/ComponentModule/vendor/wame/AdminModule/presenters/ComponentPresenter.php:78
+#: /Users/MacMini2/Weby/GIT/cms-wame-admin-4.0.0/vendor/wame/ComponentModule/vendor/wame/AdminModule/presenters/PositionPresenter.php:52
+#: /Users/MacMini2/Weby/GIT/cms-wame-admin-4.0.0/vendor/wame/ComponentModule/vendor/wame/AdminModule/presenters/PositionPresenter.php:65
+#: /Users/MacMini2/Weby/GIT/cms-wame-admin-4.0.0/vendor/wame/ComponentModule/vendor/wame/AdminModule/presenters/PositionPresenter.php:102
+#: /Users/MacMini2/Weby/GIT/cms-wame-admin-4.0.0/vendor/wame/ComponentModule/vendor/wame/AdminModule/presenters/PositionPresenter.php:111
+#: /Users/MacMini2/Weby/GIT/cms-wame-admin-4.0.0/vendor/wame/ComponentModule/vendor/wame/AdminModule/presenters/PositionPresenter.php:137
+msgid "To enter this section you do not have enough privileges."
+msgstr ""
+
+#: /Users/MacMini2/Weby/GIT/cms-wame-admin-4.0.0/vendor/wame/ComponentModule/vendor/wame/AdminModule/presenters/ComponentPositionPresenter.php:46
+#: /Users/MacMini2/Weby/GIT/cms-wame-admin-4.0.0/vendor/wame/ComponentModule/vendor/wame/AdminModule/presenters/ComponentPositionPresenter.php:76
+#: /Users/MacMini2/Weby/GIT/cms-wame-admin-4.0.0/vendor/wame/ComponentModule/vendor/wame/AdminModule/presenters/ComponentPositionPresenter.php:107
+#: /Users/MacMini2/Weby/GIT/cms-wame-admin-4.0.0/vendor/wame/ComponentModule/vendor/wame/AdminModule/presenters/ComponentPresenter.php:83
+#: /Users/MacMini2/Weby/GIT/cms-wame-admin-4.0.0/vendor/wame/ComponentModule/vendor/wame/AdminModule/presenters/PositionPresenter.php:70
+#: /Users/MacMini2/Weby/GIT/cms-wame-admin-4.0.0/vendor/wame/ComponentModule/vendor/wame/AdminModule/presenters/PositionPresenter.php:116
+#: /Users/MacMini2/Weby/GIT/cms-wame-admin-4.0.0/vendor/wame/ComponentModule/vendor/wame/AdminModule/presenters/PositionPresenter.php:142
+msgid "Missing identifier."
+msgstr ""
+
+#: /Users/MacMini2/Weby/GIT/cms-wame-admin-4.0.0/vendor/wame/ComponentModule/vendor/wame/AdminModule/presenters/ComponentPositionPresenter.php:53
+msgid "This component does not exist."
+msgstr ""
+
+#: /Users/MacMini2/Weby/GIT/cms-wame-admin-4.0.0/vendor/wame/ComponentModule/vendor/wame/AdminModule/presenters/ComponentPositionPresenter.php:58
+#: /Users/MacMini2/Weby/GIT/cms-wame-admin-4.0.0/vendor/wame/ComponentModule/vendor/wame/AdminModule/presenters/ComponentPositionPresenter.php:93
+#: /Users/MacMini2/Weby/GIT/cms-wame-admin-4.0.0/vendor/wame/ComponentModule/vendor/wame/AdminModule/presenters/ComponentPositionPresenter.php:124
+msgid "This component is removed."
+msgstr ""
+
+#: /Users/MacMini2/Weby/GIT/cms-wame-admin-4.0.0/vendor/wame/ComponentModule/vendor/wame/AdminModule/presenters/ComponentPositionPresenter.php:83
+#: /Users/MacMini2/Weby/GIT/cms-wame-admin-4.0.0/vendor/wame/ComponentModule/vendor/wame/AdminModule/presenters/ComponentPositionPresenter.php:114
+msgid "This component in position does not exist."
+msgstr ""
+
+#: /Users/MacMini2/Weby/GIT/cms-wame-admin-4.0.0/vendor/wame/ComponentModule/vendor/wame/AdminModule/presenters/ComponentPositionPresenter.php:88
+#: /Users/MacMini2/Weby/GIT/cms-wame-admin-4.0.0/vendor/wame/ComponentModule/vendor/wame/AdminModule/presenters/ComponentPositionPresenter.php:119
+#: /Users/MacMini2/Weby/GIT/cms-wame-admin-4.0.0/vendor/wame/ComponentModule/vendor/wame/AdminModule/presenters/PositionPresenter.php:84
+#: /Users/MacMini2/Weby/GIT/cms-wame-admin-4.0.0/vendor/wame/ComponentModule/vendor/wame/AdminModule/presenters/PositionPresenter.php:128
+#: /Users/MacMini2/Weby/GIT/cms-wame-admin-4.0.0/vendor/wame/ComponentModule/vendor/wame/AdminModule/presenters/PositionPresenter.php:154
+msgid "This position is removed."
+msgstr ""
+
+#: /Users/MacMini2/Weby/GIT/cms-wame-admin-4.0.0/vendor/wame/ComponentModule/vendor/wame/AdminModule/presenters/ComponentPositionPresenter.php:135
+#: /Users/MacMini2/Weby/GIT/cms-wame-admin-4.0.0/vendor/wame/ComponentModule/vendor/wame/AdminModule/presenters/ComponentPresenter.php:108
+#: /Users/MacMini2/Weby/GIT/cms-wame-admin-4.0.0/vendor/wame/ComponentModule/vendor/wame/AdminModule/presenters/PositionPresenter.php:165
+#: /Users/MacMini2/Weby/GIT/cms-wame-admin-4.0.0/vendor/wame/ComponentModule/vendor/wame/AdminModule/presenters/PositionPresenter.php:183
+msgid "For this action you do not have enough privileges."
+msgstr ""
+
+#: /Users/MacMini2/Weby/GIT/cms-wame-admin-4.0.0/vendor/wame/ComponentModule/vendor/wame/AdminModule/presenters/ComponentPositionPresenter.php:143
+msgid "Component %s has been successfully removed from %s position."
+msgstr ""
+
+#: /Users/MacMini2/Weby/GIT/cms-wame-admin-4.0.0/vendor/wame/ComponentModule/vendor/wame/AdminModule/presenters/ComponentPositionPresenter.php:154
+msgid "Add '%s' to position"
+msgstr ""
+
+#: /Users/MacMini2/Weby/GIT/cms-wame-admin-4.0.0/vendor/wame/ComponentModule/vendor/wame/AdminModule/presenters/ComponentPositionPresenter.php:160
+msgid "Edit '%s' in position"
+msgstr ""
+
+#: /Users/MacMini2/Weby/GIT/cms-wame-admin-4.0.0/vendor/wame/ComponentModule/vendor/wame/AdminModule/presenters/ComponentPositionPresenter.php:167
+msgid "Delete '%s' from position"
+msgstr ""
+
+#: /Users/MacMini2/Weby/GIT/cms-wame-admin-4.0.0/vendor/wame/ComponentModule/vendor/wame/AdminModule/presenters/ComponentPresenter.php:92
+msgid "Component does not exists."
+msgstr ""
+
+#: /Users/MacMini2/Weby/GIT/cms-wame-admin-4.0.0/vendor/wame/ComponentModule/vendor/wame/AdminModule/presenters/ComponentPresenter.php:97
+msgid "Component is already deleted."
+msgstr ""
+
+#: /Users/MacMini2/Weby/GIT/cms-wame-admin-4.0.0/vendor/wame/ComponentModule/vendor/wame/AdminModule/presenters/ComponentPresenter.php:114
+msgid "Component has been successfully deleted."
+msgstr ""
+
+#: /Users/MacMini2/Weby/GIT/cms-wame-admin-4.0.0/vendor/wame/ComponentModule/vendor/wame/AdminModule/presenters/ComponentPresenter.php:123
+msgid "Components"
+msgstr ""
+
+#: /Users/MacMini2/Weby/GIT/cms-wame-admin-4.0.0/vendor/wame/ComponentModule/vendor/wame/AdminModule/presenters/ComponentPresenter.php:130
+msgid "Select a type component"
+msgstr ""
+
+#: /Users/MacMini2/Weby/GIT/cms-wame-admin-4.0.0/vendor/wame/ComponentModule/vendor/wame/AdminModule/presenters/ComponentPresenter.php:136
+msgid "Delete component"
+msgstr ""
+
+#: /Users/MacMini2/Weby/GIT/cms-wame-admin-4.0.0/vendor/wame/ComponentModule/vendor/wame/AdminModule/presenters/PositionPresenter.php:79
+#: /Users/MacMini2/Weby/GIT/cms-wame-admin-4.0.0/vendor/wame/ComponentModule/vendor/wame/AdminModule/presenters/PositionPresenter.php:123
+#: /Users/MacMini2/Weby/GIT/cms-wame-admin-4.0.0/vendor/wame/ComponentModule/vendor/wame/AdminModule/presenters/PositionPresenter.php:149
+msgid "This position does not exist."
+msgstr ""
+
+#: /Users/MacMini2/Weby/GIT/cms-wame-admin-4.0.0/vendor/wame/ComponentModule/vendor/wame/AdminModule/presenters/PositionPresenter.php:171
+msgid "Position has been successfully deleted."
+msgstr ""
+
+#: /Users/MacMini2/Weby/GIT/cms-wame-admin-4.0.0/vendor/wame/ComponentModule/vendor/wame/AdminModule/presenters/PositionPresenter.php:225
+msgid "Positions"
+msgstr ""
+
+#: /Users/MacMini2/Weby/GIT/cms-wame-admin-4.0.0/vendor/wame/ComponentModule/vendor/wame/AdminModule/presenters/PositionPresenter.php:241
+msgid "Create position"
+msgstr ""
+
+#: /Users/MacMini2/Weby/GIT/cms-wame-admin-4.0.0/vendor/wame/ComponentModule/vendor/wame/AdminModule/presenters/PositionPresenter.php:247
+#: /Users/MacMini2/Weby/GIT/cms-wame-admin-4.0.0/vendor/wame/ComponentModule/temp/latteCompiler/5834290ce1cbe.php:49
+#: /Users/MacMini2/Weby/GIT/cms-wame-admin-4.0.0/vendor/wame/ComponentModule/temp/latteCompiler/58342988a15f2.php:49
+#: /Users/MacMini2/Weby/GIT/cms-wame-admin-4.0.0/vendor/wame/ComponentModule/temp/latteCompiler/583429e5cf0b4.php:49
+#: /Users/MacMini2/Weby/GIT/cms-wame-admin-4.0.0/vendor/wame/ComponentModule/temp/latteCompiler/58342f7ca7a7a.php:49
+#: /Users/MacMini2/Weby/GIT/cms-wame-admin-4.0.0/vendor/wame/ComponentModule/temp/latteCompiler/583431ec0fc0f.php:49
+#: /Users/MacMini2/Weby/GIT/cms-wame-admin-4.0.0/vendor/wame/ComponentModule/temp/latteCompiler/5834324700759.php:49
+#: /Users/MacMini2/Weby/GIT/cms-wame-admin-4.0.0/vendor/wame/ComponentModule/temp/latteCompiler/5834332a882bb.php:49
+msgid "Edit position"
+msgstr ""
+
+#: /Users/MacMini2/Weby/GIT/cms-wame-admin-4.0.0/vendor/wame/ComponentModule/vendor/wame/AdminModule/presenters/PositionPresenter.php:254
+#: /Users/MacMini2/Weby/GIT/cms-wame-admin-4.0.0/vendor/wame/ComponentModule/temp/latteCompiler/5834290ce1cbe.php:54
+#: /Users/MacMini2/Weby/GIT/cms-wame-admin-4.0.0/vendor/wame/ComponentModule/temp/latteCompiler/58342988a15f2.php:54
+#: /Users/MacMini2/Weby/GIT/cms-wame-admin-4.0.0/vendor/wame/ComponentModule/temp/latteCompiler/583429e5cf0b4.php:54
+#: /Users/MacMini2/Weby/GIT/cms-wame-admin-4.0.0/vendor/wame/ComponentModule/temp/latteCompiler/58342f7ca7a7a.php:54
+#: /Users/MacMini2/Weby/GIT/cms-wame-admin-4.0.0/vendor/wame/ComponentModule/temp/latteCompiler/583431ec0fc0f.php:54
+#: /Users/MacMini2/Weby/GIT/cms-wame-admin-4.0.0/vendor/wame/ComponentModule/temp/latteCompiler/5834324700759.php:54
+#: /Users/MacMini2/Weby/GIT/cms-wame-admin-4.0.0/vendor/wame/ComponentModule/temp/latteCompiler/5834332a882bb.php:54
+msgid "Delete position"
+msgstr ""
+
+#: /Users/MacMini2/Weby/GIT/cms-wame-admin-4.0.0/vendor/wame/ComponentModule/temp/latteCompiler/5834290cb8ae7.php:46
+#: /Users/MacMini2/Weby/GIT/cms-wame-admin-4.0.0/vendor/wame/ComponentModule/temp/latteCompiler/583429886de6b.php:46
+#: /Users/MacMini2/Weby/GIT/cms-wame-admin-4.0.0/vendor/wame/ComponentModule/temp/latteCompiler/583429e58324d.php:46
+#: /Users/MacMini2/Weby/GIT/cms-wame-admin-4.0.0/vendor/wame/ComponentModule/temp/latteCompiler/58342f7c7f722.php:46
+#: /Users/MacMini2/Weby/GIT/cms-wame-admin-4.0.0/vendor/wame/ComponentModule/temp/latteCompiler/583431ebd821c.php:46
+#: /Users/MacMini2/Weby/GIT/cms-wame-admin-4.0.0/vendor/wame/ComponentModule/temp/latteCompiler/58343246ae1b0.php:46
+#: /Users/MacMini2/Weby/GIT/cms-wame-admin-4.0.0/vendor/wame/ComponentModule/temp/latteCompiler/5834332a62272.php:46
+msgid "You do not have created any components."
+msgstr ""
+
+#: /Users/MacMini2/Weby/GIT/cms-wame-admin-4.0.0/vendor/wame/ComponentModule/temp/latteCompiler/5834290cb8ae7.php:49
+#: /Users/MacMini2/Weby/GIT/cms-wame-admin-4.0.0/vendor/wame/ComponentModule/temp/latteCompiler/5834290ce1cbe.php:70
+#: /Users/MacMini2/Weby/GIT/cms-wame-admin-4.0.0/vendor/wame/ComponentModule/temp/latteCompiler/583429886de6b.php:49
+#: /Users/MacMini2/Weby/GIT/cms-wame-admin-4.0.0/vendor/wame/ComponentModule/temp/latteCompiler/58342988a15f2.php:70
+#: /Users/MacMini2/Weby/GIT/cms-wame-admin-4.0.0/vendor/wame/ComponentModule/temp/latteCompiler/583429e58324d.php:49
+#: /Users/MacMini2/Weby/GIT/cms-wame-admin-4.0.0/vendor/wame/ComponentModule/temp/latteCompiler/583429e5cf0b4.php:70
+#: /Users/MacMini2/Weby/GIT/cms-wame-admin-4.0.0/vendor/wame/ComponentModule/temp/latteCompiler/58342f7c7f722.php:49
+#: /Users/MacMini2/Weby/GIT/cms-wame-admin-4.0.0/vendor/wame/ComponentModule/temp/latteCompiler/58342f7ca7a7a.php:70
+#: /Users/MacMini2/Weby/GIT/cms-wame-admin-4.0.0/vendor/wame/ComponentModule/temp/latteCompiler/583431ebd821c.php:49
+#: /Users/MacMini2/Weby/GIT/cms-wame-admin-4.0.0/vendor/wame/ComponentModule/temp/latteCompiler/583431ec0fc0f.php:70
+#: /Users/MacMini2/Weby/GIT/cms-wame-admin-4.0.0/vendor/wame/ComponentModule/temp/latteCompiler/58343246ae1b0.php:49
+#: /Users/MacMini2/Weby/GIT/cms-wame-admin-4.0.0/vendor/wame/ComponentModule/temp/latteCompiler/5834324700759.php:70
+#: /Users/MacMini2/Weby/GIT/cms-wame-admin-4.0.0/vendor/wame/ComponentModule/temp/latteCompiler/5834332a62272.php:49
+#: /Users/MacMini2/Weby/GIT/cms-wame-admin-4.0.0/vendor/wame/ComponentModule/temp/latteCompiler/5834332a882bb.php:70
+msgid "Add first component"
+msgstr ""
+
+#: /Users/MacMini2/Weby/GIT/cms-wame-admin-4.0.0/vendor/wame/ComponentModule/temp/latteCompiler/5834290cbdc09.php:39
+#: /Users/MacMini2/Weby/GIT/cms-wame-admin-4.0.0/vendor/wame/ComponentModule/temp/latteCompiler/58342988743c6.php:39
+#: /Users/MacMini2/Weby/GIT/cms-wame-admin-4.0.0/vendor/wame/ComponentModule/temp/latteCompiler/583429e589713.php:39
+#: /Users/MacMini2/Weby/GIT/cms-wame-admin-4.0.0/vendor/wame/ComponentModule/temp/latteCompiler/58342f7c83dee.php:39
+#: /Users/MacMini2/Weby/GIT/cms-wame-admin-4.0.0/vendor/wame/ComponentModule/temp/latteCompiler/583431ebdce79.php:39
+#: /Users/MacMini2/Weby/GIT/cms-wame-admin-4.0.0/vendor/wame/ComponentModule/temp/latteCompiler/58343246b2988.php:39
+#: /Users/MacMini2/Weby/GIT/cms-wame-admin-4.0.0/vendor/wame/ComponentModule/temp/latteCompiler/5834332a66f18.php:39
+msgid "Do you really want to delete %s component?"
+msgstr ""
+
+#: /Users/MacMini2/Weby/GIT/cms-wame-admin-4.0.0/vendor/wame/ComponentModule/temp/latteCompiler/5834290cbdc09.php:44
+#: /Users/MacMini2/Weby/GIT/cms-wame-admin-4.0.0/vendor/wame/ComponentModule/temp/latteCompiler/5834290cc3296.php:44
+#: /Users/MacMini2/Weby/GIT/cms-wame-admin-4.0.0/vendor/wame/ComponentModule/temp/latteCompiler/5834290cd0a54.php:44
+#: /Users/MacMini2/Weby/GIT/cms-wame-admin-4.0.0/vendor/wame/ComponentModule/temp/latteCompiler/58342988743c6.php:44
+#: /Users/MacMini2/Weby/GIT/cms-wame-admin-4.0.0/vendor/wame/ComponentModule/temp/latteCompiler/583429887c174.php:44
+#: /Users/MacMini2/Weby/GIT/cms-wame-admin-4.0.0/vendor/wame/ComponentModule/temp/latteCompiler/583429888d978.php:44
+#: /Users/MacMini2/Weby/GIT/cms-wame-admin-4.0.0/vendor/wame/ComponentModule/temp/latteCompiler/583429e589713.php:44
+#: /Users/MacMini2/Weby/GIT/cms-wame-admin-4.0.0/vendor/wame/ComponentModule/temp/latteCompiler/583429e590a93.php:44
+#: /Users/MacMini2/Weby/GIT/cms-wame-admin-4.0.0/vendor/wame/ComponentModule/temp/latteCompiler/583429e5a6e6f.php:44
+#: /Users/MacMini2/Weby/GIT/cms-wame-admin-4.0.0/vendor/wame/ComponentModule/temp/latteCompiler/58342f7c83dee.php:44
+#: /Users/MacMini2/Weby/GIT/cms-wame-admin-4.0.0/vendor/wame/ComponentModule/temp/latteCompiler/58342f7c894ef.php:44
+#: /Users/MacMini2/Weby/GIT/cms-wame-admin-4.0.0/vendor/wame/ComponentModule/temp/latteCompiler/58342f7c97145.php:44
+#: /Users/MacMini2/Weby/GIT/cms-wame-admin-4.0.0/vendor/wame/ComponentModule/temp/latteCompiler/583431ebdce79.php:44
+#: /Users/MacMini2/Weby/GIT/cms-wame-admin-4.0.0/vendor/wame/ComponentModule/temp/latteCompiler/583431ebe20e3.php:44
+#: /Users/MacMini2/Weby/GIT/cms-wame-admin-4.0.0/vendor/wame/ComponentModule/temp/latteCompiler/583431ebef7df.php:44
+#: /Users/MacMini2/Weby/GIT/cms-wame-admin-4.0.0/vendor/wame/ComponentModule/temp/latteCompiler/58343246b2988.php:44
+#: /Users/MacMini2/Weby/GIT/cms-wame-admin-4.0.0/vendor/wame/ComponentModule/temp/latteCompiler/58343246b7d4a.php:44
+#: /Users/MacMini2/Weby/GIT/cms-wame-admin-4.0.0/vendor/wame/ComponentModule/temp/latteCompiler/58343246caffb.php:44
+#: /Users/MacMini2/Weby/GIT/cms-wame-admin-4.0.0/vendor/wame/ComponentModule/temp/latteCompiler/5834332a66f18.php:44
+#: /Users/MacMini2/Weby/GIT/cms-wame-admin-4.0.0/vendor/wame/ComponentModule/temp/latteCompiler/5834332a6bc24.php:44
+#: /Users/MacMini2/Weby/GIT/cms-wame-admin-4.0.0/vendor/wame/ComponentModule/temp/latteCompiler/5834332a797bf.php:44
+msgid "Cancel"
+msgstr ""
+
+#: /Users/MacMini2/Weby/GIT/cms-wame-admin-4.0.0/vendor/wame/ComponentModule/temp/latteCompiler/5834290cc3296.php:39
+#: /Users/MacMini2/Weby/GIT/cms-wame-admin-4.0.0/vendor/wame/ComponentModule/temp/latteCompiler/583429887c174.php:39
+#: /Users/MacMini2/Weby/GIT/cms-wame-admin-4.0.0/vendor/wame/ComponentModule/temp/latteCompiler/583429e590a93.php:39
+#: /Users/MacMini2/Weby/GIT/cms-wame-admin-4.0.0/vendor/wame/ComponentModule/temp/latteCompiler/58342f7c894ef.php:39
+#: /Users/MacMini2/Weby/GIT/cms-wame-admin-4.0.0/vendor/wame/ComponentModule/temp/latteCompiler/583431ebe20e3.php:39
+#: /Users/MacMini2/Weby/GIT/cms-wame-admin-4.0.0/vendor/wame/ComponentModule/temp/latteCompiler/58343246b7d4a.php:39
+#: /Users/MacMini2/Weby/GIT/cms-wame-admin-4.0.0/vendor/wame/ComponentModule/temp/latteCompiler/5834332a6bc24.php:39
+msgid "Do you really want to delete this component from %s position?"
+msgstr ""
+
+#: /Users/MacMini2/Weby/GIT/cms-wame-admin-4.0.0/vendor/wame/ComponentModule/temp/latteCompiler/5834290cc69d3.php:44
+#: /Users/MacMini2/Weby/GIT/cms-wame-admin-4.0.0/vendor/wame/ComponentModule/temp/latteCompiler/5834298881f33.php:44
+#: /Users/MacMini2/Weby/GIT/cms-wame-admin-4.0.0/vendor/wame/ComponentModule/temp/latteCompiler/583429e59518c.php:44
+#: /Users/MacMini2/Weby/GIT/cms-wame-admin-4.0.0/vendor/wame/ComponentModule/temp/latteCompiler/58342f7c8cef6.php:44
+#: /Users/MacMini2/Weby/GIT/cms-wame-admin-4.0.0/vendor/wame/ComponentModule/temp/latteCompiler/583431ebe56fe.php:44
+#: /Users/MacMini2/Weby/GIT/cms-wame-admin-4.0.0/vendor/wame/ComponentModule/temp/latteCompiler/58343246bb7e1.php:44
+#: /Users/MacMini2/Weby/GIT/cms-wame-admin-4.0.0/vendor/wame/ComponentModule/temp/latteCompiler/5834332a6f6a8.php:44
+msgid "This data overload the settings of the main component."
+msgstr ""
+
+#: /Users/MacMini2/Weby/GIT/cms-wame-admin-4.0.0/vendor/wame/ComponentModule/temp/latteCompiler/5834290cc69d3.php:51
+#: /Users/MacMini2/Weby/GIT/cms-wame-admin-4.0.0/vendor/wame/ComponentModule/temp/latteCompiler/5834298881f33.php:51
+#: /Users/MacMini2/Weby/GIT/cms-wame-admin-4.0.0/vendor/wame/ComponentModule/temp/latteCompiler/583429e59518c.php:51
+#: /Users/MacMini2/Weby/GIT/cms-wame-admin-4.0.0/vendor/wame/ComponentModule/temp/latteCompiler/58342f7c8cef6.php:51
+#: /Users/MacMini2/Weby/GIT/cms-wame-admin-4.0.0/vendor/wame/ComponentModule/temp/latteCompiler/583431ebe56fe.php:51
+#: /Users/MacMini2/Weby/GIT/cms-wame-admin-4.0.0/vendor/wame/ComponentModule/temp/latteCompiler/58343246bb7e1.php:51
+#: /Users/MacMini2/Weby/GIT/cms-wame-admin-4.0.0/vendor/wame/ComponentModule/temp/latteCompiler/5834332a6f6a8.php:51
+msgid "Remove from this position"
+msgstr ""
+
+#: /Users/MacMini2/Weby/GIT/cms-wame-admin-4.0.0/vendor/wame/ComponentModule/temp/latteCompiler/5834290ccbbe3.php:43
+#: /Users/MacMini2/Weby/GIT/cms-wame-admin-4.0.0/vendor/wame/ComponentModule/temp/latteCompiler/583429888827c.php:43
+#: /Users/MacMini2/Weby/GIT/cms-wame-admin-4.0.0/vendor/wame/ComponentModule/temp/latteCompiler/583429e59d1e1.php:43
+#: /Users/MacMini2/Weby/GIT/cms-wame-admin-4.0.0/vendor/wame/ComponentModule/temp/latteCompiler/58342f7c923ef.php:43
+#: /Users/MacMini2/Weby/GIT/cms-wame-admin-4.0.0/vendor/wame/ComponentModule/temp/latteCompiler/583431ebeafae.php:43
+#: /Users/MacMini2/Weby/GIT/cms-wame-admin-4.0.0/vendor/wame/ComponentModule/temp/latteCompiler/58343246c2be0.php:43
+#: /Users/MacMini2/Weby/GIT/cms-wame-admin-4.0.0/vendor/wame/ComponentModule/temp/latteCompiler/5834332a744e4.php:43
+msgid "You do not have created any positions yet."
+msgstr ""
+
+#: /Users/MacMini2/Weby/GIT/cms-wame-admin-4.0.0/vendor/wame/ComponentModule/temp/latteCompiler/5834290ccbbe3.php:47
+#: /Users/MacMini2/Weby/GIT/cms-wame-admin-4.0.0/vendor/wame/ComponentModule/temp/latteCompiler/583429888827c.php:47
+#: /Users/MacMini2/Weby/GIT/cms-wame-admin-4.0.0/vendor/wame/ComponentModule/temp/latteCompiler/583429e59d1e1.php:47
+#: /Users/MacMini2/Weby/GIT/cms-wame-admin-4.0.0/vendor/wame/ComponentModule/temp/latteCompiler/58342f7c923ef.php:47
+#: /Users/MacMini2/Weby/GIT/cms-wame-admin-4.0.0/vendor/wame/ComponentModule/temp/latteCompiler/583431ebeafae.php:47
+#: /Users/MacMini2/Weby/GIT/cms-wame-admin-4.0.0/vendor/wame/ComponentModule/temp/latteCompiler/58343246c2be0.php:47
+#: /Users/MacMini2/Weby/GIT/cms-wame-admin-4.0.0/vendor/wame/ComponentModule/temp/latteCompiler/5834332a744e4.php:47
+msgid "Create first position"
+msgstr ""
+
+#: /Users/MacMini2/Weby/GIT/cms-wame-admin-4.0.0/vendor/wame/ComponentModule/temp/latteCompiler/5834290cd0a54.php:39
+#: /Users/MacMini2/Weby/GIT/cms-wame-admin-4.0.0/vendor/wame/ComponentModule/temp/latteCompiler/583429888d978.php:39
+#: /Users/MacMini2/Weby/GIT/cms-wame-admin-4.0.0/vendor/wame/ComponentModule/temp/latteCompiler/583429e5a6e6f.php:39
+#: /Users/MacMini2/Weby/GIT/cms-wame-admin-4.0.0/vendor/wame/ComponentModule/temp/latteCompiler/58342f7c97145.php:39
+#: /Users/MacMini2/Weby/GIT/cms-wame-admin-4.0.0/vendor/wame/ComponentModule/temp/latteCompiler/583431ebef7df.php:39
+#: /Users/MacMini2/Weby/GIT/cms-wame-admin-4.0.0/vendor/wame/ComponentModule/temp/latteCompiler/58343246caffb.php:39
+#: /Users/MacMini2/Weby/GIT/cms-wame-admin-4.0.0/vendor/wame/ComponentModule/temp/latteCompiler/5834332a797bf.php:39
+msgid "Do you really want to delete %s position?"
+msgstr ""
+
+#: /Users/MacMini2/Weby/GIT/cms-wame-admin-4.0.0/vendor/wame/ComponentModule/temp/latteCompiler/5834290ce1cbe.php:66
+#: /Users/MacMini2/Weby/GIT/cms-wame-admin-4.0.0/vendor/wame/ComponentModule/temp/latteCompiler/58342988a15f2.php:66
+#: /Users/MacMini2/Weby/GIT/cms-wame-admin-4.0.0/vendor/wame/ComponentModule/temp/latteCompiler/583429e5cf0b4.php:66
+#: /Users/MacMini2/Weby/GIT/cms-wame-admin-4.0.0/vendor/wame/ComponentModule/temp/latteCompiler/58342f7ca7a7a.php:66
+#: /Users/MacMini2/Weby/GIT/cms-wame-admin-4.0.0/vendor/wame/ComponentModule/temp/latteCompiler/583431ec0fc0f.php:66
+#: /Users/MacMini2/Weby/GIT/cms-wame-admin-4.0.0/vendor/wame/ComponentModule/temp/latteCompiler/5834324700759.php:66
+#: /Users/MacMini2/Weby/GIT/cms-wame-admin-4.0.0/vendor/wame/ComponentModule/temp/latteCompiler/5834332a882bb.php:66
+msgid "You do not have created any components in this position."
+msgstr ""
