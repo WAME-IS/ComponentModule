@@ -10,24 +10,24 @@ use Nette\InvalidArgumentException;
 use Wame\ComponentModule\Entities\PositionEntity;
 use Wame\ComponentModule\Paremeters\ArrayParameterSource;
 use Wame\ComponentModule\Registers\ComponentRegister;
-use Wame\ComponentModule\Renderer\PositionRenderer;
 use Wame\ComponentModule\Repositories\ComponentRepository;
+use Wame\ComponentModule\Renderer\PositionRenderer;
 use Wame\ComponentModule\Repositories\PositionRepository;
 use Wame\Core\Components\BaseControl;
 use Wame\ListControl\Components\ISimpleEmptyListControlFactory;
 use Wame\ListControl\Components\ListControl;
 use Wame\ListControl\Renderer\IListRenderer;
 
+
 interface IPositionControlFactory
 {
-
     /** @return PositionControl */
     public function create($position);
 }
 
+
 class PositionControl extends ListControl
 {
-
     const POSITION_ID_CLASS = 'pos-%s';
 
     /** @var PositionRepository */
@@ -48,8 +48,14 @@ class PositionControl extends ListControl
     /** @var ISimpleEmptyListControlFactory */
     private $ISimpleEmptyListControlFactory;
 
-    public function __construct(Container $container, PositionRepository $positionRepository, ComponentRegister $componentRegister, ISimpleEmptyListControlFactory $ISimpleEmptyListControlFactory, $position)
-    {
+
+    public function __construct(
+        Container $container,
+        PositionRepository $positionRepository,
+        ComponentRegister $componentRegister,
+        ISimpleEmptyListControlFactory $ISimpleEmptyListControlFactory,
+        $position
+    ) {
         parent::__construct($container);
 
         $this->positionRepository = $positionRepository;
@@ -58,13 +64,14 @@ class PositionControl extends ListControl
 
         $this->componentParameters->add(
             new ArrayParameterSource(['listContainer' => ['tag' => null], 'listItemContainer' => ['tag' => null]]), 'listContainers', ['priority' => 1]);
-        
+
         $this->setPosition($position);
     }
 
+
     /**
      * Set position
-     * 
+     *
      * @param string $position
      * @return PositionControl
      */
@@ -97,9 +104,10 @@ class PositionControl extends ListControl
         }
     }
 
+
     /**
      * Register components
-     * 
+     *
      * @return PositionControl
      */
     public function getListComponents()
@@ -110,20 +118,20 @@ class PositionControl extends ListControl
 
         $this->listComponents = [];
 
-        $criteria = Criteria::create()->orderBy(["sort" => Criteria::ASC]);
+        $criteria = Criteria::create()->orderBy(['sort' => Criteria::ASC]);
         $componentsInPosition = $this->position->getComponents()->matching($criteria);
 
         foreach ($componentsInPosition as $componentInPosition) {
 
-//            if ($componentInPosition->component->status != ComponentRepository::STATUS_ENABLED) {
-//                continue;
-//            }
+            if ($componentInPosition->getComponent()->getStatus() != ComponentRepository::STATUS_ENABLED) {
+                continue;
+            }
 
             $type = $componentInPosition->component->type;
 
             $componentType = $this->componentRegister->getByName($type);
-            if ($componentType) {
 
+            if ($componentType) {
                 $componentName = $this->uniqeComponentName($componentInPosition->getComponentInPositionName());
                 $component = $componentType->createComponent($componentInPosition);
 
@@ -145,6 +153,7 @@ class PositionControl extends ListControl
         return $this->listComponents;
     }
 
+
     public function getListComponent($id)
     {
         $components = $this->getListComponents();
@@ -153,11 +162,13 @@ class PositionControl extends ListControl
         }
     }
 
+
     protected function attached($control)
     {
         parent::attached($control);
         $this->checkForCycle();
     }
+
 
     private function checkForCycle()
     {
@@ -172,6 +183,7 @@ class PositionControl extends ListControl
         }
     }
 
+
     private function uniqeComponentName($originalName)
     {
         $name = $originalName;
@@ -183,9 +195,10 @@ class PositionControl extends ListControl
         return $name;
     }
 
+
     /**
      * Gets renderer used to render components in list
-     * 
+     *
      * @return IListRenderer
      */
     public function getRenderer()
@@ -196,6 +209,7 @@ class PositionControl extends ListControl
         return $this->renderer;
     }
 
+
     /**
      * @return string
      */
@@ -203,6 +217,7 @@ class PositionControl extends ListControl
     {
         return $this->positionName;
     }
+
 
     /**
      * @return PositionEntity
@@ -212,8 +227,10 @@ class PositionControl extends ListControl
         return $this->position;
     }
 
+
     public function createComponentNoItems()
     {
         return $this->ISimpleEmptyListControlFactory->create();
     }
+
 }

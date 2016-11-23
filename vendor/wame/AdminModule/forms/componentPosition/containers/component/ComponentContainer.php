@@ -25,10 +25,11 @@ class ComponentContainer extends BaseContainer
 
 
     public function __construct(
+        \Nette\DI\Container $container,
         HttpRequest $httpRequest,
         ComponentRepository $componentRepository
     ) {
-        parent::__construct();
+        parent::__construct($container);
 
         $this->componentRepository = $componentRepository;
 

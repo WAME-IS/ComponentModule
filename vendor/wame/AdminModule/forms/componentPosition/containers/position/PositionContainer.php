@@ -24,9 +24,10 @@ class PositionContainer extends BaseContainer
 
 
     public function __construct(
+        \Nette\DI\Container $container,
         PositionRepository $positionRepository
     ) {
-        parent::__construct();
+        parent::__construct($container);
 
         $this->positionRepository = $positionRepository;
         $this->positionList = $positionRepository->findPairs(['inList' => PositionRepository::SHOW_IN_LIST], 'name', ['name' => 'ASC']);
