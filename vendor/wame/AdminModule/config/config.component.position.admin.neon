@@ -41,7 +41,7 @@ services:
             - setDefaultSort({'id': 'DESC'})
             - add(Wame\ComponentModule\Vendor\Wame\AdminModule\Grids\Columns\ComponentId(), null, {priority: 100})
             - add(Wame\ComponentModule\Vendor\Wame\AdminModule\Grids\Columns\ComponentInPosition\Sort(), null, {priority: 50})
-            - add(Wame\ComponentModule\Vendor\Wame\AdminModule\Grids\Columns\ComponentInPosition\Type(), null, {priority: 90})
+#            - add(Wame\ComponentModule\Vendor\Wame\AdminModule\Grids\Columns\ComponentInPosition\Type(), null, {priority: 90})
             - add(Wame\ComponentModule\Vendor\Wame\AdminModule\Grids\Columns\ComponentInPosition\TitleLink(), null, {priority: 80})
             - add(Wame\ComponentModule\Vendor\Wame\AdminModule\Grids\Columns\ComponentName(), null, {priority: 70})
             - add(Wame\ComponentModule\Vendor\Wame\AdminModule\Grids\Columns\ComponentInPosition\Status(), null, {priority: 60})
