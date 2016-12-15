@@ -2,16 +2,14 @@
 
 namespace Wame\ComponentModule\Vendor\Wame\AdminModule\Forms\Groups;
 
-use Wame\DynamicObject\Registers\Types\IBaseContainer;
 use Wame\DynamicObject\Forms\Groups\BaseGroup;
-
+use Wame\DynamicObject\Registers\Types\IBaseContainer;
 
 interface IContainerGroupFactory extends IBaseContainer
 {
 	/** @return ContainerGroup */
 	function create();
 }
-
 
 class ContainerGroup extends BaseGroup
 {
