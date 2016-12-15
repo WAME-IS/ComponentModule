@@ -25,6 +25,34 @@ services:
             - add(Wame\DataGridControl\Columns\Description())
 
 
+    # Form containers
+    -  Wame\ComponentModule\Vendor\Wame\AdminModule\Forms\Containers\ITemplateContainerFactory
+    -  Wame\ComponentModule\Vendor\Wame\AdminModule\Forms\Containers\IPositionContainerFactory
+    -  Wame\ComponentModule\Vendor\Wame\AdminModule\Forms\Containers\ITagContainerFactory
+    -  Wame\ComponentModule\Vendor\Wame\AdminModule\Forms\Containers\ITypeContainerFactory
+
+    # Form groups
+    - Wame\ComponentModule\Vendor\Wame\AdminModule\Forms\Groups\IComponentGroupFactory
+    - Wame\ComponentModule\Vendor\Wame\AdminModule\Forms\Groups\IContainerGroupFactory
+
+    # Forms
+    Admin.ComponentFormBuilder:
+        class: Wame\DynamicObject\Forms\LangEntityFormBuilder
+        setup:
+            - setRepository(@ComponentRepository)
+            - add(@Wame\DynamicObject\Forms\Groups\IBasicGroupFactory, BasicGroup, {priority: 200})
+            - add(@Wame\DynamicObject\Forms\Containers\ITitleContainerFactory, TitleContainer, {priority: 190})
+            - add(@Wame\DynamicObject\Forms\Containers\IDescriptionContainerFactory, DescriptionContainer, {priority: 180})
+            - add(@Wame\DynamicObject\Forms\Groups\IAdvancedGroupFactory, AdvancedGroup, {priority: 170})
+            - add(@Wame\DynamicObject\Forms\Containers\INameContainerFactory, NameContainer, {priority: 160})
+            - add(@Wame\ComponentModule\Vendor\Wame\AdminModule\Forms\Containers\ITemplateContainerFactory, TemplateContainer, {priority: 150})
+            - add(@Wame\ComponentModule\Vendor\Wame\AdminModule\Forms\Containers\IPositionContainerFactory, PositionContainer, {priority: 140})
+            - add(@Wame\ComponentModule\Vendor\Wame\AdminModule\Forms\Groups\IContainerGroupFactory, ContainerGroup, {priority: 130})
+            - add(@Wame\ComponentModule\Vendor\Wame\AdminModule\Forms\Containers\ITagContainerFactory, TagContainer, {priority: 120})
+            - add(@Wame\ComponentModule\Vendor\Wame\AdminModule\Forms\Containers\ITypeContainerFactory, TypeContainer, {priority: 110})
+            - add(@Wame\DynamicObject\Forms\Containers\ISubmitContainerFactory, SubmitContainer, {priority: 0})
+
+
 webloader:
     js:
         admin:
