@@ -27,6 +27,8 @@ trait TComponentStatusType
             $entity = $this->getStatus()->get($type->getEntityName());
 
             return $entity;
+        } else {
+            throw new \Exception("Could not find entity by statusType [$type]. Did you set correct statusType?");
         }
     }
     
