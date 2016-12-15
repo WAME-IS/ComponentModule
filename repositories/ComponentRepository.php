@@ -7,6 +7,7 @@ use Wame\ComponentModule\Entities\ComponentLangEntity;
 use Wame\Core\Exception\RepositoryException;
 use Wame\LanguageModule\Repositories\TranslatableRepository;
 
+
 class ComponentRepository extends TranslatableRepository
 {
     const STATUS_REMOVE = 0;
@@ -15,15 +16,16 @@ class ComponentRepository extends TranslatableRepository
     const HIDE_IN_LIST = 0;
     const SHOW_IN_LIST = 1;
 
-    
+
     public function __construct()
     {
         parent::__construct(ComponentEntity::class, ComponentLangEntity::class);
     }
 
+
     /**
      * Return component status list
-     * 
+     *
      * @return array
      */
     public function getStatusList()
@@ -35,9 +37,10 @@ class ComponentRepository extends TranslatableRepository
         ];
     }
 
+
     /**
      * Return component status
-     * 
+     *
      * @param int $status
      * @return string
      */
@@ -46,9 +49,10 @@ class ComponentRepository extends TranslatableRepository
         return $this->getStatusList()[$status];
     }
 
+
     /**
      * Create component
-     * 
+     *
      * @param ComponentEntity $componentEntity
      * @return ComponentEntity
      * @throws RepositoryException
@@ -64,34 +68,36 @@ class ComponentRepository extends TranslatableRepository
         return $componentEntity;
     }
 
+
     /**
      * Update component
-     * 
+     *
      * @param ComponentEntity $componentEntity
      * @return ComponentEntity
      */
     public function update($componentEntity)
     {
-        $this->componentExists($componentEntity, $componentEntity->id);
+        $this->componentExists($componentEntity, $componentEntity->getId());
 
         return $componentEntity;
     }
 
+
     /**
      * Delete component by criteria
-     * 
+     *
      * @param array $criteria
      * @param int $status
      */
     public function delete($criteria = [], $status = self::STATUS_REMOVE)
     {
         $entity = $this->get($criteria);
-        $entity->status = $status;
+        $entity->setStatus($status);
     }
 
     /**
      * Check component exists
-     * 
+     *
      * @param ComponentEntity $componentEntity
      * @param mixed $without - without component ids
      * @return mixed
@@ -99,14 +105,10 @@ class ComponentRepository extends TranslatableRepository
      */
     public function componentExists($componentEntity, $without = null)
     {
-        $criteria = ['name' => $componentEntity->name, 'status !=' => self::STATUS_REMOVE];
+        $criteria = ['name' => $componentEntity->getName(), 'status !=' => self::STATUS_REMOVE];
 
         if ($without) {
-            if (!is_array($without)) {
-                $without = [$without];
-            }
-
-            $criteria['id NOT IN'] = $without;
+            $criteria['id !='] = $without;
         }
 
         $component = $this->get($criteria);
@@ -117,4 +119,5 @@ class ComponentRepository extends TranslatableRepository
             return null;
         }
     }
+
 }
