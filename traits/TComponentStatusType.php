@@ -26,7 +26,7 @@ trait TComponentStatusType
      * @return BaseEntity
      * @throws \Exception
      */
-    public function getEntityByStatusType($strict = true)
+    public function getEntityByStatusType($strict = false)
     {
         $type = $this->getStatusType();
         
