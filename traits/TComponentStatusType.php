@@ -19,7 +19,14 @@ trait TComponentStatusType
     }
     
     
-    public function getEntityByStatusType()
+    /**
+     * Get entity by status type
+     * 
+     * @param type $strict  strict mode
+     * @return BaseEntity
+     * @throws \Exception
+     */
+    public function getEntityByStatusType($strict = true)
     {
         $type = $this->getStatusType();
         
@@ -27,12 +34,19 @@ trait TComponentStatusType
             $entity = $this->getStatus()->get($type->getEntityName());
 
             return $entity;
-        } else {
+        } else if($strict) {
             throw new \Exception("Could not find entity by statusType [$type]. Did you set correct statusType?");
         }
+        
+        return null;
     }
     
     
+    /**
+     * Get status type register
+     * 
+     * @return type
+     */
     protected function getStatusTypeRegister()
     {
         return $this->statusTypeRegister;
@@ -43,11 +57,21 @@ trait TComponentStatusType
         return $this->statusType ?: $this->getComponentParameter('statusType');
     }
     
+    /**
+     * Get status type
+     * 
+     * @return type
+     */
     protected function getStatusType()
     {
         return $this->getStatusTypeRegister()->getByName($this->getStatusTypeName());
     }
     
+    /**
+     * Disable render by status entity
+     * 
+     * @return bool
+     */
     private function disableRenderByStatusEntity()
     {
         $filterByStatusEntity = $this->getComponentParameter('filterByStatusEntity');
@@ -71,6 +95,12 @@ trait TComponentStatusType
         return !$willRenderer;
     }
     
+    /**
+     * Set status type
+     * 
+     * @param string $type
+     * @return this
+     */
     public function setStatusType($type)
     {
         $this->statusType = $type;
