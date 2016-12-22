@@ -30,6 +30,7 @@ services:
     -  Wame\ComponentModule\Vendor\Wame\AdminModule\Forms\Containers\IPositionContainerFactory
     -  Wame\ComponentModule\Vendor\Wame\AdminModule\Forms\Containers\ITagContainerFactory
     -  Wame\ComponentModule\Vendor\Wame\AdminModule\Forms\Containers\ITypeContainerFactory
+    -  Wame\ComponentModule\Vendor\Wame\AdminModule\Forms\Containers\IAttributeContainerFactory
 
     # Form groups
     - Wame\ComponentModule\Vendor\Wame\AdminModule\Forms\Groups\IComponentGroupFactory
