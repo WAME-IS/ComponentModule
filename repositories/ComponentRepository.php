@@ -7,7 +7,6 @@ use Wame\ComponentModule\Entities\ComponentLangEntity;
 use Wame\Core\Exception\RepositoryException;
 use Wame\LanguageModule\Repositories\TranslatableRepository;
 
-
 class ComponentRepository extends TranslatableRepository
 {
     const STATUS_REMOVE = 0;
@@ -21,7 +20,6 @@ class ComponentRepository extends TranslatableRepository
     {
         parent::__construct(ComponentEntity::class, ComponentLangEntity::class);
     }
-
 
     /**
      * Return component status list
@@ -37,7 +35,6 @@ class ComponentRepository extends TranslatableRepository
         ];
     }
 
-
     /**
      * Return component status
      *
@@ -48,7 +45,6 @@ class ComponentRepository extends TranslatableRepository
     {
         return $this->getStatusList()[$status];
     }
-
 
     /**
      * Create component
@@ -68,7 +64,6 @@ class ComponentRepository extends TranslatableRepository
         return $componentEntity;
     }
 
-
     /**
      * Update component
      *
@@ -77,11 +72,10 @@ class ComponentRepository extends TranslatableRepository
      */
     public function update($componentEntity)
     {
-        $this->componentExists($componentEntity, $componentEntity->getId());
+        $this->componentExists($componentEntity, $componentEntity->id);
 
         return $componentEntity;
     }
-
 
     /**
      * Delete component by criteria
@@ -105,10 +99,14 @@ class ComponentRepository extends TranslatableRepository
      */
     public function componentExists($componentEntity, $without = null)
     {
-        $criteria = ['name' => $componentEntity->getName(), 'status !=' => self::STATUS_REMOVE];
+        $criteria = ['name' => $componentEntity->name, 'status !=' => self::STATUS_REMOVE];
 
         if ($without) {
-            $criteria['id !='] = $without;
+            if (!is_array($without)) {
+                $without = [$without];
+            }
+
+            $criteria['id NOT IN'] = $without;
         }
 
         $component = $this->get($criteria);
@@ -119,5 +117,4 @@ class ComponentRepository extends TranslatableRepository
             return null;
         }
     }
-
 }
