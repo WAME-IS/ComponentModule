@@ -51,7 +51,7 @@ class ComponentFormListener extends Object
 	
 	public function onUpdate($form, $values, $componentEntity)
 	{
-		if (count($values['position']) > 0) {
+		if ($form instanceof \Wame\ComponentModule\Forms\ComponentForm && count($values['position']) > 0) {
 			$positions = $this->getPositions($values['position']);
 			
 			$componentInPosition = $this->getComponentPositions($componentEntity);
