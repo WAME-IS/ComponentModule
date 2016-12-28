@@ -1,7 +1,6 @@
-nette:
-    latte:
-        macros:
-            - Wame\ComponentModule\Macros\PositionMacros::install
+latte:
+    macros:
+        - Wame\ComponentModule\Macros\PositionMacros::install
 
 
 services:
