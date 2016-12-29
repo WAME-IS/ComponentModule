@@ -3,8 +3,9 @@
 namespace Wame\ComponentModule\Doctrine\Filters;
 
 use Doctrine\ORM\Mapping\ClassMetadata;
-use Zenify\DoctrineFilters\Contract\ConditionalFilterInterface;
+use Wame\ComponentModule\Entities\PositionEntity;
 use Wame\ComponentModule\Repositories\PositionRepository;
+use Zenify\DoctrineFilters\Contract\ConditionalFilterInterface;
 
 
 final class PositionStatusFilter implements ConditionalFilterInterface
@@ -16,9 +17,9 @@ final class PositionStatusFilter implements ConditionalFilterInterface
     /**
      * {@inheritdoc}
      */
-    public function addFilterConstraint(ClassMetadata $entity, $alias)
+    public function addFilterConstraint(ClassMetadata $entity, string $alias) : string
     {
-        if ($entity->getName() == 'Wame\ComponentModule\Entities\PositionEntity' && $this->enabled) {
+        if ($entity->getName() == PositionEntity::class && $this->enabled) {
             return sprintf('%s.status = %s', $alias, PositionRepository::STATUS_ENABLED);
         }
         
@@ -34,7 +35,7 @@ final class PositionStatusFilter implements ConditionalFilterInterface
     }
     
     
-    public function isEnabled() 
+    public function isEnabled() : bool
     {
         return $this->enabled;
     }
