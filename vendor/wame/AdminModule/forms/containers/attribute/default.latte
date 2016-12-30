@@ -1,15 +1,18 @@
-{input $container['attribute']['add']}
+<div class="form-group">
+    <input n:name="$container['attribute']['add']" class="btn btn-default">
+    <span class="help-block">Attributes for container wrapper component.</span>
+</div>
 
 {foreach $container['attribute']->getComponents() as $attr}
     {if $attr instanceof \Nette\Forms\Container && isset($attr['name'])}
     <div class="form-group">
         {label $attr['name']}
-        <input n:name="$attr['name']">
+        <input n:name="$attr['name']" class="form-control">
     </div>
         
     <div class="form-group">
         {label $attr['value']}
-        <input n:name="$attr['value']">
+        <input n:name="$attr['value']" class="form-control">
     </div>
     {/if}
 {/foreach}

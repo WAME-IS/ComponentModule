@@ -17,25 +17,10 @@ class AttributeContainer extends BaseContainer
     /** {@inheritDoc} */
     public function configure() 
 	{
-//        $attributesContainer = $this->addContainer('attribute');
-        
-//        $button = $this->addSubmit('add', _('Add'));
-        
-        $this->addDynamic('attribute', function (Container $attributeContainer) {
-            $attributeContainer->addText('name', _('Name'));
-            $attributeContainer->addText('value', _('Value'));
+        $this->addDynamic('attribute', function (Container $container) {
+            $container->addText('name', _('Name'));
+            $container->addText('value', _('Value'));
         });
-        
-//        $button->onClick[] = function(SubmitButton $button) use($attributesContainer) {
-//            for($i=0; $i<1; $i++) {
-//                $attributeContainer = $attributesContainer->addContainer($i);
-//                $attributeContainer->addText('name', _('Name'));
-//                $attributeContainer->addText('value', _('Value'));
-//            }
-//            
-//            $button->getForm()->onSuccess = [];
-//            $button->getForm()->onPostSuccess = [];
-//        };
     }
 
     
@@ -48,8 +33,6 @@ class AttributeContainer extends BaseContainer
     public function update($form, $values)
     {
         parent::update($form, $values);
-        
-        \Tracy\Debugger::barDump($this['attribute'], 'update');
         
         foreach($this->getHttpData()['attribute'] as $attr) {
             $form->getEntity()->setParameter('container', $form->getEntity()->getParameter('container') + [$attr['name'] => $attr['value']]);
