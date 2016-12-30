@@ -3,6 +3,7 @@
 namespace Wame\ComponentModule\Vendor\Wame\AdminModule\Forms\Containers;
 
 use Nette\Forms\Container;
+use Nette\Forms\Controls\SubmitButton;
 use Wame\DynamicObject\Forms\Containers\BaseContainer;
 use Wame\DynamicObject\Registers\Types\IBaseContainer;
 
@@ -17,10 +18,18 @@ class AttributeContainer extends BaseContainer
     /** {@inheritDoc} */
     public function configure() 
 	{
-        $this->addDynamic('attribute', function (Container $container) {
+        $attributes = $this->addDynamic('attribute', function (Container $container) {
             $container->addText('name', _('Name'));
             $container->addText('value', _('Value'));
+
+//            $container->addSubmit('remove', _('Remove'))
+//                ->setValidationScope(false)
+//                ->onClick[] = [$this, 'removeAttribute'];
         });
+
+//        $attributes->addSubmit('add', _('Add'))
+//            ->setValidationScope(false)
+//            ->onClick[] = [$this, 'addAttribute'];
     }
 
     
@@ -38,5 +47,16 @@ class AttributeContainer extends BaseContainer
             $form->getEntity()->setParameter('container', $form->getEntity()->getParameter('container') + [$attr['name'] => $attr['value']]);
         }
     }
+
+//    public function addAttribute(SubmitButton $button)
+//    {
+//        $button->parent->createOne();
+//    }
+//
+//    public function removeAttribute(SubmitButton $button)
+//    {
+//        $attributes = $button->parent->parent;
+//        $attributes->remove($button->parent, true);
+//    }
 
 }
