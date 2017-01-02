@@ -34,7 +34,7 @@ abstract class AbstractComponentPresenter extends ComponentPresenter
     /** components ************************************************************/
 
     /**
-	 * Shop product component form
+	 * Form component
 	 *
 	 * @return ComponentForm
 	 */
