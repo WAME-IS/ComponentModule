@@ -25,7 +25,7 @@ class PositionUsageEntity extends \Wame\Core\Entities\BaseEntity
     protected $component;
 
     /**
-     * @ORM\ManyToOne(targetEntity="PositionEntity", fetch="EAGER")
+     * @ORM\ManyToOne(targetEntity="PositionEntity", cascade={"all"}, fetch="EAGER")
      * @ORM\JoinColumn(name="position_id", referencedColumnName="id", nullable=false)
      */
     protected $position;
