@@ -26,10 +26,9 @@ class Helpers
             return Html::el($tag, $containerParams);
         }
     }
-    
+
     /**
      * @param Html $container
-     * @param Control $control
      */
     public static function renderContainerStart($container)
     {
@@ -40,7 +39,6 @@ class Helpers
 
     /**
      * @param Html $container
-     * @param Control $control
      */
     public static function renderContainerEnd($container)
     {
@@ -48,4 +46,5 @@ class Helpers
             echo $container->endTag();
         }
     }
+
 }
