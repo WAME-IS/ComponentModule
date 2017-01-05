@@ -8,7 +8,6 @@ use Wame\Core\Components\BaseControl;
 
 class Helpers
 {
-
     /**
      * Get HTML container
      * 
