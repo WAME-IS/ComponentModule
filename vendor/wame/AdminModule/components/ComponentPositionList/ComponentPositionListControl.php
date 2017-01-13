@@ -1,21 +1,20 @@
 <?php
 
-namespace Wame\ComponentModule\Components;
+namespace Wame\ComponentModule\Vendor\Wame\AdminModule\Components;
 
-use Nette\Application\IRouter;
 use Nette\DI\Container;
-use Nette\Http\Request;
+use Tracy\Debugger;
 use Wame\AdminModule\Components\BaseControl;
+use Wame\ComponentModule\Entities\ComponentInPositionEntity;
 use Wame\ComponentModule\Repositories\ComponentInPositionRepository;
 use Wame\ComponentModule\Repositories\ComponentRepository;
-
+use Wame\Utils\HttpRequest;
 
 interface IComponentPositionListControlFactory
 {
     /** @return ComponentPositionListControl */
     public function create();
 }
-
 
 class ComponentPositionListControl extends BaseControl
 {
@@ -28,28 +27,34 @@ class ComponentPositionListControl extends BaseControl
     /** @var integer */
     private $id;
 
+    /** @var ComponentInPositionEntity[] */
+    private $componentPositionList;
+
 
     public function __construct(
         Container $container,
-        IRouter $router,
-        Request $httpRequest,
         ComponentRepository $componentRepository,
-        ComponentInPositionRepository $componentInPositionRepository
+        ComponentInPositionRepository $componentInPositionRepository,
+        HttpRequest $httpRequest
     ) {
         parent::__construct($container);
 
         $this->componentRepository = $componentRepository;
         $this->componentInPositionRepository = $componentInPositionRepository;
 
-        $this->id = $router->match($httpRequest)->getParameter('id');
+        // TODO: zistit ci sa neda nahradit za $this->getPresenter()->id; v beforeRender metode
+        $this->id = $httpRequest->getParameter('id');
+
+        $component = $this->componentRepository->get(['id' => $this->id]);
+        $this->componentPositionList = $this->componentInPositionRepository->find(['component' => $component]);
     }
 
 
+    /** rendering *************************************************************/
+
     public function render()
     {
-        $component = $this->componentRepository->get(['id' => $this->id]);
-
-        $this->template->componentPositionList = $this->componentInPositionRepository->find(['component' => $component]);
+        $this->template->componentPositionList = $this->componentPositionList;
     }
 
 }

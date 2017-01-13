@@ -5,7 +5,6 @@ namespace App\AdminModule\Presenters;
 use Wame\ComponentModule\Forms\ComponentForm;
 use Wame\ComponentModule\Repositories\PositionRepository;
 
-
 abstract class AbstractComponentPresenter extends ComponentPresenter
 {
 	/** @var ComponentForm @inject */

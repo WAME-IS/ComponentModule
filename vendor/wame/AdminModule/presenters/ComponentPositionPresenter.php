@@ -11,7 +11,6 @@ use Wame\ComponentModule\Repositories\PositionRepository;
 use Wame\ComponentModule\Forms\ComponentPositionForm;
 use Wame\ComponentModule\Registers\ComponentRegister;
 
-
 class ComponentPositionPresenter extends AdminFormPresenter
 {
 	/** @var ComponentInPositionRepository @inject */
@@ -37,6 +36,7 @@ class ComponentPositionPresenter extends AdminFormPresenter
 
 	public function actionCreate()
 	{
+        // TODO: nechat overenie na parmission listener
 		if (!$this->user->isAllowed('admin.componentPosition', 'create')) {
 			$this->flashMessage(_('To enter this section you do not have enough privileges.'), 'danger');
 			$this->redirect(':Admin:Dashboard:', ['id' => null]);
@@ -67,6 +67,7 @@ class ComponentPositionPresenter extends AdminFormPresenter
 
     public function actionEdit()
 	{
+        // TODO: nechat overenie na parmission listener
 		if (!$this->user->isAllowed('admin.componentPosition', 'edit')) {
 			$this->flashMessage(_('To enter this section you do not have enough privileges.'), 'danger');
 			$this->redirect(':Admin:Dashboard:', ['id' => null]);
@@ -98,6 +99,7 @@ class ComponentPositionPresenter extends AdminFormPresenter
 
     public function actionDelete()
 	{
+        // TODO: nechat overenie na parmission listener
 		if (!$this->user->isAllowed('admin.componentPosition', 'delete')) {
 			$this->flashMessage(_('To enter this section you do not have enough privileges.'), 'danger');
 			$this->redirect(':Admin:Dashboard:', ['id' => null]);
@@ -131,6 +133,7 @@ class ComponentPositionPresenter extends AdminFormPresenter
 
 	public function handleDelete()
 	{
+        // TODO: nechat overenie na parmission listener
 		if (!$this->user->isAllowed('admin.componentPosition', 'delete')) {
 			$this->flashMessage(_('For this action you do not have enough privileges.'), 'danger');
 			$this->redirect('Admin:Dashboard:');

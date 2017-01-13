@@ -1,21 +1,4 @@
 services:
-    PermissionObject:
-        setup:
-            - addResource('component')
-            - addResourceAction('component', 'default')
-            - allow('admin', 'component', 'default')
-            - addResourceAction('component', 'create')
-            - allow('admin', 'component', 'create')
-            - addResourceAction('component', 'edit')
-            - allow('admin', 'component', 'edit')
-            - addResourceAction('component', 'delete')
-            - allow('admin', 'component', 'delete')
-
-
-    # Components
-    - Wame\ComponentModule\Components\IAddComponentControlFactory
-
-
     # Repositories
     ComponentRepository:
         class: Wame\ComponentModule\Repositories\ComponentRepository
@@ -25,20 +8,6 @@ services:
     # Registers
     ComponentRegister:
         class: Wame\ComponentModule\Registers\ComponentRegister
-
-
-    # Forms
-    ComponentForm:
-        class: Wame\ComponentModule\Forms\ComponentForm
-        setup:
-            - addFormContainer(Wame\ComponentModule\Forms\Component\BasicFormContainer(), 'BasicFormContainer', 100)
-            - addFormContainer(Wame\DynamicObject\Forms\FormGroupContainer(), 'AdvancedFormGroupContainer', 80)
-            - addFormContainer(Wame\ComponentModule\Forms\Component\NameFormContainer(), 'NameFormContainer', 75)
-            - addFormContainer(Wame\ComponentModule\Forms\Component\TemplateFormContainer(), 'TemplateFormContainer', 70)
-            - addFormContainer(Wame\ComponentModule\Forms\Component\PositionFormContainer(), 'PositionFormContainer', 65)
-            - addFormContainer(Wame\ComponentModule\Forms\Component\ContainerFormContainer(), 'ContainerFormContainer', 50)
-            - addFormContainer(Wame\DynamicObject\Forms\FormGroupContainer(), 'SubmitFormGroupContainer')
-            - addFormContainer(Wame\DynamicObject\Forms\SubmitFormContainer(), 'SubmitFormContainer')
 
 
     # Doctrine filters

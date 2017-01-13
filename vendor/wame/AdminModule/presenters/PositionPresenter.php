@@ -2,17 +2,19 @@
 
 namespace App\AdminModule\Presenters;
 
+use Doctrine\ORM\Query\Expr\Join;
+use Wame\ComponentModule\Entities\ComponentEntity;
+use Wame\ComponentModule\Vendor\Wame\AdminModule\Components\IPositionListControlFactory;
+use Wame\ComponentModule\Vendor\Wame\AdminModule\Components\PositionListControl;
+use Wame\ComponentModule\Vendor\Wame\AdminModule\Grids\PositionGrid;
+use Wame\DataGridControl\DataGridControl;
 use Wame\DynamicObject\Vendor\Wame\AdminModule\Presenters\AdminFormPresenter;
 use Wame\ComponentModule\Entities\PositionEntity;
-use Wame\ComponentModule\Components\PositionListControl;
-use Wame\ComponentModule\Components\IPositionListControlFactory;
 use Wame\ComponentModule\Repositories\ComponentInPositionRepository;
 use Wame\ComponentModule\Repositories\PositionRepository;
-use Wame\ComponentModule\Vendor\Wame\AdminModule\Grids\ComponentInPositionGrid;
 use Wame\ComponentModule\Forms\PositionForm;
 use Wame\ComponentModule\Doctrine\Filters\ComponentStatusFilter;
 use Wame\ComponentModule\Doctrine\Filters\PositionStatusFilter;
-
 
 class PositionPresenter extends AdminFormPresenter
 {
@@ -24,9 +26,6 @@ class PositionPresenter extends AdminFormPresenter
 
     /** @var ComponentInPositionRepository @inject */
     public $componentInPositionRepository;
-
-    /** @var ComponentInPositionGrid @inject */
-	public $componentInPositionGrid;
 
     /** @var PositionForm @inject */
 	public $positionForm;
@@ -48,6 +47,7 @@ class PositionPresenter extends AdminFormPresenter
 
     public function actionDefault()
     {
+        // TODO: nechat overenie na parmission listener
 		if (!$this->user->isAllowed('position', 'default')) {
 			$this->flashMessage(_('To enter this section you do not have enough privileges.'), 'danger');
 			$this->redirect(':Admin:Dashboard:', ['id' => null]);
@@ -61,6 +61,7 @@ class PositionPresenter extends AdminFormPresenter
 
 	public function actionShow()
 	{
+        // TODO: nechat overenie na parmission listener
 		if (!$this->user->isAllowed('position', 'show')) {
 			$this->flashMessage(_('To enter this section you do not have enough privileges.'), 'danger');
 			$this->redirect(':Admin:Dashboard:', ['id' => null]);
@@ -88,7 +89,7 @@ class PositionPresenter extends AdminFormPresenter
         $this->componentStatusFilter->setEnabled(false);
 
         $qb = $this->componentInPositionRepository->createQueryBuilder('a');
-        $qb->join(\Wame\ComponentModule\Entities\ComponentEntity::class, 'c', \Doctrine\ORM\Query\Expr\Join::WITH, 'a.component = c.id');
+        $qb->join(ComponentEntity::class, 'c', Join::WITH, 'a.component = c.id');
         $qb->andWhere($qb->expr()->eq('a.position', $this->id));
         $qb->andWhere($qb->expr()->neq('c.status', 0));
 
@@ -98,6 +99,7 @@ class PositionPresenter extends AdminFormPresenter
 
 	public function actionCreate()
 	{
+        // TODO: nechat overenie na parmission listener
 		if (!$this->user->isAllowed('position', 'create')) {
 			$this->flashMessage(_('To enter this section you do not have enough privileges.'), 'danger');
 			$this->redirect(':Admin:Dashboard:', ['id' => null]);
@@ -107,6 +109,7 @@ class PositionPresenter extends AdminFormPresenter
 
 	public function actionEdit()
 	{
+        // TODO: nechat overenie na parmission listener
 		if (!$this->user->isAllowed('position', 'edit')) {
 			$this->flashMessage(_('To enter this section you do not have enough privileges.'), 'danger');
 			$this->redirect(':Admin:Dashboard:', ['id' => null]);
@@ -135,6 +138,7 @@ class PositionPresenter extends AdminFormPresenter
 
 	public function actionDelete()
 	{
+        // TODO: nechat overenie na parmission listener
 		if (!$this->user->isAllowed('position', 'delete')) {
 			$this->flashMessage(_('To enter this section you do not have enough privileges.'), 'danger');
 			$this->redirect(':Admin:Dashboard:', ['id' => null]);
@@ -165,6 +169,7 @@ class PositionPresenter extends AdminFormPresenter
 
 	public function handleDelete()
 	{
+        // TODO: nechat overenie na parmission listener
 		if (!$this->user->isAllowed('position', 'delete')) {
 			$this->flashMessage(_('For this action you do not have enough privileges.'), 'danger');
 			$this->redirect(':Admin:Dashboard:');
@@ -185,6 +190,7 @@ class PositionPresenter extends AdminFormPresenter
 	 */
 	public function handleChangeStatus()
 	{
+        // TODO: nechat overenie na parmission listener
 		if (!$this->user->isAllowed('position', 'changeStatus')) {
 			$this->flashMessage(_('For this action you do not have enough privileges.'), 'danger');
 			$this->redirect(':Admin:Dashboard:');
@@ -297,22 +303,27 @@ class PositionPresenter extends AdminFormPresenter
     /**
      * ComponentInPosition grid component
      *
-     * @return ComponentInPositionGrid
+     * @return DataGridControl
      */
     protected function createComponentComponentInPositionGrid()
 	{
-		$this->componentInPositionGrid->setDataSource($this->components);
-		$this->componentInPositionGrid->setSortable();
-        $this->componentInPositionGrid->setDefaultSort(['sort' => 'ASC']);
+        /** @var DataGridControl $grid */
+        $grid = $this->context->getService('Admin.ComponentInPositionGrid');
 
-		return $this->componentInPositionGrid;
+        $grid
+            ->setDataSource($this->components)
+            ->setSortable()
+            ->setDefaultSort(['sort' => 'ASC']);
+
+		return $grid;
 	}
 
 
     /**
      * Create component grid
      *
-     * @return DataGridControl
+     * @return PositionGrid
+     * @throws \Exception
      */
     protected function createComponentGrid()
     {
@@ -320,6 +331,7 @@ class PositionPresenter extends AdminFormPresenter
             throw new \Exception("Repository or grid service alias not initialized in presenter");
         }
 
+        /** @var PositionGrid $grid */
         $grid = $this->context->getService($this->getGridServiceAlias());
 
         $qb = $this->repository->createQueryBuilder('a');

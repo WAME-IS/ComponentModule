@@ -19,7 +19,7 @@ class TemplateFormContainer extends BaseFormContainer
 	public function setDefaultValues($object)
 	{
 		$form = $this->getForm();
-		
+
 		if (isset($object->componentEntity)) {
             $componentEntity = $object->componentEntity;
         } elseif (isset($object->componentInPositionEntity)) {

@@ -1,11 +1,11 @@
 <?php
 
-namespace Wame\ComponentModule\Components;
+namespace Wame\ComponentModule\Vendor\Wame\AdminModule\Components;
 
+use Nette\DI\Container;
 use Nette\Http\Url;
-use Wame\Core\Components\BaseControl;
+use Wame\AdminModule\Components\BaseControl;
 use Wame\ComponentModule\Registers\ComponentRegister;
-
 
 interface IAddComponentControlFactory
 {
@@ -13,22 +13,37 @@ interface IAddComponentControlFactory
 	public function create();
 }
 
-
 class AddComponentControl extends BaseControl
 {
 	/** @var ComponentRegister */
 	private $componentRegister;
 
 
-	public function __construct(
-        \Nette\DI\Container $container,
-        ComponentRegister $componentRegister
-    ) {
+	public function __construct(Container $container, ComponentRegister $componentRegister)
+    {
         parent::__construct($container);
 
 		$this->componentRegister = $componentRegister->getList();
 	}
 
+
+	/** interaction ***********************************************************/
+
+    public function handleRedraw()
+    {
+        $component = $this->getParameter('c');
+
+        if ($component && isset($this->componentRegister[$component])) {
+            $component = $this->componentRegister[$component];
+        }
+
+        $this->template->info = $component;
+
+        $this->redrawControl();
+    }
+
+
+    /** rendering *************************************************************/
 
 	public function render()
 	{
@@ -49,19 +64,5 @@ class AddComponentControl extends BaseControl
             $this->template->createLink = $url;
         }
 	}
-
-
-    public function handleRedraw()
-    {
-        $component = $this->getParameter('c');
-
-        if ($component && isset($this->componentRegister[$component])) {
-            $component = $this->componentRegister[$component];
-        }
-
-        $this->template->info = $component;
-
-        $this->redrawControl();
-    }
 
 }

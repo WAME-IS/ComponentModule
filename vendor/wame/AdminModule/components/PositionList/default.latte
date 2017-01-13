@@ -1,7 +1,7 @@
-{if count($positions) == 0}   
+{if count($positions) == 0}
 	<div class="empty-block">
         <p>{_'Do not created any positions.'}</p>
-        
+
         <a href="{plink Position:create, 'id' => null}" class="btn btn-success ajax-modal">
             <span class="material-icons">add_circle_outline</span>
             {_'Create first position'}
@@ -21,7 +21,7 @@
                 </div>
             </div>
         </li>
-        
+
         <li class="collection-item dismissable" n:foreach="$positions as $position">
             <div class="row">
                 <div class="col-xs-8">
@@ -30,7 +30,7 @@
                     </a>
 
                     <small>[{$position->name}]</small>
-                    
+
                     {if $position->description}
                         <br>
                         <small>
@@ -38,10 +38,10 @@
                         </small>
                     {/if}
                 </div>
-                
+
                 <div class="col-xs-4">
                     <div class="right-align">
-                        <span class="btn btn-icon btn-xs text-muted tooltipped" data-position="left" data-tooltip="{_'Count components'}">{count($position->components)}</span>
+                        <span class="btn btn-icon btn-xs text-muted tooltipped" data-position="left" data-tooltip="{_'Count components'}">{count($position->components)}{* TODO: pre kazdy component vyvola samostatny request *}</span>
 
                         <a href="{plink Position:delete, 'id' => $position->id}" class="btn btn-icon btn-hover-danger tooltipped ajax-modal" data-position="left" data-tooltip="{_'Remove position'}">
                             <i class="material-icons">delete</i>

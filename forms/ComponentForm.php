@@ -60,7 +60,10 @@ class ComponentForm extends FormFactory
 		
 		if ($this->id) {
 			$this->componentEntity = $this->componentRepository->get(['id' => $this->id]);
-			$this->setDefaultValues();
+
+			if($this->componentEntity) {
+                $this->setDefaultValues();
+            }
 		}
 		
 		$form->onSuccess[] = [$this, 'formSucceeded'];

@@ -10,7 +10,8 @@
         }
     ],
     "require": {
-        "wame/Core": "*"
+        "wame/Core": "*",
+        "wame/ListControl": "*"
     },
     "softRequire": {
         "wame/AdminModule": "*",

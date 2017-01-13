@@ -1,11 +1,28 @@
 services:
+    PermissionObject:
+        setup:
+            - addResource('component')
+            - addResourceAction('component', 'default')
+            - allow('admin', 'component', 'default')
+            - addResourceAction('component', 'create')
+            - allow('admin', 'component', 'create')
+            - addResourceAction('component', 'edit')
+            - allow('admin', 'component', 'edit')
+            - addResourceAction('component', 'delete')
+            - allow('admin', 'component', 'delete')
+
+
     # Events
     - {class: Wame\ComponentModule\Vendor\Wame\AdminModule\Events\ComponentFormListener, tags: [run]}
 
 
+    # Components
+    - Wame\ComponentModule\Vendor\Wame\AdminModule\Components\IAddComponentControlFactory
+
+
     # Grids
-    ComponentGrid:
-        class: Wame\ComponentModule\Vendor\Wame\AdminModule\Grids\ComponentGrid
+    Admin.ComponentGrid:
+        class: Wame\AdminModule\Vendor\Wame\DataGridControl\AdminDataGridControl
         setup:
             - setDefaultSort({'id': 'DESC'})
             - add(Wame\DataGridControl\Columns\Id(), null, {priority: 90})
@@ -18,8 +35,8 @@ services:
             - add(Wame\DataGridControl\GroupActions\DeleteSelected())
             - add(Wame\DataGridControl\GroupActions\ChangeStatusSelected())
 
-    CreateComponentGrid:
-        class: Wame\ComponentModule\Vendor\Wame\AdminModule\Grids\CreateComponentGrid
+    Admin.CreateComponentGrid:
+        class: Wame\AdminModule\Vendor\Wame\DataGridControl\AdminDataGridControl
         setup:
             - add(Wame\DataGridControl\Columns\Name())
             - add(Wame\DataGridControl\Columns\Description())
@@ -53,6 +70,18 @@ services:
             - add(@Wame\ComponentModule\Vendor\Wame\AdminModule\Forms\Containers\ITypeContainerFactory, TypeContainer, {priority: 110})
             - add(@Wame\DynamicObject\Forms\Containers\ISubmitContainerFactory, SubmitContainer, {priority: 0})
 
+    # Forms (old)
+    ComponentForm:
+        class: Wame\ComponentModule\Forms\ComponentForm
+        setup:
+            - addFormContainer(Wame\ComponentModule\Forms\Component\BasicFormContainer(), 'BasicFormContainer', 100)
+            - addFormContainer(Wame\DynamicObject\Forms\FormGroupContainer(), 'AdvancedFormGroupContainer', 80)
+            - addFormContainer(Wame\ComponentModule\Forms\Component\NameFormContainer(), 'NameFormContainer', 75)
+            - addFormContainer(Wame\ComponentModule\Forms\Component\TemplateFormContainer(), 'TemplateFormContainer', 70)
+            - addFormContainer(Wame\ComponentModule\Forms\Component\PositionFormContainer(), 'PositionFormContainer', 65)
+            - addFormContainer(Wame\ComponentModule\Forms\Component\ContainerFormContainer(), 'ContainerFormContainer', 50)
+            - addFormContainer(Wame\DynamicObject\Forms\FormGroupContainer(), 'SubmitFormGroupContainer')
+            - addFormContainer(Wame\DynamicObject\Forms\SubmitFormContainer(), 'SubmitFormContainer')
 
 webloader:
     js:

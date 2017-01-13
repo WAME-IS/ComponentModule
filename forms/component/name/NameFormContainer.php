@@ -18,7 +18,7 @@ class NameFormContainer extends BaseFormContainer
 	public function setDefaultValues($object)
 	{
 		$form = $this->getForm();
-		
+
 		$componentEntity = $object->componentEntity;
 
 		$form['name']->setDefaultValue($componentEntity->name);

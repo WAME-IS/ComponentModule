@@ -4,27 +4,13 @@ latte:
 
 
 services:
-    PermissionObject:
-        setup:
-            - addResource('position')
-            - addResourceAction('position', 'default')
-            - allow('admin', 'position', 'default')
-            - addResourceAction('position', 'show')
-            - allow('admin', 'position', 'show')
-            - addResourceAction('position', 'create')
-            - allow('admin', 'position', 'create')
-            - addResourceAction('position', 'edit')
-            - allow('admin', 'position', 'edit')
-            - addResourceAction('position', 'delete')
-            - allow('admin', 'position', 'delete')
-            - addResourceAction('position', 'changeStatus')
-            - allow('admin', 'position', 'changeStatus')
-
-
-    # Factories
+    # Loader
     - Wame\ComponentModule\Components\PositionControlLoader
+
+
+    # Components
     - Wame\ComponentModule\Components\IPositionControlFactory
-    - Wame\ComponentModule\Components\IPositionListControlFactory
+
 
 
     # Repositories

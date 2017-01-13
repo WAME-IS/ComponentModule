@@ -1,8 +1,4 @@
 services:
-    # Factories
-    - Wame\ComponentModule\Components\IComponentPositionListControlFactory
-
-
     # Repositories
     ComponentInPositionRepository:
         class: Wame\ComponentModule\Repositories\ComponentInPositionRepository

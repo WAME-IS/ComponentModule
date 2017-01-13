@@ -2,21 +2,19 @@
 
 namespace App\AdminModule\Presenters;
 
+use Wame\ComponentModule\Vendor\Wame\AdminModule\Components\AddComponentControl;
+use Wame\ComponentModule\Vendor\Wame\AdminModule\Components\ComponentPositionListControl;
+use Wame\ComponentModule\Vendor\Wame\AdminModule\Components\IAddComponentControlFactory;
+use Wame\ComponentModule\Vendor\Wame\AdminModule\Components\IComponentPositionListControlFactory;
+use Wame\ComponentModule\Vendor\Wame\AdminModule\Components\IPositionListControlFactory;
+use Wame\ComponentModule\Vendor\Wame\AdminModule\Components\PositionListControl;
+use Wame\DataGridControl\DataGridControl;
 use Wame\DynamicObject\Vendor\Wame\AdminModule\Presenters\AdminFormPresenter;
 use Wame\ComponentModule\Entities\ComponentEntity;
 use Wame\ComponentModule\Repositories\ComponentRepository;
 use Wame\ComponentModule\Registers\ComponentRegister;
-use Wame\ComponentModule\Components\PositionListControl;
-use Wame\ComponentModule\Components\IPositionListControlFactory;
-use Wame\ComponentModule\Components\ComponentPositionListControl;
-use Wame\ComponentModule\Components\IComponentPositionListControlFactory;
 use Wame\ComponentModule\Vendor\Wame\MenuModule\Components\ComponentMenu\ItemTemplate;
-use Wame\ComponentModule\Vendor\Wame\AdminModule\Grids\ComponentGrid;
-use Wame\ComponentModule\Vendor\Wame\AdminModule\Grids\CreateComponentGrid;
-use Wame\MenuModule\Components\MenuControl;
 use Wame\ComponentModule\Doctrine\Filters\ComponentStatusFilter;
-use Wame\ComponentModule\Components\IAddComponentControlFactory;
-
 
 class ComponentPresenter extends AdminFormPresenter
 {
@@ -44,12 +42,6 @@ class ComponentPresenter extends AdminFormPresenter
 	/** @var ItemTemplate @inject */
 	public $componentItemTemplate;
 
-    /** @var ComponentGrid @inject */
-	public $componentGrid;
-
-    /** @var CreateComponentGrid @inject */
-	public $createComponentGrid;
-
     /** @var ComponentStatusFilter @inject */
 	public $componentStatusFilter;
 
@@ -58,6 +50,7 @@ class ComponentPresenter extends AdminFormPresenter
 
 	public function actionDefault()
 	{
+        // TODO: nechat overenie na parmission listener
 		if (!$this->user->isAllowed('component', 'default')) {
 			$this->flashMessage(_('To enter this section you do not have enough privileges.'), 'danger');
 			$this->redirect(':Admin:Dashboard:');
@@ -71,9 +64,9 @@ class ComponentPresenter extends AdminFormPresenter
         $this->components = $qb;
     }
 
-
 	public function actionDelete()
 	{
+        // TODO: nechat overenie na parmission listener
 		if (!$this->user->isAllowed('component', 'delete')) {
 			$this->flashMessage(_('To enter this section you do not have enough privileges.'), 'danger');
 			$this->redirect(':Admin:Dashboard:');
@@ -104,6 +97,7 @@ class ComponentPresenter extends AdminFormPresenter
 
 	public function handleDelete()
 	{
+        // TODO: nechat overenie na parmission listener
 		if (!$this->user->isAllowed('component', 'delete')) {
 			$this->flashMessage(_('For this action you do not have enough privileges.'), 'danger');
 			$this->redirect('Admin:Dashboard:');
@@ -124,12 +118,10 @@ class ComponentPresenter extends AdminFormPresenter
 		$this->template->count = count($this->components);
 	}
 
-
 	public function renderCreate()
 	{
 		$this->template->siteTitle = _('Select a type component');
 	}
-
 
 	public function renderDelete()
 	{
@@ -143,7 +135,7 @@ class ComponentPresenter extends AdminFormPresenter
     /**
 	 * Add component component
 	 *
-	 * @return MenuControl
+	 * @return AddComponentControl
 	 */
 	protected function createComponentAddComponent()
 	{
@@ -151,7 +143,6 @@ class ComponentPresenter extends AdminFormPresenter
 
 		return $control;
 	}
-
 
 	/**
 	 * Position list component
@@ -165,7 +156,6 @@ class ComponentPresenter extends AdminFormPresenter
 		return $control;
 	}
 
-
 	/**
 	 * Component position list component
 	 *
@@ -178,40 +168,39 @@ class ComponentPresenter extends AdminFormPresenter
 		return $control;
 	}
 
-
     /**
      * Component grid component
      *
-     * @param type $name
-     * @return type
+     * @return DataGridControl
      */
     protected function createComponentComponentGrid()
 	{
-		$this->componentGrid->setDataSource($this->components);
+	    /** @var DataGridControl $grid */
+        $grid = $this->context->getService('Admin.ComponentGrid');
+        $grid->setDataSource($this->components);
 
-		return $this->componentGrid;
+		return $grid;
 	}
-
 
     /**
      * Component component grid
      *
-     * @param type $name
-     * @return type
+     * @return DataGridControl
      */
     protected function createComponentCreateComponentGrid()
 	{
+	    /** @var DataGridControl $grid */
+        $grid = $this->context->getService('Admin.CreateComponentGrid');
 //        $qb = $this->repository->createQueryBuilder('a');
-		$this->createComponentGrid->setDataSource($this->getComponentsArray());
+        $grid->setDataSource($this->getComponentsArray());
 
-		return $this->createComponentGrid;
+		return $grid;
 	}
-
 
     /**
      * Get component array
      *
-     * @return ComponentEntity[]    components
+     * @return ComponentEntity[] components
      */
     private function getComponentsArray()
     {
@@ -232,7 +221,7 @@ class ComponentPresenter extends AdminFormPresenter
     }
 
 
-    /** abstract methods ******************************************************/
+    /** implements ************************************************************/
 
     /** {@inheritdoc} */
     protected function getFormBuilderServiceAlias() { }

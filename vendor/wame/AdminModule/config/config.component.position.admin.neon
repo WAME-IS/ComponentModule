@@ -10,6 +10,10 @@ services:
             - allow('admin', 'admin.componentPosition', 'delete')
 
 
+    # Components
+    - Wame\ComponentModule\Vendor\Wame\AdminModule\Components\IComponentPositionListControlFactory
+
+
     # Form containers
     - Wame\ComponentModule\Vendor\Wame\AdminModule\Forms\Containers\ComponentPosition\IPositionContainerFactory
     - Wame\ComponentModule\Vendor\Wame\AdminModule\Forms\Containers\ComponentPosition\IComponentContainerFactory
@@ -35,8 +39,8 @@ services:
    
 
     # Grids
-    ComponentInPositionGrid:
-        class: Wame\ComponentModule\Vendor\Wame\AdminModule\Grids\ComponentInPositionGrid
+    Admin.ComponentInPositionGrid:
+        class: Wame\AdminModule\Vendor\Wame\DataGridControl\AdminDataGridControl
         setup:
             - setDefaultSort({'id': 'DESC'})
             - add(Wame\ComponentModule\Vendor\Wame\AdminModule\Grids\Columns\ComponentId(), null, {priority: 100})
