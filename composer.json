@@ -15,13 +15,13 @@
     ],
     "config": { "secure-http": false },
     "require": {
-        "wame/Core": "*",
-        "wame/ListControl": "*"
+        "wame/Core": "0.0.*",
+        "wame/ListControl": "0.0.*"
     },
     "softRequire": {
-        "wame/AdminModule": "*",
-        "wame/MenuModule": "*",
-        "wame/RouterModule": "*"
+        "wame/AdminModule": "0.0.*",
+        "wame/MenuModule": "0.0.*",
+        "wame/RouterModule": "0.0.*"
     },
     "autoload": {
         "classmap": [
