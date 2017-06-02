@@ -3,12 +3,17 @@
     "version": "0.0.1",
     "description": "CMS WAME admin",
     "homepage": "http://wame.sk/cms-wame-admin",
+    "minimum-stability": "dev",
     "authors": [
         {
-            "name": "Wame",
+            "name": "WAME s.r.o.",
             "homepage": "http://wame.sk"
         }
     ],
+    "repositories": [
+        { "type": "composer", "url": "http://packages.wame.sk" }
+    ],
+    "config": { "secure-http": false },
     "require": {
         "wame/Core": "*",
         "wame/ListControl": "*"
