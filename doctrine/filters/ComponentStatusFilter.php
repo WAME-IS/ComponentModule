@@ -16,7 +16,7 @@ final class ComponentStatusFilter implements ConditionalFilterInterface
     /**
      * {@inheritdoc}
      */
-    public function addFilterConstraint(ClassMetadata $entity, string $alias) : string
+    public function addFilterConstraint(ClassMetadata $entity, $alias) : string
     {
         if ($entity->getName() == ComponentEntity::class && $this->enabled) {
             return sprintf('%s.status = %s', $alias, ComponentRepository::STATUS_ENABLED);
