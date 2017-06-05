@@ -17,7 +17,7 @@ final class PositionStatusFilter implements ConditionalFilterInterface
     /**
      * {@inheritdoc}
      */
-    public function addFilterConstraint(ClassMetadata $entity, string $alias) : string
+    public function addFilterConstraint(ClassMetadata $entity, $alias) : string
     {
         if ($entity->getName() == PositionEntity::class && $this->enabled) {
             return sprintf('%s.status = %s', $alias, PositionRepository::STATUS_ENABLED);
