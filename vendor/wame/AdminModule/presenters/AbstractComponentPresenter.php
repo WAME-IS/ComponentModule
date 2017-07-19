@@ -41,10 +41,15 @@ abstract class AbstractComponentPresenter extends ComponentPresenter
 	{
 		$form = $this->componentForm
 						->setType($this->getComponentIdentifier())
-						->setId($this->id)
-						->build();
+						->setId($this->id);
 
-		return $form;
+        if (count($this->formContainers) > 0) {
+            foreach ($this->formContainers as $container) {
+                $form->addFormContainer($container['service'], $container['name'], $container['priority']);
+            }
+        }
+
+		return $form->build();
 	}
 
 
