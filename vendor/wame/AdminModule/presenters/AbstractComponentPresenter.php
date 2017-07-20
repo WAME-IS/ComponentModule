@@ -5,6 +5,7 @@ namespace App\AdminModule\Presenters;
 use Wame\ComponentModule\Forms\ComponentForm;
 use Wame\ComponentModule\Repositories\PositionRepository;
 
+
 abstract class AbstractComponentPresenter extends ComponentPresenter
 {
 	/** @var ComponentForm @inject */
@@ -12,6 +13,30 @@ abstract class AbstractComponentPresenter extends ComponentPresenter
 
 	/** @var PositionRepository @inject */
 	public $positionRepository;
+
+
+    /** actions ***************************************************************/
+
+    public function actionCreate()
+    {
+        if ($this->getParameter('p')) {
+            $position = $this->positionRepository->get(['id' => $this->getParameter('p')]);
+
+            if (!$position) {
+                $this->flashMessage(_('This position does not exist.'), 'danger');
+                $this->redirect(':Admin:Component:', ['id' => null]);
+            }
+
+            if ($position->getStatus() == PositionRepository::STATUS_REMOVE) {
+                $this->flashMessage(_('This position is removed.'), 'danger');
+                $this->redirect(':Admin:Component:', ['id' => null]);
+            }
+
+            if ($position->getStatus() == PositionRepository::STATUS_DISABLED) {
+                $this->flashMessage(_('This position is disabled.'), 'warning');
+            }
+        }
+    }
 
 
     /** renders ***************************************************************/
