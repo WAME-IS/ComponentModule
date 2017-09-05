@@ -7,6 +7,7 @@ use Exception;
 use Nette\Application\UI\Control;
 use Nette\DI\Container;
 use Nette\InvalidArgumentException;
+use Tracy\Debugger;
 use Wame\ComponentModule\Entities\PositionEntity;
 use Wame\ComponentModule\Paremeters\ArrayParameterSource;
 use Wame\ComponentModule\Registers\ComponentRegister;
@@ -96,11 +97,9 @@ class PositionControl extends ListControl
         if ($this->position->getStatus() == PositionRepository::STATUS_ENABLED) {
             $this->getListComponents();
 
-            $this->componentParameters->add(
-                new ArrayParameterSource($this->position->getParameters()), 'position', ['priority' => 20]);
+            $this->componentParameters->add(new ArrayParameterSource($this->position->getParameters()), 'position', ['priority' => 20]);
             $this->componentParameters->remove('componentDefaultClass');
-            $this->componentParameters->add(
-                new ArrayParameterSource(['container' => ['class' => sprintf(self::POSITION_ID_CLASS, $this->positionName)]]), 'positionDefaultClass', ['priority' => 1]);
+            $this->componentParameters->add(new ArrayParameterSource(['container' => ['class' => sprintf(self::POSITION_ID_CLASS, $this->positionName)]]), 'positionDefaultClass', ['priority' => 1]);
         }
     }
 
@@ -131,22 +130,27 @@ class PositionControl extends ListControl
 
             $componentType = $this->componentRegister->getByName($type);
 
-            if ($componentType) {
-                $componentName = $this->uniqeComponentName($componentInPosition->getComponentInPositionName());
-                $component = $componentType->createComponent($componentInPosition);
+            try {
+                if ($componentType) {
+                    $componentName = $this->uniqeComponentName($componentInPosition->getComponentInPositionName());
+                    $component = $componentType->createComponent($componentInPosition);
 
-                if ($component instanceof BaseControl) {
-                    $component->setComponentInPosition($componentInPosition);
+                    if ($component instanceof BaseControl) {
+                        $component->setComponentInPosition($componentInPosition);
 
-                    //TODO remove
-                    $component->componentParameters->add(
-                        new ArrayParameterSource(['container' => ['class' => sprintf(BaseControl::COMPONENT_ID_CLASS, $type)]]), 'componentInPositionClass', ['priority' => 0]);
+                        //TODO remove
+                        $component->componentParameters->add(
+                            new ArrayParameterSource(['container' => ['class' => sprintf(BaseControl::COMPONENT_ID_CLASS, $type)]]), 'componentInPositionClass', ['priority' => 0]);
+                    }
+
+                    $this->listComponents[$componentName] = $component;
+                    $this->addComponent($component, $componentName);
+                } else {
+                    throw new InvalidArgumentException("Invalid component type $type");
                 }
-
-                $this->listComponents[$componentName] = $component;
-                $this->addComponent($component, $componentName);
-            } else {
-                throw new InvalidArgumentException("Invalid component type $type");
+            } catch (Exception $e) {
+                Debugger::log($e);
+                Debugger::barDump($e->getMessage() . ', Error has been logged on ./log folder.', $type);
             }
         }
 
