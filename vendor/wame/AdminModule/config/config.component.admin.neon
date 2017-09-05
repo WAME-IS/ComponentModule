@@ -20,6 +20,11 @@ services:
     - Wame\ComponentModule\Vendor\Wame\AdminModule\Components\IAddComponentControlFactory
 
 
+    # Registers
+    AdminComponentRegister:
+        class: Wame\ComponentModule\Registers\AdminComponentRegister
+
+
     # Grids
     Admin.ComponentGrid:
         class: Wame\AdminModule\Vendor\Wame\DataGridControl\AdminDataGridControl
@@ -49,9 +54,11 @@ services:
     -  Wame\ComponentModule\Vendor\Wame\AdminModule\Forms\Containers\ITypeContainerFactory
     -  Wame\ComponentModule\Vendor\Wame\AdminModule\Forms\Containers\IAttributeContainerFactory
 
+
     # Form groups
     - Wame\ComponentModule\Vendor\Wame\AdminModule\Forms\Groups\IComponentGroupFactory
     - Wame\ComponentModule\Vendor\Wame\AdminModule\Forms\Groups\IContainerGroupFactory
+
 
     # Forms
     Admin.ComponentFormBuilder:
@@ -82,6 +89,14 @@ services:
             - addFormContainer(Wame\ComponentModule\Forms\Component\ContainerFormContainer(), 'ContainerFormContainer', 50)
             - addFormContainer(Wame\DynamicObject\Forms\FormGroupContainer(), 'SubmitFormGroupContainer')
             - addFormContainer(Wame\DynamicObject\Forms\SubmitFormContainer(), 'SubmitFormContainer')
+
+
+    # Commands
+    ComponentAdminCommand:
+        class: Wame\ComponentModule\Vendor\Wame\AdminModule\Commands\ComponentAdminCommand
+        tags: [kdyby.console.command]
+
+
 
 webloader:
     js:

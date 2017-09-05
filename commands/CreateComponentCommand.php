@@ -50,8 +50,14 @@ abstract class CreateComponentCommand extends Command
 
     protected function configure()
     {
-        $this->setName('component:'.$this->getComponentName().':create')
+        $this->setName($this->getExecCommand())
                 ->setDescription($this->getComponentDescription());
+    }
+
+
+    public function getExecCommand()
+    {
+        return 'component:' . lcfirst($this->getComponentName()) . ':create';
     }
 
 
@@ -64,7 +70,6 @@ abstract class CreateComponentCommand extends Command
             $this->output->writeLn('<info>START</info> ' . $this->getComponentType());
 
         // Component
-
             $this->output->writeLn('FIND component');
             $componentEntity = $this->getComponent();
 
