@@ -69,3 +69,8 @@ services:
     PositionAdminCommand:
         class: Wame\ComponentModule\Vendor\Wame\AdminModule\Commands\PositionAdminCommand
         tags: [kdyby.console.command]
+
+
+    # Registers
+    AdminPositionRegister:
+        class: Wame\ComponentModule\Registers\AdminPositionRegister

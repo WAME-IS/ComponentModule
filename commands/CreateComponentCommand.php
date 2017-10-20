@@ -101,7 +101,7 @@ abstract class CreateComponentCommand extends Command
 
             $this->entityManager->flush();
 
-            $output->writeLn('<info>END</info> ' . $this->getComponentType());
+            $output->writeLn('<info>UPDATE</info> ' . $this->getComponentName());
 
             return 0; // zero return code means everything is ok
         }
