@@ -105,7 +105,7 @@ abstract class CreatePositionCommand extends Command
 
         $this->positionRepository->create($positionEntity);
 
-        $this->output->writeLn(sprintf('CREATE <info>%s</info> position', $name));
+        $this->output->writeLn(sprintf('CREATE <info>%s</info> position', $this->getPositionName()));
     }
 
 
