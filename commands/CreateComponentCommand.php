@@ -92,12 +92,7 @@ abstract class CreateComponentCommand extends Command
             $componentInPositions = $this->findComponentInPositions($componentEntity);
             $countComponentInPositions = count($componentInPositions);
 
-            if ($countComponentInPositions < $countPositionList) {
-                $this->output->writeLn(sprintf('Find %s of %s', $countComponentInPositions, $countPositionList));
-                $this->addComponentToPositions($componentEntity, $positionList, $positionEntities, $componentInPositions);
-            } else {
-                $this->output->writeLn('Component is added to all positions');
-            }
+            $this->addComponentToPositions($componentEntity, $positionList, $positionEntities, $componentInPositions);
 
             $this->entityManager->flush();
 
@@ -129,6 +124,8 @@ abstract class CreateComponentCommand extends Command
             $componentEntity = $this->createComponent();
         } else {
             $this->output->writeLn('Component is exist');
+
+            $componentEntity = $this->updateComponent($componentEntity);
         }
 
         return $componentEntity;
@@ -147,7 +144,7 @@ abstract class CreateComponentCommand extends Command
                             ->setType($this->getComponentType())
                             ->setParameters($this->getComponentParameters())
                             ->setStatus(ComponentRepository::STATUS_ENABLED)
-                            ->setInList(ComponentRepository::SHOW_IN_LIST);
+                            ->setInList($this->inList() === true ? 1 : 0);
 
         $lang = $this->componentRepository->lang;
 
@@ -162,6 +159,24 @@ abstract class CreateComponentCommand extends Command
         $this->output->writeLn('CREATE component');
 
         $this->componentRepository->create($componentEntity);
+
+        return $componentEntity;
+    }
+
+
+    /**
+     * Update component
+     *
+     * @return ComponentEntity
+     */
+    private function updateComponent($componentEntity)
+    {
+        $componentEntity->setParameters($this->getComponentParameters());
+        $componentEntity->setInList($this->inList() === true ? 1 : 0);
+
+        $componentLangEntity = $componentEntity->getCurrentLangEntity();
+        $componentLangEntity->setTitle($this->getComponentTitle());
+        $componentLangEntity->setDescription($this->getComponentDescription());
 
         return $componentEntity;
     }
@@ -316,5 +331,14 @@ abstract class CreateComponentCommand extends Command
      * @return array
      */
     abstract protected function getPositions();
+
+
+    /**
+     * Get component in list
+     * show in grid
+     *
+     * @return boolean
+     */
+    abstract protected function inList();
 
 }
