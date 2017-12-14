@@ -309,11 +309,7 @@ class PositionPresenter extends AdminFormPresenter
 	{
         /** @var DataGridControl $grid */
         $grid = $this->context->getService('Admin.ComponentInPositionGrid');
-
-        $grid
-            ->setDataSource($this->components)
-            ->setSortable()
-            ->setDefaultSort(['sort' => 'ASC']);
+        $grid->setDataSource($this->components);
 
 		return $grid;
 	}

@@ -6,6 +6,7 @@ use Nette\Utils\Html;
 use Wame\DataGridControl\BaseGridItem;
 use Wame\ComponentModule\Registers\ComponentRegister;
 
+
 class Type extends BaseGridItem
 {
     /** @var ComponentRegister */
@@ -21,14 +22,20 @@ class Type extends BaseGridItem
 	/** {@inheritDoc} */
 	public function render($grid)
 	{
-		$grid->addColumnText('type', _('Type'))
-				->setRenderer(function($item) {
-                  return Html::el('i')
-                            ->addClass('material-icons tooltipped')
-                            ->addData('position', 'right')
-                            ->addData('tooltip', $this->componentRegister[$item->component->getType()]->getTitle())
-                            ->setText($this->componentRegister[$item->component->getType()]->getIcon());
-				});
+        $grid->addColumnText('type', _('Type'))
+                ->setRenderer(function($item) {
+                    $type = $item->getComponent()->getType();
+
+                    if ($this->componentRegister[$type]) {
+                        return Html::el('small')->setText($this->componentRegister[$type]->getTitle());
+                    } else {
+                        return Html::el('span')
+                            ->setClass('material-icons text-danger tooltipped')
+                            ->setAttribute('data-tooltip', sprintf(_('Missing component %s'), $type))
+                            ->setAttribute('data-position', 'right')
+                            ->setText('help');
+                    }
+                });
 		
 		return $grid;
 	}

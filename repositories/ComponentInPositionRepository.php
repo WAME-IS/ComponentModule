@@ -5,6 +5,8 @@ namespace Wame\ComponentModule\Repositories;
 use Wame\Core\Repositories\BaseRepository;
 use Wame\ComponentModule\Entities\ComponentEntity;
 use Wame\ComponentModule\Entities\ComponentInPositionEntity;
+use Wame\Core\Repositories\Traits\SortableRepositoryTrait;
+
 
 class ComponentInPositionRepository extends BaseRepository
 {
@@ -12,7 +14,7 @@ class ComponentInPositionRepository extends BaseRepository
 	const STATUS_ACTIVE = 1;
     
     
-    use \Wame\Core\Repositories\Traits\SortableRepositoryTrait;
+    use SortableRepositoryTrait;
 	
     
 	public function __construct()
