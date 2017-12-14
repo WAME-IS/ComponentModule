@@ -16,29 +16,26 @@ class Type extends BaseGridItem
     {
         $this->componentRegister = $componentRegister;
     }
-    
-    
-	/** {@inheritDoc} */
-	public function render($grid)
-	{
-		$grid->addColumnText('type', _('Type'))
-				->setRenderer(function($item) {
-                    if($this->componentRegister[$item->getType()]) {
-                        return Html::el('i')
-                            ->addClass('material-icons tooltipped')
-                            ->addData('position', 'right')
-                            ->addData('tooltip', $this->componentRegister[$item->getType()]->getTitle())
-                            ->setText($this->componentRegister[$item->getType()]->getIcon());
+
+
+    /** {@inheritDoc} */
+    public function render($grid)
+    {
+        $grid->addColumnText('type', _('Type'))
+                ->setRenderer(function($item) {
+                    if ($this->componentRegister[$item->getType()]) {
+                        return Html::el('small')->setText($this->componentRegister[$item->getType()]->getTitle());
                     } else {
-                        return Html::el('i')
-                                ->addClass('material-icons text-danger tooltipped')
-                                ->addData('position', 'right')
-                                ->addData('tooltip', $this->componentRegister[$item->getType()]->getTitle())
-                                ->setText('help_outline');
+                        return Html::el('span')
+                            ->setClass('material-icons text-danger tooltipped')
+                            ->setAttribute('data-tooltip', sprintf(_('Missing component %s'), $item->getType()))
+                            ->setAttribute('data-position', 'right')
+                            ->setText('help');
                     }
-				});
-		
-		return $grid;
-	}
+                })
+                ->setFilterSelect(array_replace(['' => '- ' . _('Select from list') . ' -'], $this->componentRegister->getComponentList()), 'type');
+
+        return $grid;
+    }
     
 }

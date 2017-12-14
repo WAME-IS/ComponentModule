@@ -31,7 +31,7 @@ services:
         setup:
             - setDefaultSort({'id': 'DESC'})
             - add(Wame\DataGridControl\Columns\Id(), null, {priority: 90})
-#            - add(Wame\ComponentModule\Vendor\Wame\AdminModule\Grids\Columns\Component\Type(), null, {priority: 80})
+            - add(Wame\ComponentModule\Vendor\Wame\AdminModule\Grids\Columns\Component\Type(), null, {priority: 80})
             - add(Wame\ComponentModule\Vendor\Wame\AdminModule\Grids\Columns\Component\TitleLink(), null, {priority: 70})
             - add(Wame\DataGridControl\Columns\Name(), null, {priority: 60})
             - add(Wame\DataGridControl\Columns\Status(), null, {priority: 50})
