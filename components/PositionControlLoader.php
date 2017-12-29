@@ -11,7 +11,6 @@ use Wame\ComponentModule\Entities\PositionLangEntity;
 use Wame\ComponentModule\Entities\PositionUsageEntity;
 use Wame\ComponentModule\Repositories\PositionRepository;
 use Wame\ComponentModule\Repositories\PositionUsageRepository;
-
 class PositionControlLoader extends Object
 {
 
@@ -23,10 +22,10 @@ class PositionControlLoader extends Object
 
     /** @var PositionUsageRepository */
     private $positionUsageRepository;
-    
+
     /** @var array */
     private $positionsInPresenter;
-    
+
     /** @var static */
     private static $instance;
 
@@ -45,11 +44,11 @@ class PositionControlLoader extends Object
         $controlName = $control->getUniqueId();
 
         $this->loadPresenter($presenterName);
-        
+
         if(!isset($this->positionsInPresenter[$controlName])) {
             return; //has no positions
         }
-        
+
         foreach ($this->positionsInPresenter[$controlName] as $position) {
             $positionName = 'position' . Strings::firstUpper($position->name);
             if (!isset($control->getComponents()[$positionName])) {
@@ -57,22 +56,37 @@ class PositionControlLoader extends Object
             }
         }
     }
-    
-    private function loadPresenter($presenterName) {
-        if(!$this->positionsInPresenter) {
-            $positionUsages = $this->positionUsageRepository->find(['presenter' => $presenterName]);
-            foreach($positionUsages as $usage) {
-                if(!isset($this->positionsInPresenter[$usage->component])) {
-                    $this->positionsInPresenter[$usage->component] = [];
+
+
+    /**
+     * Load presenter
+     * Get position usage in this presenter
+     *
+     * @param string $presenterName
+     */
+    private function loadPresenter($presenterName)
+    {
+        if (!$this->positionsInPresenter) {
+            try {
+                $positionUsages = $this->positionUsageRepository->find(['presenter' => $presenterName]);
+
+                foreach ($positionUsages as $usage) {
+                    if (!isset($this->positionsInPresenter[$usage->component])) {
+                        $this->positionsInPresenter[$usage->component] = [];
+                    }
+
+                    $this->positionsInPresenter[$usage->component][] = $usage->position;
                 }
-                $this->positionsInPresenter[$usage->component][] = $usage->position;
+            } catch (\Exception $e) {
+
             }
         }
     }
 
+
     /**
      * Checks if position usage is saved in database. If not it will be created.
-     * 
+     *
      * @param Control $control
      * @param string $positionName
      * @return boolean Whenever position is loaded
@@ -97,7 +111,7 @@ class PositionControlLoader extends Object
         $positionUsageEntity->setComponent($controlName);
 
         $this->positionUsageRepository->create($positionUsageEntity);
-        
+
         return false;
     }
 
