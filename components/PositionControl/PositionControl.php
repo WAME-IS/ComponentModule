@@ -30,6 +30,7 @@ interface IPositionControlFactory
 class PositionControl extends ListControl
 {
     const POSITION_ID_CLASS = 'pos-%s';
+    
 
     /** @var PositionRepository */
     private $positionRepository;
@@ -63,8 +64,7 @@ class PositionControl extends ListControl
         $this->componentRegister = $componentRegister;
         $this->ISimpleEmptyListControlFactory = $ISimpleEmptyListControlFactory;
 
-        $this->componentParameters->add(
-            new ArrayParameterSource(['listContainer' => ['tag' => null], 'listItemContainer' => ['tag' => null]]), 'listContainers', ['priority' => 1]);
+        $this->componentParameters->add(new ArrayParameterSource(['listContainer' => ['tag' => null], 'listItemContainer' => ['tag' => null]]), 'listContainers', ['priority' => 1]);
 
         $this->setPosition($position);
     }
@@ -80,12 +80,14 @@ class PositionControl extends ListControl
     {
         if (is_object($position) && $position instanceof PositionEntity) {
             $positionEntity = $position;
-            $positionName = $position->name;
+            $positionName = $position->getName();
         } elseif (is_string($position)) {
             $positionEntity = $this->positionRepository->get(['name' => $position, 'status' => PositionRepository::STATUS_ENABLED]);
+
             if (!$positionEntity) {
                 throw new Exception("Position $position does not exist in database.");
             }
+
             $positionName = $position;
         } else {
             throw new InvalidArgumentException("Argument position has wrong type.");
@@ -117,16 +119,19 @@ class PositionControl extends ListControl
 
         $this->listComponents = [];
 
+        if ($this->position->getStatus() != PositionRepository::STATUS_ENABLED) {
+            return $this->listComponents;
+        }
+
         $criteria = Criteria::create()->orderBy(['sort' => Criteria::ASC]);
         $componentsInPosition = $this->position->getComponents()->matching($criteria);
 
         foreach ($componentsInPosition as $componentInPosition) {
-
             if ($componentInPosition->getComponent()->getStatus() != ComponentRepository::STATUS_ENABLED) {
                 continue;
             }
 
-            $type = $componentInPosition->component->type;
+            $type = $componentInPosition->getComponent()->getType();
 
             $componentType = $this->componentRegister->getByName($type);
 
@@ -139,8 +144,7 @@ class PositionControl extends ListControl
                         $component->setComponentInPosition($componentInPosition);
 
                         //TODO remove
-                        $component->componentParameters->add(
-                            new ArrayParameterSource(['container' => ['class' => sprintf(BaseControl::COMPONENT_ID_CLASS, $type)]]), 'componentInPositionClass', ['priority' => 0]);
+                        $component->componentParameters->add(new ArrayParameterSource(['container' => ['class' => sprintf(BaseControl::COMPONENT_ID_CLASS, $type)]]), 'componentInPositionClass', ['priority' => 0]);
                     }
 
                     $this->listComponents[$componentName] = $component;
@@ -161,6 +165,7 @@ class PositionControl extends ListControl
     public function getListComponent($id)
     {
         $components = $this->getListComponents();
+
         if (isset($components[$id])) {
             return $components[$id];
         }
@@ -170,6 +175,7 @@ class PositionControl extends ListControl
     protected function attached($control)
     {
         parent::attached($control);
+
         $this->checkForCycle();
     }
 
@@ -177,12 +183,14 @@ class PositionControl extends ListControl
     private function checkForCycle()
     {
         $parent = $this->getParent();
+
         while ($parent) {
             if ($parent instanceof PositionControl) {
                 if ($parent->getPositionName() == $this->getPositionName()) {
-                    throw new InvalidArgumentException("Position {$this->getPositionName()} has position {$this->getPositionName()} inside it!");
+                    throw new InvalidArgumentException("Position {$this->getPositionName()} has position {$parent->getPositionName()} inside it!");
                 }
             }
+
             $parent = $parent->getParent();
         }
     }
@@ -191,11 +199,14 @@ class PositionControl extends ListControl
     private function uniqeComponentName($originalName)
     {
         $name = $originalName;
+
         $i = 1;
+
         while ($this->getComponent($name, false)) {
             $name = $originalName . $i;
             $i++;
         }
+
         return $name;
     }
 
@@ -210,6 +221,7 @@ class PositionControl extends ListControl
         if (!$this->renderer) {
             $this->renderer = new PositionRenderer();
         }
+
         return $this->renderer;
     }
 
@@ -232,6 +244,11 @@ class PositionControl extends ListControl
     }
 
 
+    /**
+     * Create no items control
+     *
+     * @return \Nette\ComponentModel\IComponent|\Wame\ListControl\Components\SimpleEmptyListControl
+     */
     public function createComponentNoItems()
     {
         return $this->ISimpleEmptyListControlFactory->create();
