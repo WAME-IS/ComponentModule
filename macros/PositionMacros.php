@@ -22,6 +22,7 @@ class PositionMacros extends MacroSet
 
     public function macroPosition(MacroNode $node, PhpWriter $writer)
     {
+        // TODO: refactor this hell
         return $writer->write('$_positionName = %node.word;'
                 . 'if(\Wame\ComponentModule\Components\PositionControlLoader::checkStatic($_control, $_positionName)) {'
                     . '$_position = $_control->getComponent("position".Nette\Utils\Strings::firstUpper($_positionName));'
