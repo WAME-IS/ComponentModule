@@ -243,7 +243,7 @@ class PositionPresenter extends AdminFormPresenter
 	public function renderShow()
 	{
 		$this->template->siteTitle = _('Position');
-		$this->template->subTitle = $this->entity->getTitle();
+		$this->template->subTitle = $this->entity->title;
 		$this->template->position = $this->entity;
 		$this->template->components = $this->components;
 		$this->template->positionStatusList = $this->repository->getStatusList();
@@ -259,14 +259,14 @@ class PositionPresenter extends AdminFormPresenter
 	public function renderEdit()
 	{
 		$this->template->siteTitle = _('Edit position');
-		$this->template->subTitle = $this->entity->getTitle();
+		$this->template->subTitle = $this->entity->title;
 	}
 
 
 	public function renderDelete()
 	{
 		$this->template->siteTitle = _('Delete position');
-		$this->template->subTitle = $this->entity->getTitle();
+		$this->template->subTitle = $this->entity->title;
 	}
 
 
