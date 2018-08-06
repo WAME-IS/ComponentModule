@@ -58,6 +58,7 @@ abstract class CreatePositionCommand extends Command
 
             $this->output->writeLn('<info>START</info> ' . $this->getPositionName());
 
+            $this->positionRepository->lang = 'en';
             $positionEntity = $this->positionRepository->get(['name' => $this->getPositionName()]);
 
             if ($positionEntity) {
@@ -87,6 +88,8 @@ abstract class CreatePositionCommand extends Command
      */
     private function create()
     {
+        $this->positionRepository->lang = 'en';
+
         $positionEntity = (new PositionEntity())
                             ->setName($this->getPositionName())
                             ->setParameters($this->getPositionParameters())

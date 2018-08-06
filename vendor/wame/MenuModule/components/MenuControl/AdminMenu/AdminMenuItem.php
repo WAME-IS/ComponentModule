@@ -33,30 +33,30 @@ class AdminMenuItem implements \Wame\MenuModule\Models\IMenuItem
 		$item->setLink($this->linkGenerator->link('Admin:Component:', ['id' => null]));
 		$item->setIcon('fa fa-puzzle-piece');
         
-        $item->addNode($this->componentsDefault());
-        $item->addNode($this->componentsPositions());
+//        $item->addNode($this->componentsDefault());
+//        $item->addNode($this->componentsPositions());
 		
 		return $item->getItem();
 	}
     
-    private function componentsDefault()
-	{
-		$item = new Item();
-		$item->setName('components-components');
-		$item->setTitle(_('Components'));
-		$item->setLink($this->linkGenerator->link('Admin:Component:', ['id' => null]));
-		
-		return $item->getItem();
-	}
-    
-    private function componentsPositions()
-	{
-		$item = new Item();
-		$item->setName('components-positions');
-		$item->setTitle(_('Positions'));
-		$item->setLink($this->linkGenerator->link('Admin:Position:', ['id' => null]));
-		
-		return $item->getItem();
-	}
+//    private function componentsDefault()
+//	{
+//		$item = new Item();
+//		$item->setName('components-components');
+//		$item->setTitle(_('Components'));
+//		$item->setLink($this->linkGenerator->link('Admin:Component:', ['id' => null]));
+//
+//		return $item->getItem();
+//	}
+//
+//    private function componentsPositions()
+//	{
+//		$item = new Item();
+//		$item->setName('components-positions');
+//		$item->setTitle(_('Positions'));
+//		$item->setLink($this->linkGenerator->link('Admin:Position:', ['id' => null]));
+//
+//		return $item->getItem();
+//	}
 
 }

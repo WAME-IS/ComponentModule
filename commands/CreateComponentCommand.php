@@ -7,6 +7,7 @@ use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Kdyby\Doctrine\EntityManager;
+use Tracy\Debugger;
 use Wame\ComponentModule\Entities\ComponentEntity;
 use Wame\ComponentModule\Entities\ComponentLangEntity;
 use Wame\ComponentModule\Entities\ComponentInPositionEntity;
@@ -116,19 +117,18 @@ abstract class CreateComponentCommand extends Command
      */
     private function getComponent()
     {
+        $this->componentRepository->lang = 'en';
         $componentEntity = $this->componentRepository->get(['name' => $this->getComponentName(), 'type' => $this->getComponentType()]);
 
-        if (!$componentEntity) {
+        if ($componentEntity == null) {
             $this->output->writeLn('Component does not exist');
 
-            $componentEntity = $this->createComponent();
+            return $this->createComponent();
         } else {
-            $this->output->writeLn('Component is exist');
+            $this->output->writeLn('Component exists');
 
-            $componentEntity = $this->updateComponent($componentEntity);
+            return $this->updateComponent($componentEntity);
         }
-
-        return $componentEntity;
     }
 
 
@@ -146,7 +146,7 @@ abstract class CreateComponentCommand extends Command
                             ->setStatus(ComponentRepository::STATUS_ENABLED)
                             ->setInList($this->inList() === true ? 1 : 0);
 
-        $lang = $this->componentRepository->lang;
+        $lang = 'en';
 
         $componentLangEntity = (new ComponentLangEntity())
                                 ->setComponent($componentEntity)
@@ -265,10 +265,16 @@ abstract class CreateComponentCommand extends Command
     private function addComponentToPositions($componentEntity, $positionList, $positionEntities, $componentInPositions)
     {
         foreach ($positionList as $name => $parameters) {
-            if (!isset($componentInPositions[$name])) {
-                $positionEntity = $positionEntities[$name];
-                $sort = $this->componentInPositionRepository->getNextSort(['position' => $positionEntity, 'component' => $componentEntity]);
+            $positionEntity = $positionEntities[$name];
 
+            if (isset($parameters['sort'])) {
+                $sort = $parameters['sort'];
+                unset($parameters['sort']);
+            } else {
+                $sort = $this->componentInPositionRepository->getNextSort(['position' => $positionEntity, 'component' => $componentEntity]);
+            }
+
+            if (!isset($componentInPositions[$name])) {
                 $componentInPositionEntity = (new ComponentInPositionEntity())
                                                 ->setPosition($positionEntity)
                                                 ->setComponent($componentEntity)
@@ -278,6 +284,12 @@ abstract class CreateComponentCommand extends Command
                 $this->componentInPositionRepository->create($componentInPositionEntity);
 
                 $this->output->writeLn(sprintf('ADD component to <info>%s</info> position', $name));
+            } else {
+                $componentInPositionEntity = $this->componentInPositionRepository->get(['position' => $positionEntity, 'component' => $componentEntity]);
+                $componentInPositionEntity->setParameters($parameters);
+                $componentInPositionEntity->setSort($sort);
+
+                $this->output->writeLn(sprintf('UPDATE component in <info>%s</info> position', $name));
             }
         }
     }

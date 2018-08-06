@@ -31,6 +31,15 @@ services:
     PositionsSeeker:
         class: Wame\ComponentModule\Commands\Seeker\PositionsSeeker
 
+    SitePositionCommand:
+        class: Wame\ComponentModule\Commands\SitePositionCommand
+        tags: [kdyby.console.command]
+
+
+    # Registers
+    SitePositionRegister:
+        class: Wame\ComponentModule\Registers\SitePositionRegister
+
 
     # Doctrine filters
     - Wame\ComponentModule\Doctrine\Filters\PositionStatusFilter

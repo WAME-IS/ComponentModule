@@ -9,6 +9,15 @@ services:
     ComponentRegister:
         class: Wame\ComponentModule\Registers\ComponentRegister
 
+    SiteComponentRegister:
+        class: Wame\ComponentModule\Registers\SiteComponentRegister
+
+
+    # Commands
+    SiteComponentCommand:
+        class: Wame\ComponentModule\Commands\SiteComponentCommand
+        tags: [kdyby.console.command]
+
 
     # Doctrine filters
     - Wame\ComponentModule\Doctrine\Filters\ComponentStatusFilter

@@ -180,7 +180,7 @@ class PositionPresenter extends AdminFormPresenter
 		$this->repository->delete(['id' => $this->id]);
 
 		$this->flashMessage(_('Position has been successfully deleted.'), 'success');
-		$this->redirect(':Admin:Position:', ['id' => null]);
+		$this->redirect(':Admin:Component:', ['id' => null]);
 	}
 
 

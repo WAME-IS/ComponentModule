@@ -23,9 +23,13 @@ class TitleLink extends BaseGridItem
 	{
         $grid->addColumnText('title', _('Title'))
 				->setRenderer(function($item) {
-                    return Html::el('a')
+				    if (isset($this->componentRegister[$item->component->type])) {
+                        return Html::el('a')
                             ->addAttributes(['href' => $this->componentRegister[$item->component->type]->getLinkDetail($item->component)])
                             ->setText($item->component->title);
+                    } else {
+				        return $item->component->title;
+                    }
 				});
 		
 		return $grid;

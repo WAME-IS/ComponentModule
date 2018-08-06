@@ -30,7 +30,9 @@
                         <span class="title truncate">{$position->title}</span>
                     </a>
                     
-                    <small>[{$position->name}]</small>
+                    <a class="link-dark link-hover-secondary" href="{plink Position:show, 'id' => $position->id}">
+                        <small>[{$position->name}]</small>
+                    </a>
                     
                     {if $position->description}
                         <br>

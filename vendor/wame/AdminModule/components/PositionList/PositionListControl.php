@@ -32,7 +32,7 @@ class PositionListControl extends BaseControl
         $this->positions = $this->positionRepository->find([
             'status !=' => PositionRepository::STATUS_REMOVE, // TODO: tento riadok nemusi byt, lebo doctrine filters
             'inList' => PositionRepository::SHOW_IN_LIST
-        ]);
+        ], ['title' => 'ASC']);
 	}
 
 
